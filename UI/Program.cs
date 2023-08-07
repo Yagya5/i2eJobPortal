@@ -1,4 +1,6 @@
 using Repository.Connection;
+using Repository.Users;
+using Services.Users;
 
 namespace i2eJobPortal
 {
@@ -21,6 +23,9 @@ namespace i2eJobPortal
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
             builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
+
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IUserServices, UserServices>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -45,7 +50,7 @@ namespace i2eJobPortal
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=Index}/{id?}");
 
             app.MapRazorPages();
 
