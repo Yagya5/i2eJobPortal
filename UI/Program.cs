@@ -1,3 +1,5 @@
+using Repository.Connection;
+
 namespace i2eJobPortal
 {
     public class Program
@@ -6,8 +8,21 @@ namespace i2eJobPortal
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+            // Add the memory cache services.
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
+            builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
+
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
             var app = builder.Build();
 
@@ -24,11 +39,15 @@ namespace i2eJobPortal
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }
