@@ -48,11 +48,59 @@ namespace i2eJobPortal
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=User}/{action=Index}/{id?}");
+
+
+            //app.MapControllerRoute(
+            //   name: "default",
+            //   pattern: "{controller=User}/{action=Index}/{id?}");
+
+            //app.MapControllerRoute(
+            //    name: "Admin",
+            //    pattern: "{area=Admin}/{controller=AdminDashboard}/{action=Index}/{id?}");
+
+
+
+            app.UseEndpoints(endpoints =>
+            {
+
+                endpoints.MapAreaControllerRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=AdminDashboard}/{action=Index}"
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "areaRoute",
+                    pattern: "{area:exists}/{controller}/{action}"
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=User}/{action=Index}/{id?}"
+                );
+
+            });
+
+
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //      endpoints.MapControllerRoute(
+            //      name: "Admin",
+            //      pattern: "{area=Admin}/{controller=AdminDashboard}/{action=Index}/{id?}"
+            //    );
+            //});
+
+
 
             app.MapRazorPages();
+
+
+            
+
+
+
+
 
             app.Run();
         }
