@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,9 @@ namespace DomainModel.Users
 
         public int RoleId { get; set; }
 
-        public bool Is_Active { get; set; }  
+        public bool Is_Active { get; set; }
+
+        public string? RoleName { get; set; }
 
     }
 }
