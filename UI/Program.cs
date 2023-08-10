@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Repository.Connection;
 using Repository.Users;
 using Services.Users;
@@ -22,8 +23,10 @@ namespace i2eJobPortal
             // Add the memory cache services.
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
-            builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
 
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserServices, UserServices>();
 

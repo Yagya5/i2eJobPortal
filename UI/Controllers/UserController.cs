@@ -4,6 +4,7 @@ using Services.Users;
 
 namespace UI.Controllers
 {
+
     
     public class UserController : Controller
     {
@@ -13,6 +14,7 @@ namespace UI.Controllers
         {
             _UserServices = UserServices;
         }
+
 
         public IActionResult Index()
         {

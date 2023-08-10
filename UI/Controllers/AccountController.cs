@@ -5,13 +5,13 @@ namespace UI.Controllers
     public class AccountController : Controller
     {
         [HttpGet]
-        public IActionResult SignIn()
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult SignIn(string UserName, string Password)
+        public IActionResult Login(string UserName, string Password)
         {
             return View();
         }
