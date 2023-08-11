@@ -21,5 +21,11 @@ namespace UI.Controllers
             //  var Result = _UserServices.GetUsers();
             return Content("This is Yagya Branch");
         }
+
+        public IActionResult NewMethod()
+        {
+            //  var Result = _UserServices.GetUsers();
+            return Content("This is New Method in Yagya Branch");
+        }
     }
 }
