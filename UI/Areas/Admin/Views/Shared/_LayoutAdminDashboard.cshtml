@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bootstrap5_Practice</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .nav-link {
+            font-weight: bold;
+        }
+
+        .footerBackground {
+            background-color: black;
+        }
+
+            .footerBackground small {
+                color: white;
+                float: right;
+            }
+
+        .footerLogoSection {
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+
+
+        <nav class="navbar navbar-expand-sm bg-white navbar-light">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/Images/i2e_JobPortal_Logo.jpg" alt="i2e Logo" style="width:155px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav ms-auto">
+
+                                               
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="Admin" asp-controller="AdminDashboard" asp-action="MyProfile">My Profile</a>
+                        </li>
+
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="Admin" asp-controller="RegisteredUser" asp-action="Index">Users Management</a>
+                        </li>
+
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Job" asp-action="Index">Jobs Management</a>
+                        </li>
+
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="Admin" asp-controller="JobApplications" asp-action="Index">Job Applications</a>
+                        </li>  
+
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="Admin" asp-controller="AboutUs" asp-action="Index">About Us</a>
+                        </li>
+
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="Admin" asp-controller="ContactUs" asp-action="Index">Contact Us</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Hi, @User.Identity.Name <span class="badge rounded-pill bg-primary">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</span>  !</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a asp-controller="" asp-action="" class="dropdown-item">Link 1</a>
+                                <a asp-controller="" asp-action="" class="dropdown-item">Link 2</a>
+                                <div class="dropdown-divider"></div>
+                                <a  asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+
+                                           
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        
+    </header>
+    <div class="container">
+
+        @RenderBody()
+
+    </div>
+
+    @* <footer class="border-top footer text-muted">
+        <div class="container-fluid">
+            <div class="row footerBackground">
+                <div class="col-sm-3 footerLogoSection">
+                    <div class="col-sm-4" style="text-align: left;">
+                        <img src="~/Images/i2e_Logo_White.png" alt="i2e Logo" style="width:92px; float: left;" />
+                    </div>
+                    <div class="col-sm-8" style="float: right;">
+                        <small style="font-size:10px;">i2e consulting named among the fastest growing private companies in the US (2018 Inc. 5000), a Microsoft Gold partner has been delivering tailored solutions to Fortune 100 companies for over a decade.</small>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                </div>
+            </div>            
+        </div>
+    </footer> *@
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
