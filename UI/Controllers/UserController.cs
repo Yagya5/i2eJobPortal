@@ -17,8 +17,8 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
-            var Result = _UserServices.GetUsers();
-            return View(Result);
+            //  var Result = _UserServices.GetUsers();
+            return Content("This is Yagya Branch");
         }
 
         [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
