@@ -11,5 +11,7 @@ namespace Repository.Users
     public interface IUserRepository
     {
         IEnumerable<User> GetUsers();
+
+        User AuthenticateUser(string Email, string Password);
     }
 }

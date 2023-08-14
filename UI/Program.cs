@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
 using Repository.Connection;
 using Repository.Users;
 using Services.Users;
@@ -24,7 +25,13 @@ namespace i2eJobPortal
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.Cookie.Name = "SessionCookie";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(25);
+                options.SlidingExpiration = true;
+                
+            });
 
             builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
             builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -79,7 +86,7 @@ namespace i2eJobPortal
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=User}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
 
             });

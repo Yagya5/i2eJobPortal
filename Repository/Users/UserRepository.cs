@@ -24,6 +24,15 @@ namespace Repository.Users
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
+        public User AuthenticateUser(string Email, string Password)
+        {
+            var result = new User();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "select * from v_Users where Email='"+Email+"' and Password = '"+Password+"'";
+            result = connection.QueryFirstOrDefault<User>(Query,null,null,0,null);
+            return result;
+        }
+
         public IEnumerable<User> GetUsers()
         {
             IEnumerable<User> result = new List<User>();

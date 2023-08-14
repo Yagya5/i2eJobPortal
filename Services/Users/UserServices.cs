@@ -17,6 +17,11 @@ namespace Services.Users
             _UserRepository = UserRepository;    
         }
 
+        public User AuthenticateUser(string Email, string Password)
+        {
+           var result =  _UserRepository.AuthenticateUser(Email, Password);
+            return result;
+        }
 
         public IEnumerable<User> GetUsers()
         {

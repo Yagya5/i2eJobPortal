@@ -5,7 +5,7 @@ using Services.Users;
 namespace UI.Controllers
 {
 
-    
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserServices _UserServices;
@@ -15,11 +15,30 @@ namespace UI.Controllers
             _UserServices = UserServices;
         }
 
-
         public IActionResult Index()
         {
             var Result = _UserServices.GetUsers();
             return View(Result);
         }
+
+        [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
+        public IActionResult JobSeekerDashboard()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin, Super Admin")]
+        public IActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Super Admin")]
+        public IActionResult SuperAdminDashboard()
+        {
+            return View();
+        }
+
+
     }
 }
