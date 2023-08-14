@@ -54,7 +54,7 @@
                         </li>                        
 
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Hi, @User.Identity.Name <span class="badge rounded-pill bg-primary">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</span>  !!!</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Hi, @User.Identity.Name <span class="badge rounded-pill bg-primary">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</span>  !</a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a asp-controller="" asp-action="" class="dropdown-item">Link 1</a>
                                 <a asp-controller="" asp-action="" class="dropdown-item">Link 2</a>

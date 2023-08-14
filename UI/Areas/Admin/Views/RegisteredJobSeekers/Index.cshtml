@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdminDashboard.cshtml";
     ViewData["Title"] = "Registered JobSeeker";
 }
 
@@ -46,13 +46,17 @@
     }
 
     img {
-        height: 100px;
+        /* height: 100px; */
         width: 100px;
     }
 
     td {
         word-wrap: break-word !important;
         text-align: center !important;
+    }
+
+    .btn-primary{
+        color: white!important;
     }
 
 </style>
@@ -68,7 +72,7 @@
 <script src="~/js/RegisteredJobSeekers.js"></script>
 
 
-<h1>Registered JobSeekers</h1>
+<h1>JobSeekers Management</h1>
 
 <body class="dx-viewport">
 
