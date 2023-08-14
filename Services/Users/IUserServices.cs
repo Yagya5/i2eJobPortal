@@ -10,5 +10,7 @@ namespace Services.Users
     public interface IUserServices
     {
         IEnumerable<User> GetUsers();
+
+        User AuthenticateUser(string Email, string Password);
     }
 }

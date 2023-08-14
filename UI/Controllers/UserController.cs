@@ -5,7 +5,7 @@ using Services.Users;
 namespace UI.Controllers
 {
 
-    
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserServices _UserServices;
@@ -15,17 +15,30 @@ namespace UI.Controllers
             _UserServices = UserServices;
         }
 
-
         public IActionResult Index()
         {
             //  var Result = _UserServices.GetUsers();
             return Content("This is Yagya Branch");
         }
 
-        public IActionResult NewMethod()
+        [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
+        public IActionResult JobSeekerDashboard()
         {
-            //  var Result = _UserServices.GetUsers();
-            return Content("This is New Method in Yagya Branch");
+            return View();
         }
+
+        [Authorize(Roles = "Admin, Super Admin")]
+        public IActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Super Admin")]
+        public IActionResult SuperAdminDashboard()
+        {
+            return View();
+        }
+
+
     }
 }
