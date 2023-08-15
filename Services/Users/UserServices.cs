@@ -28,5 +28,11 @@ namespace Services.Users
             var result = _UserRepository.GetUsers();
             return result;
         }
+
+        public bool JobSeekerSignUp(string FirstName, string LastName, string Email, string Password)
+        {
+            var result = _UserRepository.JobSeekerSignUp(FirstName, LastName, Email, Password);
+            return result;
+        }
     }
 }

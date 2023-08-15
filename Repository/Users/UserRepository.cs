@@ -43,5 +43,17 @@ namespace Repository.Users
             // result = connection.Query<User>("spGetUsers", null, commandType: CommandType.StoredProcedure);
             return result;
         }
+
+        public bool JobSeekerSignUp(string FirstName, string LastName, string Email, string Password)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            var param = new DynamicParameters();
+            param.Add(nameof(User.FirstName), FirstName);
+            param.Add(nameof(User.LastName), LastName);
+            param.Add(nameof(User.Email), Email);
+            param.Add(nameof(User.Password), Password);
+            connection.Execute("spJobSeekerSignUp", param, null, 0, CommandType.StoredProcedure);
+            return true;
+        }
     }
 }

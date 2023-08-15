@@ -13,5 +13,7 @@ namespace Repository.Users
         IEnumerable<User> GetUsers();
 
         User AuthenticateUser(string Email, string Password);
+
+        bool JobSeekerSignUp(string FirstName, string LastName, string Email, string Password);
     }
 }

@@ -98,8 +98,25 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignUp(string param1)
-        {
+        public IActionResult SignUp(string FirstName, string LastName, string Email, string Password)
+        {            
+            var result = _UserServices.JobSeekerSignUp(FirstName, LastName, Email, Password);
+            if(result == true)
+            {
+                var Identity = new ClaimsIdentity(new[]{
+                       new Claim(ClaimTypes.Name, FirstName),
+                       new Claim(ClaimTypes.Email,Email),
+                       new Claim(ClaimTypes.Role, "Job Seeker")
+                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var Principal = new ClaimsPrincipal(Identity);
+
+                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal);
+
+                return RedirectToAction("MyProfile", "UserDashboard");
+
+            }
+            ViewBag.DuplicateEmailEntry = "Sign Up Failed. This Email is already registered !!!";
             return View();
         }
 
