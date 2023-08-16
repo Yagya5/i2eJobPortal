@@ -29,7 +29,7 @@ namespace i2eJobPortal
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.Cookie.Name = "SessionCookie";
+                options.Cookie.Name = "Cookie";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(25);
                 options.SlidingExpiration = true;
                 

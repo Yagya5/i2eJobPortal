@@ -23,7 +23,7 @@
         <div class="col-md-6 right-box">
             <div class="row align-items-center">
 
-                <form asp-action="" asp-controller="" asp-area="" method="post">
+                <form asp-action="SignUp" asp-controller="Account" asp-area="" method="post">
                     <div class="header-text mb-4">
                         <h2>SignUp Here</h2>
                         <p>Make the most of your professional life.</p>
@@ -63,7 +63,7 @@
                     <div class="input-group mb-3">
                         <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Submit</button>
                     </div>
-                    <small style="color: red; font-weight: bold">@ViewBag.Message</small>
+                    <small style="color: red; font-weight: bold">@ViewBag.DuplicateEmailEntry</small>
                     @* <div class="input-group mb-3">
                     <button class="btn btn-lg btn-light w-100 fs-6 "><img src="images/google.png" style="width:20px" class="me-2"><small>Sign In with Google</small></button>
                     </div> *@
