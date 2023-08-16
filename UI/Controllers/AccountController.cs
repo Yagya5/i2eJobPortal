@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using DomainModel.Users;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Services.Users;
@@ -39,7 +40,8 @@ namespace UI.Controllers
                     var Identity = new ClaimsIdentity(new[]{
                        new Claim(ClaimTypes.Name, result.FirstName),
                        new Claim(ClaimTypes.Email, result.Email),
-                       new Claim(ClaimTypes.Role, result.RoleName)
+                       new Claim(ClaimTypes.Role, result.RoleName),
+                       new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString())
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     var Principal = new ClaimsPrincipal(Identity);
@@ -54,7 +56,8 @@ namespace UI.Controllers
                     var Identity = new ClaimsIdentity(new[]{
                        new Claim(ClaimTypes.Name, result.FirstName),
                        new Claim(ClaimTypes.Email, result.Email),
-                       new Claim(ClaimTypes.Role, result.RoleName)
+                       new Claim(ClaimTypes.Role, result.RoleName),
+                       new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString())
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     var Principal = new ClaimsPrincipal(Identity);
@@ -74,7 +77,8 @@ namespace UI.Controllers
                     var Identity = new ClaimsIdentity(new[]{
                        new Claim(ClaimTypes.Name, result.FirstName),
                        new Claim(ClaimTypes.Email, result.Email),
-                       new Claim(ClaimTypes.Role, result.RoleName)
+                       new Claim(ClaimTypes.Role, result.RoleName),
+                       new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString())
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     var Principal = new ClaimsPrincipal(Identity);
@@ -103,10 +107,13 @@ namespace UI.Controllers
             var result = _UserServices.JobSeekerSignUp(FirstName, LastName, Email, Password);
             if(result == true)
             {
+                int UserId = _UserServices.GetRecentSignedUp_UserId(Email);
+
                 var Identity = new ClaimsIdentity(new[]{
                        new Claim(ClaimTypes.Name, FirstName),
                        new Claim(ClaimTypes.Email,Email),
-                       new Claim(ClaimTypes.Role, "Job Seeker")
+                       new Claim(ClaimTypes.Role, "Job Seeker"),
+                       new Claim(ClaimTypes.NameIdentifier, UserId.ToString())
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 var Principal = new ClaimsPrincipal(Identity);

@@ -33,6 +33,15 @@ namespace Repository.Users
             return result;
         }
 
+        public int GetRecentSignedUp_UserId(string Email)
+        {
+            var result = new User();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "select UserId from v_Users where Email='" + Email + "'";
+            result = connection.QueryFirstOrDefault<User>(Query, null, null, 0, null);
+            return result.UserId;
+        }
+
         public IEnumerable<User> GetUsers()
         {
             IEnumerable<User> result = new List<User>();

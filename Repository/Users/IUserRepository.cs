@@ -15,5 +15,7 @@ namespace Repository.Users
         User AuthenticateUser(string Email, string Password);
 
         bool JobSeekerSignUp(string FirstName, string LastName, string Email, string Password);
+
+        int GetRecentSignedUp_UserId(string Email);
     }
 }

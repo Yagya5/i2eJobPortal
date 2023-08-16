@@ -23,6 +23,12 @@ namespace Services.Users
             return result;
         }
 
+        public int GetRecentSignedUp_UserId(string Email)
+        {
+            int result = _UserRepository.GetRecentSignedUp_UserId(Email);
+            return result;
+        }
+
         public IEnumerable<User> GetUsers()
         {
             var result = _UserRepository.GetUsers();
