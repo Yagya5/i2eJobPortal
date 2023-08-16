@@ -42,6 +42,9 @@ namespace i2eJobPortal
             builder.Services.AddTransient<IRegisteredJobSeekersRepository, RegisteredJobSeekersRepository>();
             builder.Services.AddTransient<IRegisteredJobSeekersServices, RegisteredJobSeekersServices>();
 
+            builder.Services.AddTransient<IEditUserFullDetailsRepository, EditUserFullDetailsRepository>();
+            builder.Services.AddTransient<IEditUserFullDetailsServices, EditUserFullDetailsServices>();
+
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
             var app = builder.Build();
