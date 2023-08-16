@@ -1,9 +1,12 @@
 ﻿using DomainModel.Users;
+using DomainModel.LoginModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Users;
 using System.Security.Claims;
+using DomainModel.AuditLogins;
 
 namespace UI.Controllers
 {
@@ -24,17 +27,29 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string Email, string Password)
+        public IActionResult Login(Login Obj)
         {
-            if(string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
+            if(string.IsNullOrEmpty(Obj.Email) || string.IsNullOrEmpty(Obj.Password))
             {                
                 return RedirectToAction("Login");
             }
 
-            var result =  _UserServices.AuthenticateUser(Email, Password);
+            var result =  _UserServices.AuthenticateUser(Obj.Email, Obj.Password);
 
             if(result != null)
             {
+
+                AuditLogin newLogin = new AuditLogin() 
+                {
+                    FirstName = result.FirstName,
+                    LastName = result.LastName,
+                    Email = result.Email,
+                    UserId = result.UserId,
+                    RoleId = result.RoleId,   
+                };
+                
+                _UserServices.AuditUserLogin(newLogin);
+
                 if(result.RoleName == "Super Admin")
                 {
                     var Identity = new ClaimsIdentity(new[]{
@@ -46,7 +61,13 @@ namespace UI.Controllers
 
                     var Principal = new ClaimsPrincipal(Identity);
 
-                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        ExpiresUtc = DateTime.Now.AddDays(3),
+                        IsPersistent = Obj.RememberMe
+                    };
+
+                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
 
                     return RedirectToAction("MyProfile", "AdminDashboard", new { area = "Admin" });
                 }
@@ -64,7 +85,8 @@ namespace UI.Controllers
 
                     var authProperties = new AuthenticationProperties
                     {
-                        ExpiresUtc = DateTime.Now.AddMinutes(1),
+                        ExpiresUtc = DateTime.Now.AddDays(3),
+                        IsPersistent = Obj.RememberMe
                     };
 
                     var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
@@ -83,7 +105,13 @@ namespace UI.Controllers
 
                     var Principal = new ClaimsPrincipal(Identity);
 
-                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        ExpiresUtc = DateTime.Now.AddDays(3),
+                        IsPersistent = Obj.RememberMe
+                    };
+
+                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
 
                     return RedirectToAction("MyProfile", "UserDashboard");
                 }
@@ -116,7 +144,7 @@ namespace UI.Controllers
                        new Claim(ClaimTypes.NameIdentifier, UserId.ToString())
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                var Principal = new ClaimsPrincipal(Identity);
+                var Principal = new ClaimsPrincipal(Identity);                
 
                 var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal);
 

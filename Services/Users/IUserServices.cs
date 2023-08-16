@@ -1,4 +1,5 @@
-﻿using DomainModel.Users;
+﻿using DomainModel.AuditLogins;
+using DomainModel.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,9 @@ namespace Services.Users
         bool JobSeekerSignUp(string FirstName, string LastName, string Email, string Password);
 
         int GetRecentSignedUp_UserId(string Email);
+
+        bool AuditUserLogin(AuditLogin model);
+
+        IEnumerable<AuditLogin> GetRecentLogins();
     }
 }
