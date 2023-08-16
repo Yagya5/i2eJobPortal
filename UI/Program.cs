@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Repository.AppliedJobs;
 using Repository.Connection;
 using Repository.Users;
+using Services.AppliedJobs;
+using Services.RegisteredJobSeekers;
 using Services.Users;
 
 namespace i2eJobPortal
@@ -29,6 +32,14 @@ namespace i2eJobPortal
             builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserServices, UserServices>();
+
+            builder.Services.AddTransient<IRegisteredJobSeekersRepository, RegisteredJobSeekersRepository>();
+            builder.Services.AddTransient<IRegisteredJobSeekersServices, RegisteredJobSeekersServices>();
+
+
+
+            builder.Services.AddTransient<IAppliedJobsRepository, AppliedJobsRepository>();
+            builder.Services.AddTransient<IAppliedJobsServices, AppliedJobsServices>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
