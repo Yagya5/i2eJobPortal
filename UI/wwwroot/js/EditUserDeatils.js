@@ -14,6 +14,10 @@
                             disabled: false,
                             /*value: null,*/
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'FirstName is required',
+                        }],
                         label: {
                             template: labelTemplate('user'),
                         },
@@ -24,6 +28,10 @@
                         editorOptions: {
                             disabled: false,
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'LastName is required',
+                        }],
                         label: {
                             template: labelTemplate('user'),
                         },
@@ -53,6 +61,10 @@
                             disabled: false,
                             width: '100%'
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'BirthDate is required',
+                        }],
                         label: {
                             template: labelTemplate('event'),
                         },
@@ -63,6 +75,10 @@
                         editorOptions: {
                             disabled: false,
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'BirthDate is required',
+                        }],
                         label: {
                             template: labelTemplate('home'),
                         },
@@ -73,6 +89,10 @@
                         editorOptions: {
                             disabled: false,
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'BirthDate is required',
+                        }],
                         label: {
                             template: labelTemplate('home'),
                         },
@@ -80,6 +100,10 @@
 
                     {
                         dataField: 'Address',
+                        validationRules: [{
+                            type: 'required',
+                            message: 'Skills is required',
+                        }],
                         label: {
                             template: labelTemplate('home'),
                         },
@@ -91,6 +115,10 @@
                             mask: '+1 (X00) 000-0000',
                             maskRules: { X: /[02-9]/ },
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'BirthDate is required',
+                        }],
                         label: {
                             template: labelTemplate('tel'),
                         },
@@ -166,6 +194,10 @@
                             disabled: false,
                             /*value: null,*/
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'Skills is required',
+                        }],
                         label: {
                             template: labelTemplate('info'),
                         },
@@ -218,6 +250,10 @@
                             height: 90,
                             maxLength: 200,
                         },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'CoverLetter is required',
+                        }],
                         label: {
                             template: (data, element) => {
                                 const lineBreak = '<br>';
@@ -278,6 +314,10 @@
                                 }
                             }
                         },
+                        //validationRules: [{
+                        //    type: 'required',
+                        //    message: 'Resume is required',
+                        //}],
                     },
 
 
@@ -295,14 +335,14 @@
         </div>`);
         }
 
-        if (_datasource.ResumeUrl != '')
+        if (_datasource.ResumeUrl != null)
         {
             $('#form').append(`<div>Uploaded Resume: 
-        <div id="pdfContainer">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <embed id="pdfEmbed" src="${_datasource.ResumeUrl}"  type="application/pdf" style="width:300px; height:100px; border: 2px solid black;">
-        </div></div>`);
+            <div id="pdfContainer">
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp;
+                <embed id="pdfEmbed" src="${_datasource.ResumeUrl}"  type="application/pdf" style="width:300px; height:100px; border: 2px solid black;">
+            </div></div>`);
 
         }
 
@@ -376,8 +416,14 @@
             data: { "id" : userId },
             success: function (ResponseData) {
                 const user = ResponseData[0];
-                user.ProfilePictureUrl = user.ProfilePicture;
-                user.ResumeUrl = user.Resume;
+                if (user.ProfilePicture != null) {
+                    user.ProfilePictureUrl = user.ProfilePicture;
+                }
+
+                if (user.Resume != null) {
+                    user.ResumeUrl = user.Resume;
+                }
+
                 user.ProfilePicture = '';
                 user.Resume = ''
                 
