@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdminDashboard.cshtml";
+    ViewData["Title"] = "Registered JobSeeker";
+}
+
+
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-color: rgb(245, 248, 251);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 50px !important;
+        font-weight: 600 !important;
+        background-image: radial-gradient(circle, #ed0909, #50322c);
+        color: transparent;
+        -webkit-background-clip: text;
+        line-height: 1.3 !important;
+    }
+
+    .dx-link-edit, .dx-link-delete {
+        text-decoration: none !important;
+        color: blue !important;
+    }
+
+    .dx-link-delete {
+        display: block !important;
+        margin-top: 10px;
+    }
+
+    .dx-datagrid-action, .dx-datagrid-drag-action {
+        background-color: bisque;
+        color: black;
+        font-weight: bold;
+    }
+
+    .dx-icon-edit-button-addrow {
+        color: white !important;
+    }
+
+    .dx-datagrid-addrow-button {
+        background-color: green !important;
+    }
+
+    img {
+        /* height: 100px; */
+        width: 100px;
+    }
+
+    td {
+        word-wrap: break-word !important;
+        text-align: center !important;
+    }
+
+    .btn-primary{
+        color: white!important;
+    }
+
+</style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- DevExtreme theme -->
+<link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/23.1.3/css/dx.light.css">
+
+<!-- DevExtreme library -->
+<script type="text/javascript" src="https://cdn3.devexpress.com/jslib/23.1.3/js/dx.all.js"></script>
+
+<script src="~/js/RegisteredJobSeekers.js"></script>
+
+
+<h1>JobSeekers Management</h1>
+
+<body class="dx-viewport">
+
+    <div id="dataGrid">
+    </div>
+
+</body>
+

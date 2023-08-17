@@ -11,6 +11,11 @@
     <style>
         .nav-link {
             font-weight: bold;
+            /* color: black !important; */
+        }
+
+        a{
+            color: black !important;
         }
 
         .footerBackground {
@@ -25,6 +30,11 @@
         .footerLogoSection {
             padding: 30px;
         }
+
+        .dx-theme-generic-typography {
+            font-size: 16px !important;
+        }
+
     </style>
 </head>
 <body>
@@ -41,24 +51,43 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
+
+                                               
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="AdminDashboard" asp-action="MyProfile">My Profile</a>
                         </li>
+
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="RegisteredJobSeekers" asp-action="Index">JobSeekers Management</a>
                         </li>
+
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Jobs">Jobs</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Job" asp-action="Index">Jobs Management</a>
                         </li>
+
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
+                            <a class="nav-link" asp-area="Admin" asp-controller="JobApplications" asp-action="Index">Job Applications</a>
+                        </li>  
+
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Signup">Signup</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="AboutUs" asp-action="Index">About Us</a>
                         </li>
+
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="ContactUs" asp-action="Index">Contact Us</a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Hi, @User.Identity.Name [User Id : @User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value] <span class="badge rounded-pill bg-primary">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</span>  !</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a asp-controller="" asp-action="" class="dropdown-item">Link 1</a>
+                                <a asp-controller="" asp-action="" class="dropdown-item">Link 2</a>
+                                <div class="dropdown-divider"></div>
+                                <a  asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+
+                                           
                     </ul>
                 </div>
 
@@ -89,8 +118,7 @@
             </div>            
         </div>
     </footer> *@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

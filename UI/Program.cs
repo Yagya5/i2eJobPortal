@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Repository.AppliedJobs;
+using Microsoft.Extensions.Options;
 using Repository.Connection;
+using Repository.RegisteredJobSeekers;
 using Repository.Users;
-using Services.AppliedJobs;
 using Services.RegisteredJobSeekers;
 using Services.Users;
 
@@ -27,7 +27,13 @@ namespace i2eJobPortal
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.Cookie.Name = "Cookie";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(25);
+                options.SlidingExpiration = true;
+                
+            });
 
             builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
             builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -35,11 +41,6 @@ namespace i2eJobPortal
 
             builder.Services.AddTransient<IRegisteredJobSeekersRepository, RegisteredJobSeekersRepository>();
             builder.Services.AddTransient<IRegisteredJobSeekersServices, RegisteredJobSeekersServices>();
-
-
-
-            builder.Services.AddTransient<IAppliedJobsRepository, AppliedJobsRepository>();
-            builder.Services.AddTransient<IAppliedJobsServices, AppliedJobsServices>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -90,7 +91,7 @@ namespace i2eJobPortal
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=User}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
 
             });

@@ -1,99 +1,75 @@
-﻿
+﻿@model DomainModel.LoginModel.Login
+
 @{
-    Layout = null;
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<link rel="stylesheet" href="~/css/loginPage.css">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+<!----------------------- Main Container -------------------------->
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <!----------------------- Login Container -------------------------->
+    <div class="row border rounded-5 p-3 bg-white shadow box-area">
+        <!--------------------------- Left Box ----------------------------->
+        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #103cbe;">
+            <div class="featured-image mb-3">
+                <img src="~/Images/Login_Page_Image.png" class="img-fluid" style="width: 400px;">
+            </div>
+            <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be Verified</p>
+            <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Wherever you are in your professional journey, come innovate with us.</small>
+        </div>
+        <!-------------------- ------ Right Box ---------------------------->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="col-md-6 right-box">
+            <div class="row align-items-center">
 
-    
-  
-
-    <style>
-        a {
-            text-decoration: none;
-        }
-
-        .login-page {
-            width: 100%;
-            height: 100vh;
-            display: inline-block;
-            display: flex;
-            align-items: center;
-        }
-
-        .form-right i {
-            font-size: 100px;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-page bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <h3 class="mb-3">Login</h3>
-                    <div class="bg-white shadow rounded">
-                        <div class="row">
-                            <div class="col-md-7 pe-0">
-                                <div class="form-left h-100 py-5 px-5">
-                                    <form action="" class="row g-4">
-                                        <div class="col-12">
-                                            <label>Email<span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                
-                                                <input type="text" class="form-control" placeholder="Enter Email Address">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <label>Password<span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                
-                                                <input type="text" class="form-control" placeholder="Enter Password">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="inlineFormCheck">
-                                                <label class="form-check-label" for="inlineFormCheck">Remember me</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <a href="#" class="float-end text-primary">New User? Click here for Sign Up</a>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <button type="submit" class="btn btn-primary px-4 float-end mt-4">login</button>
-                                            <button type="reset" class="btn btn-primary px-4 float-end mt-4" style="margin-right:10px !important">Reset</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-md-5 ps-0 d-none d-md-block">
-                                <div class="form-right h-100 bg-primary text-white text-center pt-5">
-                                    <i class="bi bi-bootstrap"></i>
-                                    <h2 class="fs-1" style="margin-top: 50px">Welcome<br /> to <br />Job Portal!!!</h2>
-                                </div>
-                            </div>
-                        </div>
+                <form method="post">
+                    <div class="header-text mb-4">
+                        <h2>Login Here</h2>
+                        <p>We are happy to have you back.</p>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" asp-for="Email"  class="form-control form-control-lg bg-light fs-6" placeholder="Email address" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" asp-for="Password"  class="form-control form-control-lg bg-light fs-6" placeholder="Password" required>
                     </div>
                     
+
+                    <div class="input-group mb-5 d-flex justify-content-between" style="margin-bottom: 2rem !important;">
+
+                        <div class="form-check">
+
+                            <input type="checkbox" class="form-check-input" id="formCheck" asp-for="RememberMe">
+                            <label asp-for="RememberMe"  for="formCheck" class="form-check-label"><small>Remember Me</small></label>
+                        </div>
+
+                        @*  <div class="forgot">
+                        <small><a href="#">Forgot Password?</a></small>
+                        </div> *@
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Login</button>
+                    </div>
+                    <small style="color: red; font-weight: bold">@ViewBag.Message</small>
+                    @* <div class="input-group mb-3">
+                    <button class="btn btn-lg btn-light w-100 fs-6 "><img src="images/google.png" style="width:20px" class="me-2"><small>Sign In with Google</small></button>
+                    </div> *@
+                    <div class="row" style="margin-bottom:35px;">
+                        <h6>Don't have account? <a asp-controller="Account" asp-action="Signup">Sign Up Here</a></h6>
+                    </div>
+                </form>
+                <div class="input-group mb-3" style="visibility:hidden">
+                    <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="Password" required>
                 </div>
+                <div class="input-group mb-3" style="visibility: hidden">
+                    <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="Password" required>
+                </div>
+
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+
