@@ -42,7 +42,7 @@ namespace Repository.EditAdminFullDetails
                 ProfilePicture = adminDetails.ProfilePicture
 
             };
-            var result = connection.Query<DomainModel.EditAdminFullDetails.EditAdminFullDetails>("spUpdateUserDetails", para, commandType: CommandType.StoredProcedure);
+            var result = connection.Query<DomainModel.EditAdminFullDetails.EditAdminFullDetails>("spUpdateAdminDetails", para, commandType: CommandType.StoredProcedure);
             if (result != null && result.FirstOrDefault().Response == "Update Sucessfully")
             {
                 return "Update Sucessfully";
