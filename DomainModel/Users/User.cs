@@ -39,5 +39,7 @@ namespace DomainModel.Users
 
         public string? RoleName { get; set; }
 
+        public bool? Is_CreatedBySignUp { get; set; }
+
     }
 }
