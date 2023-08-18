@@ -77,7 +77,7 @@
                         },
                         validationRules: [{
                             type: 'required',
-                            message: 'BirthDate is required',
+                            message: 'State is required',
                         }],
                         label: {
                             template: labelTemplate('home'),
@@ -91,7 +91,7 @@
                         },
                         validationRules: [{
                             type: 'required',
-                            message: 'BirthDate is required',
+                            message: 'City is required',
                         }],
                         label: {
                             template: labelTemplate('home'),
@@ -102,7 +102,7 @@
                         dataField: 'Address',
                         validationRules: [{
                             type: 'required',
-                            message: 'Skills is required',
+                            message: 'Address is required',
                         }],
                         label: {
                             template: labelTemplate('home'),
@@ -117,7 +117,7 @@
                         },
                         validationRules: [{
                             type: 'required',
-                            message: 'BirthDate is required',
+                            message: 'PhoneNumber is required',
                         }],
                         label: {
                             template: labelTemplate('tel'),
@@ -145,7 +145,7 @@
                         },
                         validationRules: [{
                             type: 'required',
-                            message: 'bachelor is required',
+                            message: 'Bachelors is required',
                         }],
                         label: {
                             template: labelTemplate('info'),
@@ -162,7 +162,7 @@
                         },
                         validationRules: [{
                             type: 'required',
-                            message: 'bachelor is required',
+                            message: 'Masters is required',
                         }],
 
                         label: {
