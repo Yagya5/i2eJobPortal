@@ -60,8 +60,9 @@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <img id="profileImage" src="#" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid black;" />
-                                <span class="badge rounded-pill bg-primary">
-                                    Hi @User.Identity.Name <br> @User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value
+                                <span class="badge rounded-pill" style="background-color: white; color: black;">
+                                    <span id="firstNameSpan"></span><br />
+                                    @User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -118,8 +119,11 @@
                     success: function (ResponseData) {
                         const user = ResponseData[0];
                         console.log(user.ProfilePicture);
+                        console.log(user.FirstName)
                         const profileImageElement = document.getElementById("profileImage");
                         profileImageElement.src = user.ProfilePicture; // Set the src attribute
+                        const firstNameSpan = document.getElementById("firstNameSpan");
+                        firstNameSpan.textContent = "Hi " + user.FirstName; // Set the content of the span
                     },
                     error: function (err) {
                         alert(err);
