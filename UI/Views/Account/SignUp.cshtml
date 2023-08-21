@@ -5,6 +5,7 @@
 }
 
 <link rel="stylesheet" href="~/css/loginPage.css">
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
 
 <!----------------------- Main Container -------------------------->
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -23,28 +24,28 @@
         <div class="col-md-6 right-box">
             <div class="row align-items-center">
 
-                <form asp-action="SignUp" asp-controller="Account" asp-area="" method="post">
+                <form method="post" id="SignUpForm">
                     <div class="header-text mb-4">
                         <h2>SignUp Here</h2>
                         <p>Make the most of your professional life.</p>
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="First Name" name="FirstName" required>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="First Name" name="FirstName" id="FirstName">
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Last Name" name="LastName" required>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Last Name" name="LastName" id="LastName">
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address" name="Email" required>
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Email address" name="Email" id="Email">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="Password" required>
+                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="Password" id="Password">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Confirm Password" required>
+                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="ConfirmPassword" id="ConfirmPassword">
                     </div>
 
                     @* <div class="input-group mb-5 d-flex justify-content-between" style="margin-bottom: 2rem !important;">
@@ -63,7 +64,7 @@
                     <div class="input-group mb-3">
                         <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Submit</button>
                     </div>
-                    <small style="color: red; font-weight: bold">@ViewBag.DuplicateEmailEntry</small>
+                    <small style="color: red; font-weight: bold; display:none" id="errorSpan">@ViewBag.DuplicateEmailEntry</small>
                     @* <div class="input-group mb-3">
                     <button class="btn btn-lg btn-light w-100 fs-6 "><img src="images/google.png" style="width:20px" class="me-2"><small>Sign In with Google</small></button>
                     </div> *@
@@ -78,3 +79,6 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/signupvalidations.js"></script>
