@@ -118,7 +118,7 @@ namespace UI.Controllers
 
             }
 
-            ViewBag.Message = "Please enter valid Email or Password !!!";
+            ViewBag.Message = "Incorrect Email or Password !!!";
             return View();
         }
 
