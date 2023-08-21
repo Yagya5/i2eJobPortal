@@ -54,8 +54,8 @@ namespace UI.Controllers
 
             string result = string.Empty;
             result = _EditUserFullDetailServices.UpdateProfileDetails(userDetails);
-
-            return View(userDetails);
+            userDetails.Response = result;
+            return Ok(userDetails);
         }
 
 

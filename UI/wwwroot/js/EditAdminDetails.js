@@ -220,7 +220,7 @@
                     },
                     success: function (ResponseData) {
                         // Optionally, you can show a success message or perform other actions on success
-                        console.log('User data updated successfully');
+                        console.log('Data updated successfully');
                     },
                     error: function (err) {
                         // Handle the error if any

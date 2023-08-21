@@ -45,8 +45,8 @@ namespace UI.Areas.Admin.Controllers
 
             string result = string.Empty;
             result = _EditAdminFullDetailServices.UpdateProfileDetails(adminDetails);
-
-            return View(adminDetails);
+            adminDetails.Response = result;
+            return Ok(adminDetails);
         }
 
         public async Task<IActionResult> UploadProfilePicture(IFormFile profilePicture)
