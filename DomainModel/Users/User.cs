@@ -11,17 +11,17 @@ namespace DomainModel.Users
     {
         public int UserId { get; set; }
 
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         public string? Gender { get; set; }
 
         public DateTime BirthDate { get; set; }
 
-        public string? Password { get; set; }
+        public string Password { get; set; }
 
         public string? PhoneNumber { get; set; }
 
@@ -38,6 +38,8 @@ namespace DomainModel.Users
         public bool Is_Active { get; set; }
 
         public string? RoleName { get; set; }
+
+        public bool? Is_CreatedBySignUp { get; set; }
 
     }
 }

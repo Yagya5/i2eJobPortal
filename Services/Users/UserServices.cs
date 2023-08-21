@@ -1,4 +1,5 @@
-﻿using DomainModel.Users;
+﻿using DomainModel.AuditLogins;
+using DomainModel.Users;
 using Repository.Users;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,27 @@ namespace Services.Users
             _UserRepository = UserRepository;    
         }
 
+        public bool AuditUserLogin(AuditLogin model)
+        {
+            var result = _UserRepository.AuditUserLogin(model);
+            return result;
+        }
+
         public User AuthenticateUser(string Email, string Password)
         {
            var result =  _UserRepository.AuthenticateUser(Email, Password);
+            return result;
+        }
+
+        public IEnumerable<AuditLogin> GetRecentLogins()
+        {
+            var result = _UserRepository.GetRecentLogins();
+            return result;
+        }
+
+        public int GetRecentSignedUp_UserId(string Email)
+        {
+            int result = _UserRepository.GetRecentSignedUp_UserId(Email);
             return result;
         }
 

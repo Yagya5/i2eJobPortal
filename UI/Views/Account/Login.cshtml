@@ -1,9 +1,14 @@
-﻿@{
+﻿@model DomainModel.LoginModel.Login
+
+@{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="~/css/loginPage.css">
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+
+
 
 <!----------------------- Main Container -------------------------->
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -22,16 +27,16 @@
         <div class="col-md-6 right-box">
             <div class="row align-items-center">
 
-                <form asp-action="Login" asp-controller="Account" asp-area="" method="post">
+                <form method="post" id="LoginForm">
                     <div class="header-text mb-4">
                         <h2>Login Here</h2>
                         <p>We are happy to have you back.</p>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address" name="Email" required>
+                        <input type="text" asp-for="Email" id="Email"  class="form-control form-control-lg bg-light fs-6" placeholder="Email address">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="Password" required>
+                        <input type="password" asp-for="Password" id="Password"  class="form-control form-control-lg bg-light fs-6" placeholder="Password">
                     </div>
                     
 
@@ -39,8 +44,8 @@
 
                         <div class="form-check">
 
-                            <input type="checkbox" class="form-check-input" id="formCheck">
-                            <label for="formCheck" class="form-check-label"><small>Remember Me</small></label>
+                            <input type="checkbox" class="form-check-input" id="formCheck" asp-for="RememberMe">
+                            <label asp-for="RememberMe"  for="formCheck" class="form-check-label"><small>Remember Me</small></label>
                         </div>
 
                         @*  <div class="forgot">
@@ -51,7 +56,7 @@
                     <div class="input-group mb-3">
                         <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Login</button>
                     </div>
-                    <small style="color: red; font-weight: bold">@ViewBag.Message</small>
+                    <h6 style="color: red; font-weight: bold; display:none" id="errorSpan">@ViewBag.Message</h6>
                     @* <div class="input-group mb-3">
                     <button class="btn btn-lg btn-light w-100 fs-6 "><img src="images/google.png" style="width:20px" class="me-2"><small>Sign In with Google</small></button>
                     </div> *@
@@ -70,4 +75,8 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/loginvalidations.js"></script>
 
