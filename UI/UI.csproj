@@ -23,4 +23,14 @@
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DatabaseScripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\AdminProfile\" />
+    <Folder Include="wwwroot\UserResume\" />
+    <Folder Include="wwwroot\UserProfile\" />
+  </ItemGroup>
+
 </Project>

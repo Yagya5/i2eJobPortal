@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using DomainModel.AuditLogins;
+using DomainModel.Common;
 using DomainModel.Users;
 using Repository.Connection;
 using System;
@@ -36,7 +37,7 @@ namespace Repository.Users
             param.Add(nameof(AuditLogin.UserId), model.UserId);
             param.Add(nameof(AuditLogin.RoleId), model.RoleId);            
 
-            connection.Execute("spAuditUserLogin", param, null, 0, CommandType.StoredProcedure);
+            connection.Execute(Constant.AuditUserLoginStoredProcedure, param, null, 0, CommandType.StoredProcedure);
             return true;
         }
 
@@ -44,7 +45,7 @@ namespace Repository.Users
         {
             var result = new User();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "select * from v_Users where Email='"+Email+"' and Password = '"+Password+"'";
+            string Query = "select * from "+Constant.GetAllUsersViewName+" where Email='"+Email+"' and Password = '"+Password+"'";
             result = connection.QueryFirstOrDefault<User>(Query,null,null,0,null);
             return result;
         }

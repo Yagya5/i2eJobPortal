@@ -97,7 +97,7 @@
             {
                 dataField: "PhoneNumber",
                 caption: "Phone Number",
-                validationRules: [{ type: "required" }],
+                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
 
             },
@@ -105,7 +105,7 @@
             {
                 dataField: "State",
                 caption: "State",
-                validationRules: [{ type: "required" }],
+                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 groupIndex: 0
             },
@@ -115,7 +115,7 @@
             {
                 dataField: "City",
                 caption: "City",
-                validationRules: [{ type: "required" }],
+                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 groupIndex: 0
             },
@@ -123,20 +123,20 @@
             {
                 dataField: "Address",
                 caption: "Address",
-                validationRules: [{ type: "required" }],
+                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
             },
             {
                 dataField: "Gender",
                 caption: "Gender",
-                validationRules: [{ type: "required" }],
+                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
             },
 
             {
                 dataField: "BirthDate",
                 caption: "BirthDate",
-                validationRules: [{ type: "required" }],
+                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 cellTemplate: function (container, options) {
                     var birthDate = new Date(options.value);
