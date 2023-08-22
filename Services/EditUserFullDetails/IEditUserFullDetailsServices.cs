@@ -11,6 +11,9 @@ namespace Services.RegisteredJobSeekers
 {
     public interface IEditUserFullDetailsServices
     {
+        IEnumerable<EditUserFullDetails> GetCityList(string state);
+        IEnumerable<EditUserFullDetails> GetCountryList();
+        IEnumerable<EditUserFullDetails> GetStateList(string country);
         IEnumerable<EditUserFullDetails> GetUserFullDetails(int id);
         string UpdateProfileDetails(EditUserFullDetails userDetails);
 

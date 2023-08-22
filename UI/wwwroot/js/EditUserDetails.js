@@ -41,7 +41,7 @@
                         dataField: 'Gender',
                         editorType: 'dxSelectBox',
                         editorOptions: {
-                            items: [ 'Male', 'Female'],
+                            items: ['Male', 'Female'],
                             searchEnabled: true,
                             /*value: '',*/
                         },
@@ -71,30 +71,58 @@
                     },
 
                     {
-                        dataField: 'State',
+                        dataField: 'Country',
+                        editorType: 'dxSelectBox',
                         editorOptions: {
-                            disabled: false,
+                            items: _datasource.CountryList,
+                            searchEnabled: true,
+                            onValueChanged: function (e) {
+                                LoadState(e.value);
+                            }
+                        },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'Country is required',
+                        }],
+                        label: {
+                            template: labelTemplate('info'),
+                        },
+                    },
+
+                    {
+                        dataField: 'State',
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            items: _datasource.StateList,
+                            searchEnabled: true,
+                            onValueChanged: function (e)
+                            {
+                                LoadCity(e.value);
+                            }
                         },
                         validationRules: [{
                             type: 'required',
                             message: 'State is required',
                         }],
                         label: {
-                            template: labelTemplate('home'),
+                            template: labelTemplate('info'),
                         },
                     },
 
                     {
                         dataField: 'City',
+                        editorType: 'dxSelectBox',
                         editorOptions: {
-                            disabled: false,
+                            items: _datasource.CityList,
+                            searchEnabled: true,
+                            
                         },
                         validationRules: [{
                             type: 'required',
                             message: 'City is required',
                         }],
                         label: {
-                            template: labelTemplate('home'),
+                            template: labelTemplate('info'),
                         },
                     },
 
@@ -139,7 +167,7 @@
                         dataField: 'Bachelors',
                         editorType: 'dxSelectBox',
                         editorOptions: {
-                            items: ["BTECH","BCA","BSC"],
+                            items: ["BTECH", "BCA", "BSC"],
                             searchEnabled: true,
                             /*value: '',*/
                         },
@@ -174,7 +202,7 @@
                         dataField: 'Experience',
                         editorType: 'dxSelectBox',
                         editorOptions: {
-                            items: [1, 2, 3, 4, 5, 6, 7, 8, 9 , 10],
+                            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                             searchEnabled: true,
                             /*value: '',*/
                         },
@@ -272,10 +300,7 @@
                                 }).appendTo(element);
                             },
                         },
-                    }, 
-
-
-                    
+                    },
 
                     {
                         dataField: 'Resume',
@@ -335,8 +360,7 @@
         </div>`);
         }
 
-        if (_datasource.ResumeUrl != null)
-        {
+        if (_datasource.ResumeUrl != null) {
             $('#form').append(`<div>Uploaded Resume: 
             <div id="pdfContainer">
                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -346,7 +370,7 @@
 
         }
 
-       
+
 
 
         $('#form').append('<br /><div id="updateButton"></div>');
@@ -356,8 +380,6 @@
             onClick: function () {
                 // Get the updated form data
                 const updatedData = $('#form').dxForm('instance').option('formData');
-
-
 
                 // Send the updated data to the server
                 $.ajax({
@@ -373,6 +395,7 @@
                         "Address": updatedData.Address,
                         "City": updatedData.City,
                         "State": updatedData.State,
+                        "Country": updatedData.Country,
                         "PhoneNumber": updatedData.PhoneNumber,
                         "Email": updatedData.Email,
                         "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
@@ -389,6 +412,7 @@
                     success: function (ResponseData) {
                         // Optionally, you can show a success message or perform other actions on success
                         console.log('Data updated successfully');
+                        LoadRecords();
                     },
                     error: function (err) {
                         // Handle the error if any
@@ -408,39 +432,113 @@
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
 
-    function LoadRecords() {
-        console.log(userId)
-        $.ajax({
-            url: "/EditUserFullDetails/GetUserDetails",
-            method: "GET",
-            data: { "id" : userId },
-            success: function (ResponseData) {
-                const user = ResponseData[0];
-                if (user.ProfilePicture != null) {
-                    user.ProfilePictureUrl = user.ProfilePicture;
+    var CountryList = [];
+
+    function LoadCountry() {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditUserFullDetails/GetCountry",
+                method: "GET",
+                success: function (ResponseData) {
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        CountryList.push(value);
+                    }
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
                 }
+            });
+        });
+    }
 
-                if (user.Resume != null) {
-                    user.ResumeUrl = user.Resume;
+    var StateList = [];
+
+    function LoadState(Country) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditUserFullDetails/GetState",
+                data: { country: Country },
+                method: "GET",
+                success: function (ResponseData) {
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        StateList.push(value);
+                    }
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
                 }
-
-                user.ProfilePicture = '';
-                user.Resume = ''
-                
-                ShowUserProfileDetails(user);
+            });
+        });
+    }
 
 
-            },
-            error: function (err) {
-                alert(err);
+    var CityList = [];
+
+    function LoadCity(State) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditUserFullDetails/GetCity",
+                method: "GET",
+                data: { state: State },
+                success: function (ResponseData) {
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        CityList.push(value);
+                    }
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
+                }
+            });
+        });
+    }
+
+    async function LoadRecords() {
+        console.log(userId);
+        try {
+            const response = await $.ajax({
+                url: "/EditUserFullDetails/GetUserDetails",
+                method: "GET",
+                data: { "id": userId }
+            });
+
+            const user = response[0];
+            if (user.ProfilePicture != null) {
+                user.ProfilePictureUrl = user.ProfilePicture;
             }
 
-        })
+            if (user.Resume != null) {
+                user.ResumeUrl = user.Resume;
+            }
+
+            user.ProfilePicture = '';
+            user.Resume = '';
+
+            await LoadCountry(); // Wait for LoadCountry to complete
+            user.CountryList = CountryList;
+
+            await LoadState(user.Country); // Wait for LoadState to complete
+            user.StateList = StateList;
+
+            await LoadCity(user.State); // Wait for LoadCity to complete
+            user.CityList = CityList;
+
+            ShowUserProfileDetails(user);
+        } catch (err) {
+            alert(err);
+        }
     }
 
     LoadRecords();
 
-    
+
+
+
 });
 
 

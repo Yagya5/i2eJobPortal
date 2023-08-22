@@ -30,6 +30,26 @@ namespace UI.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult GetCountry()
+        {
+            var result = _EditUserFullDetailServices.GetCountryList().ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetState(string country)
+        {
+            var result = _EditUserFullDetailServices.GetStateList(country).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetCity(string state)
+        {
+            var result = _EditUserFullDetailServices.GetCityList(state).ToList();
+            return Ok(result);
+        }
 
         [HttpPost]
         public IActionResult UpdateUserDetails(EditUserFullDetails userDetails)
