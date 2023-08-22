@@ -80,6 +80,7 @@ function showJob(dataSource) {
                     "JobTypeValue": e.data.JobTypeValue, // Set to the appropriate dropdown value
                     "JobModeValue": e.data.JobModeValue, // Set to the appropriate dropdown value
                     "JobCurrencyValue": e.data.JobCurrencyValue, // Set to the appropriate dropdown value
+                    "urgentRequirement": e.data.urgentRequirement,
                 },
                 success: function (ResponseData) {
                     LoadRecords();
@@ -105,6 +106,7 @@ function showJob(dataSource) {
                 "JobTypeValue": e.data.JobTypeValue, // Set to the appropriate dropdown value
                 "JobModeValue": e.data.JobModeValue, // Set to the appropriate dropdown value
                 "JobCurrencyValue": e.data.JobCurrencyValue, // Set to the appropriate dropdown value
+                "urgentRequirement": e.data.urgentRequirement,
             };
 
             // Send the data to the server
@@ -170,7 +172,7 @@ function showJob(dataSource) {
             { dataField: "MaxExperience", caption: "Max Experience" },
             { dataField: "Description", caption: "Description" },
             { dataField: "IsActive", caption: "Is Active" },
-            /*  { dataField: "PostDate", caption: "Post Date" },*/
+            { dataField: "urgentRequirement", caption: "Urgent Requirement" },
             { dataField: "Location", caption: "Location" },
 
 

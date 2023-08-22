@@ -25,6 +25,7 @@ namespace DomainModel.Jobs
 
         public DateTime PostDate { get; set; }
         public string? Location { get; set; }
+        public bool urgentRequirement { get; set; }
 
         //These are used to view Table_MasterDetails values for the ids fetched
         public string? JobTypeValue { get; set; }

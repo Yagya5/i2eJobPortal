@@ -69,7 +69,7 @@ namespace Repository.Jobs
             param.Add("IsActive", job_Obj.IsActive);
             param.Add("PostDate", job_Obj.PostDate);
             param.Add("Location", job_Obj.Location);
-
+            param.Add("urgentRequirement", job_Obj.urgentRequirement);
             connection.Execute(Constant.CreateNewJob, param, null, 0, CommandType.StoredProcedure);
             return true;
         }
@@ -124,7 +124,7 @@ namespace Repository.Jobs
             param.Add("Description", job.Description);
             param.Add("IsActive", job.IsActive);
             param.Add("Location", job.Location);
-
+            param.Add("urgentRequirement", job.urgentRequirement);
             connection.Execute(Constant.UpdateAJob, param, null, 0, CommandType.StoredProcedure);
             return true;
         }
