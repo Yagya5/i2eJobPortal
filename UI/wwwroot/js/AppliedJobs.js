@@ -2,9 +2,10 @@
 
 
 
-function ShowEvent(_datasource) {
 
-    
+function ShowEvent(_datasource) {
+    window.jsPDF = window.jspdf.jsPDF;
+
     $("#dataGrid1").dxDataGrid({
 
 
@@ -13,12 +14,16 @@ function ShowEvent(_datasource) {
         allowColumnReordering: true,
         allowColumnResizing: true,
         filterRow: { visible: true },
-        searchPanel: { visible: false },
+
 
         showBorders: true,
         showRowLines: true,
         rowAlternationEnabled: true,
         wordWrapEnabled: true,
+
+        selection: {
+            mode: 'multiple',
+        },
 
         paging: {
             pageSize: 10,
@@ -41,7 +46,9 @@ function ShowEvent(_datasource) {
             mode: "popup",
             allowUpdating: true,
             allowDeleting: true,
-            allowAdding: true
+            allowAdding: false,
+            
+
         },
 
         onContentReady: function () {
@@ -52,7 +59,7 @@ function ShowEvent(_datasource) {
         columns: [
             {
                 dataField: "UserId",
-                caption:"User ID",
+                caption: "User ID",
                 validationRules: [{ type: "required" }],
                 allowEditing: false
             },
@@ -77,51 +84,162 @@ function ShowEvent(_datasource) {
                 allowEditing: false
             },
 
-          
-           
+
+
 
             {
                 dataField: "JobId",
-                caption:"Job ID",
+                caption: "Job ID",
                 validationRules: [{ type: "required" }],
-                 allowEditing: false
+                allowEditing: false
             },
             {
                 dataField: "JobTitle",
-                caption:"Job Title",
+                caption: "Job Title",
                 validationRules: [{ type: "required" }],
-                 allowEditing: false
+                allowEditing: false
             },
             {
                 dataField: "DepartmentName",
                 caption: "Department Name",
                 validationRules: [{ type: "required" }],
-                 allowEditing: false
+                allowEditing: false
             },
             {
                 dataField: "MinExperience",
-                caption:"Min Experience",
+                caption: "Min Experience",
                 validationRules: [{ type: "required" }],
-                 allowEditing: false
+                allowEditing: false
             },
             {
                 dataField: "Location",
-                caption:"Location",
+                caption: "Location",
                 validationRules: [{ type: "required" }],
-                 allowEditing: false
+                allowEditing: false
             },
             {
                 dataField: "ProfilePicture",
-                caption:"Profile Picture",
+                caption: "Profile Picture",
                 validationRules: [{ type: "required" }],
-                 allowEditing: false
+                allowEditing: false
             },
+            //{
+
+            //            caption: "Resume",
+            //            cellTemplate: function (container, options) {
+            //                $("<div>")
+            //                    .addClass("dx-toolbar")
+            //                    .dxToolbar({
+            //                        items: [{
+            //                            location: "after",
+            //                            widget: "dxButton",
+            //                            options: {
+            //                                text: "Show Resume",
+            //                                onClick: function () {
+            //                                    // Handle the button click here
+            //                                    // You can use options.data to access the row data
+            //                                    alert("Show resume for User ID: " + options.data.UserId);
+            //                                    // Add your custom logic to show the resume
+            //                                }
+            //                            }
+            //                        }]
+            //                    })
+            //                    .appendTo(container);
+            //            }
+                    
+                //}
 
 
-        ]
-
+        ],
+    
     });
+    
 }
+
+
+$(function () {
+    const dataGrid = $('#dataGrid1').dxDataGrid({
+        
+        export: {
+            enabled: true,
+            formats: ['xlsx', 'pdf'],
+        },
+        onExporting(e) {
+            if (e.format === 'xlsx') {
+                const workbook = new ExcelJS.Workbook();
+                const worksheet = workbook.addWorksheet('AppliedJobs');
+                DevExpress.excelExporter.exportDataGrid({
+                    component: e.component,
+                    worksheet,
+                    autoFilterEnabled: true,
+                }).then(() => {
+                    workbook.xlsx.writeBuffer().then((buffer) => {
+                        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'AppliedJobs.xlsx');
+                    });
+                });
+            }
+            else if (e.format === 'pdf') {
+                const doc = new jsPDF();
+                DevExpress.pdfExporter.exportDataGrid({
+                    jsPDFDocument: doc,
+                    component: e.component,
+                }).then(() => {
+                    doc.save('AppliedJobs.pdf');
+                });
+            }
+        },
+    }).dxDataGrid('instance');
+});
+
+
+
+
+
+
+
+
+//function exportToPdf() {
+//    const doc = new jsPDF();
+
+//    DevExpress.pdfExporter.exportDataGrid({
+//        jsPDFDocument: doc,
+//        component: $("#dataGrid1").dxDataGrid("instance"),
+//        indent: 5,
+//    }).then(() => {
+//        doc.save('Data.pdf');
+//    }).catch(error => {
+//        console.error('Error during PDF export:', error);
+//    });
+//}
+
+
+
+
+
+   
+    
+
+
+//function exportToExcel(e) {
+//    const workbook = new ExcelJS.Workbook();
+//    const worksheet = workbook.addWorksheet('AppliedJobsData');
+
+//    DevExpress.excelExporter.exportDataGrid({
+//        worksheet: worksheet,
+//        component: e.component,
+        
+//        autoFilterEnabled: true,
+
+//        customizeCell: function (options) {
+//            options.excelCell.font = { name: 'Arial', size: 12 };
+//            options.excelCell.alignment = { horizontal: 'left' };
+//        }
+//    }).then(function () {
+//        workbook.xlsx.writeBuffer().then(function (buffer) {
+//            saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'DataGrid.xlsx');
+//        });
+//    });
+//}
 
 
 
@@ -129,10 +247,10 @@ function LoadRecords() {
     $.ajax({
         url: "/JobApplications/GetAppliedJobs", 
         method: 'GET',
-        success: function (ResponseData) {
-            ShowEvent(ResponseData);
-            alert(response);
-            window.location.reload();
+        success: function (responseData) {
+            ShowEvent(responseData);
+           /* alert(response);*/
+          /*  window.location.reload();*/
             console.log("Hello");
         },
         error: function (err) {
@@ -140,8 +258,31 @@ function LoadRecords() {
         }
     });
 }
-
 $(document).ready(function () {
+    // Load the data
     LoadRecords();
+
+    //// PDF Button
+    //$('#pdfButton').on('click', function () {
+    //    // Check if the data is loaded before exporting
+    //    if ($("#dataGrid1").dxDataGrid("instance").getVisibleRows().length > 0) {
+    //        exportToPdf();
+    //    } else {
+    //        alert("No data to export to PDF.");
+    //    }
+    //});
+
+    //// Excel Button
+    //$('#excelButton').on('click', function () {
+    //    // Check if the data is loaded before exporting
+    //    if ($("#dataGrid1").dxDataGrid("instance").getVisibleRows().length > 0) {
+    //        exportToExcel();
+    //    } else {
+    //        alert("No data to export to Excel.");
+    //    }
+    //});
 });
+
+
+
 

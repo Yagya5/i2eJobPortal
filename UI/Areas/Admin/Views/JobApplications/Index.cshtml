@@ -1,43 +1,95 @@
-﻿ 
-@{
-    Layout = null;
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Applied Jobs</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-}
+    <!-- CSS stylesheets -->
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/23.1.4/css/dx.light.css" />
+    <!-- Add other CSS stylesheets here -->
+    <!-- JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/23.1.4/js/dx.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="~/js/appliedjobs.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .pdfButton, .excelButton {
+            background-color: green;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 18px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .pdfButton {
+            top: 80px; 
+        }
+
+        .excelButton {
+            top: 80px; 
+            right: 230px; 
+        }
+
+        .h1 {
+            text-align: center;
+            font-size: 50px !important;
+            font-weight: 600 !important;
+          /*  background-image: radial-gradient(circle, darkblue, #50322c);
+            color: transparent;
+           /* -webkit-background-clip: text;*/
+            /*line-height: 1.3 !important;*/*/
+        }
+
+        .dx-link-edit, .dx-link-delete {
+            text-decoration: none !important;
+            color: blue !important;
+        }
+
+        .dx-link-delete {
+            display: block !important;
+            margin-top: 10px;
+        }
+
+        #dataGrid1 {
+            margin-top: 100px; 
+           
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+           
+        }
+
+        .dx-datagrid-action, .dx-datagrid-drag-action {
+            background-color: lightgrey;
+            color: black;
+            font-weight: bold;
+        }
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/23.1.3/css/dx.light.css">
-
-<script type="text/javascript" src="https://cdn3.devexpress.com/jslib/23.1.3/js/dx.all.js"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
- 
-<script src="~/js/appliedjobs.js"></script>
-
-
-
-<style>
-    h1 {
-        color: darkblue;
-        text-align: center;
-    }
-</style>
-
-
-<h1>Applied Jobs </h1>
-
-
-
+           
+    </style>
+</head>
 <body class="dx-viewport">
-
-    <div id="dataGrid1">
-    </div>
-
+    <h1 class="h1">Applied Jobs</h1>
+    <button class="pdfButton" id="pdfButton">Download PDF</button>
+    <button class="excelButton" id="excelButton">Download Excel</button>
+    <div id="dataGrid1"></div>
 </body>
- 
-
-<h1>Job Applications</h1>
- 
+</html>

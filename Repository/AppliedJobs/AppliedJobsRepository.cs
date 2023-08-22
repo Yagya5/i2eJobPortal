@@ -55,6 +55,38 @@ namespace Repository.AppliedJobs
 
         }
 
+
+
+        //    public void UpdateAppliedJob(DM_AppliedJobs appliedJob)
+        //    {
+        //        using var connection = _dapperConnection.CreateConnection();
+        //        string query = @"UPDATE v_AppliedJobs
+        //                        SET FirstName = @FirstName,
+        //                            LastName = @LastName,
+        //                            Gender = @Gender,
+        //                            JobId = @JobId,
+        //                            JobTitle=@JobTitle,
+        //                            DepartmentName=@DepartmentName,
+        //                            MinExperience=@MinExperience,
+        //                            Location=@Location
+        //                        WHERE UserId = @UserId";
+
+        //        connection.Execute(query, appliedJob);
+        //    }
     }
 }
 
+
+
+
+    
+
+
+
+
+
+
+
+
+       
+       
