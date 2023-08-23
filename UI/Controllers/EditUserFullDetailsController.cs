@@ -29,6 +29,20 @@ namespace UI.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public IActionResult GetBachelors()
+        {
+            var result = _EditUserFullDetailServices.GetBachelorsList().ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetMasters()
+        {
+            var result = _EditUserFullDetailServices.GetMastersList().ToList();
+            return Ok(result);
+        }
+
 
         [HttpGet]
         public IActionResult GetCountry()

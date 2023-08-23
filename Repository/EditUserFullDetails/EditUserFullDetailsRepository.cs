@@ -29,6 +29,14 @@ namespace Repository.RegisteredJobSeekers
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
+        public IEnumerable<EditUserFullDetails> GetBachelorsList()
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<EditUserFullDetails>("spGetBachelors", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
         public IEnumerable<EditUserFullDetails> GetCityList(string state)
         {
             IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
@@ -43,6 +51,14 @@ namespace Repository.RegisteredJobSeekers
             IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
             using var connection = _dapperConnection.CreateConnection();
             result = connection.Query<EditUserFullDetails>("spGetCountry", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
+        public IEnumerable<EditUserFullDetails> GetMastersList()
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<EditUserFullDetails>("spGetMasters", null, commandType: CommandType.StoredProcedure);
             return result;
         }
 

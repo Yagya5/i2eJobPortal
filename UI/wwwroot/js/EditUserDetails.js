@@ -167,7 +167,7 @@
                         dataField: 'Bachelors',
                         editorType: 'dxSelectBox',
                         editorOptions: {
-                            items: ["BTECH", "BCA", "BSC"],
+                            items: _datasource.BachelorsList,
                             searchEnabled: true,
                             /*value: '',*/
                         },
@@ -184,7 +184,7 @@
                         dataField: 'Masters',
                         editorType: 'dxSelectBox',
                         editorOptions: {
-                            items: ["MTECH", "MCA", "MSC"],
+                            items: _datasource.MastersList,
                             searchEnabled: true,
                             /*value: '',*/
                         },
@@ -432,6 +432,49 @@
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
 
+    var BachelorsList = [];
+
+    function LoadBachelors() {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditUserFullDetails/GetBachelors",
+                method: "GET",
+                success: function (ResponseData) {
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        BachelorsList.push(value);
+                    }
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
+                }
+            });
+        });
+    }
+
+
+    var MastersList = [];
+
+    function LoadMasters() {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditUserFullDetails/GetMasters",
+                method: "GET",
+                success: function (ResponseData) {
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        MastersList.push(value);
+                    }
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
+                }
+            });
+        });
+    }
+
     var CountryList = [];
 
     function LoadCountry() {
@@ -527,6 +570,12 @@
 
             await LoadCity(user.State); // Wait for LoadCity to complete
             user.CityList = CityList;
+
+            await LoadBachelors(); // Wait for LoadCountry to complete
+            user.BachelorsList = BachelorsList;
+
+            await LoadMasters(); // Wait for LoadCountry to complete
+            user.MastersList = MastersList;
 
             ShowUserProfileDetails(user);
         } catch (err) {

@@ -49,5 +49,8 @@ namespace DomainModel.EditUserFullDetails
         public List<string> CountryList { get; set; }
         public List<string> StateList { get; set; }
         public List<string> CityList { get; set; }
+
+        public List<string> BachelorsList { get; set; }
+        public List<string> MastersList { get; set; }
     }
 }

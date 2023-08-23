@@ -21,6 +21,12 @@ namespace Services.RegisteredJobSeekers
             
         }
 
+        public IEnumerable<EditUserFullDetails> GetBachelorsList()
+        {
+            var result = _UserFullDetailsRepository.GetBachelorsList();
+            return result;
+        }
+
         public IEnumerable<EditUserFullDetails> GetCityList(string state)
         {
             var result = _UserFullDetailsRepository.GetCityList(state);
@@ -30,6 +36,12 @@ namespace Services.RegisteredJobSeekers
         public IEnumerable<EditUserFullDetails> GetCountryList()
         {
             var result = _UserFullDetailsRepository.GetCountryList();
+            return result;
+        }
+
+        public IEnumerable<EditUserFullDetails> GetMastersList()
+        {
+            var result = _UserFullDetailsRepository.GetMastersList();
             return result;
         }
 
