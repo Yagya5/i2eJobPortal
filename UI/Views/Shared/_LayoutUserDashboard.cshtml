@@ -12,12 +12,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
+        
+       
         .nav-link {
             font-weight: bold;
         }
 
         .footerBackground {
-            background-color: black;
+            background-color: #202020;
         }
 
             .footerBackground small {
@@ -85,25 +87,28 @@
     <div class="container">
 
         @RenderBody()
-
+        
     </div>
 
-    @* <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            <div class="row footerBackground">
-                <div class="col-sm-3 footerLogoSection">
-                    <div class="col-sm-4" style="text-align: left;">
-                        <img src="~/Images/i2e_Logo_White.png" alt="i2e Logo" style="width:92px; float: left;" />
+    <footer class="border-top footer text-muted" style="background-color:#202020">
+        <div class="container">
+
+            <div class="container-fluid">
+                <div class="row footerBackground">
+                    <div class="col-sm-3 footerLogoSection">
+                        <div class="col-sm-4" style="text-align: left;">
+                            <img src="~/Images/i2e_Logo_White.png" alt="i2e Logo" style="width:92px; float: left;" />
+                        </div>
+                        <div class="col-sm-8" style="float: right;">
+                            <small style="font-size:10px;">i2e consulting named among the fastest growing private companies in the US (2018 Inc. 5000), a Microsoft Gold partner has been delivering tailored solutions to Fortune 100 companies for over a decade.</small>
+                        </div>
                     </div>
-                    <div class="col-sm-8" style="float: right;">
-                        <small style="font-size:10px;">i2e consulting named among the fastest growing private companies in the US (2018 Inc. 5000), a Microsoft Gold partner has been delivering tailored solutions to Fortune 100 companies for over a decade.</small>
+                    <div class="col-sm-9">
                     </div>
                 </div>
-                <div class="col-sm-9">
-                </div>
-            </div>            
+            </div>
         </div>
-    </footer> *@
+    </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
