@@ -4,7 +4,22 @@
     Layout = "~/Views/Shared/_LayoutUserDashboard.cshtml";
 }
 
-<h1>AppliedJobs</h1>
+
+<style>
+    h1 {
+        color: darkblue;
+        text-align: center
+    }
+
+    .dx-datagrid-action, .dx-datagrid-drag-action {
+        background-color: bisque;
+        color: black;
+        font-weight: bold;
+    }
+</style>
+
+
+<h1> My Applied Jobs</h1>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -14,15 +29,8 @@
 <!-- DevExtreme library -->
 <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/23.1.3/js/dx.all.js"></script>
 
-<script src="~/js/AppliedJobsUserside.js"></script>"
-<style>
-    h1{
-        color:darkblue;
-        text-align:center
-    }
-</style>
+<script src="~/js/AppliedJobsUserside.js"></script>
 
-     <h2> My Applied Jobs </h2>
      <body class="dx-viewport">
     <div id="dataGrid"> </div>
      </body>

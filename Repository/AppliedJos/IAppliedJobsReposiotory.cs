@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Repository.MyAppliedJos
 {
-    public interface IAppliedReposiotory
+    public interface IAppliedJobsReposiotory
     {
-        IEnumerable<ViewModel_AppliedJob> MyAppliedJobs();
+        Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
     }
 }

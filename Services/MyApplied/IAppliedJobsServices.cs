@@ -9,6 +9,6 @@ namespace Services.MyApplied
 {
     public interface IAppliedJobsServices
     {
-        IEnumerable<ViewModel_AppliedJob> MyAppliedJobs();
+        Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
     }
 }

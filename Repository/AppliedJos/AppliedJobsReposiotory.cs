@@ -17,7 +17,7 @@ using NuGet.Protocol.Plugins;
 
 namespace Repository.MyAppliedJos
 {
-    public class AppliedJobsReposiotory:IAppliedReposiotory
+    public class AppliedJobsReposiotory:IAppliedJobsReposiotory
     {
         private readonly IDapperConnection _dapperConnection;
         private readonly string _schemaName;
@@ -27,11 +27,15 @@ namespace Repository.MyAppliedJos
             _dapperConnection = dapperConnection;
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
-        public IEnumerable<ViewModel_AppliedJob> MyAppliedJobs()
+        public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
         {
             IEnumerable<ViewModel_AppliedJob> result = new List<ViewModel_AppliedJob>();
             using var connection = _dapperConnection.CreateConnection();
-            result = connection.Query<ViewModel_AppliedJob>("spAllAppliedjobs", null, commandType: CommandType.StoredProcedure);
+            var param = new DynamicParameters();
+            param.Add("@UserId", userId);
+            //result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs",param: param, null, commandType: CommandType.StoredProcedure);
+
+            result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs", null, commandType: CommandType.StoredProcedure);
             return result;
         }
 

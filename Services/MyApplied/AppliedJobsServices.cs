@@ -1,5 +1,6 @@
 ﻿
 using DomainModel.AppliedJob;
+using DomainModel.Users;
 using Repository.MyAppliedJos;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,16 @@ namespace Services.MyApplied
 {
     public class AppliedJobsServices:IAppliedJobsServices
     {
-        private readonly IAppliedReposiotory _myAppliedRepository;
+        private readonly IAppliedJobsReposiotory _myAppliedRepository;
 
-        public AppliedJobsServices(IAppliedReposiotory MyAppliedJobsReposiotory)
+        public AppliedJobsServices(IAppliedJobsReposiotory MyAppliedJobsReposiotory)
         {
             _myAppliedRepository = MyAppliedJobsReposiotory;
 
         }
-        public IEnumerable<ViewModel_AppliedJob> MyAppliedJobs()
+        public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
         {
-            var result = _myAppliedRepository.MyAppliedJobs();
-            return result;
+            return await _myAppliedRepository.MyAppliedJobs(userId);
         }
     }
 }
