@@ -18,6 +18,24 @@ namespace Services.EditAdminFullDetails
             return result;
         }
 
+        public IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetCityList(string state)
+        {
+            var result = _AdminFullDetailsRepository.GetCityList(state);
+            return result;
+        }
+
+        public IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetCountryList()
+        {
+            var result = _AdminFullDetailsRepository.GetCountryList();
+            return result;
+        }
+
+        public IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetStateList(string country)
+        {
+            var result = _AdminFullDetailsRepository.GetStateList(country);
+            return result;
+        }
+
         public string UpdateProfileDetails(DomainModel.EditAdminFullDetails.EditAdminFullDetails adminDetails)
         {
             var result = _AdminFullDetailsRepository.UpdateProfileDetails(adminDetails);
