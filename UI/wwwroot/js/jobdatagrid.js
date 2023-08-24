@@ -171,7 +171,7 @@ function showJob(dataSource) {
             { dataField: "MinExperience", caption: "Min Experience" },
             { dataField: "MaxExperience", caption: "Max Experience" },
             { dataField: "Description", caption: "Description" },
-            { dataField: "IsActive", caption: "Is Active" },
+            { dataField: "IsActive", caption: "Post Active Status" },
             { dataField: "urgentRequirement", caption: "Urgent Requirement" },
             { dataField: "Location", caption: "Location" },
 
