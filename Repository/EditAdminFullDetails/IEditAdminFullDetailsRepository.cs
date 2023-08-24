@@ -11,9 +11,11 @@ namespace Repository.EditAdminFullDetails
     public interface IEditAdminFullDetailsRepository
     {
         IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetAdminFullDetails(int id);
+        IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetCityList(string state);
+        IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetCountryList();
+        IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetStateList(string country);
         string UpdateProfileDetails(DomainModel.EditAdminFullDetails.EditAdminFullDetails userDetails);
 
-        //public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker);
     }
 
     

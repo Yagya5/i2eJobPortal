@@ -29,7 +29,41 @@ namespace UI.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public IActionResult GetBachelors()
+        {
+            var result = _EditUserFullDetailServices.GetBachelorsList().ToList();
+            return Ok(result);
+        }
 
+        [HttpGet]
+        public IActionResult GetMasters()
+        {
+            var result = _EditUserFullDetailServices.GetMastersList().ToList();
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        public IActionResult GetCountry()
+        {
+            var result = _EditUserFullDetailServices.GetCountryList().ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetState(string country)
+        {
+            var result = _EditUserFullDetailServices.GetStateList(country).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetCity(string state)
+        {
+            var result = _EditUserFullDetailServices.GetCityList(state).ToList();
+            return Ok(result);
+        }
 
         [HttpPost]
         public IActionResult UpdateUserDetails(EditUserFullDetails userDetails)
@@ -54,8 +88,8 @@ namespace UI.Controllers
 
             string result = string.Empty;
             result = _EditUserFullDetailServices.UpdateProfileDetails(userDetails);
-
-            return View(userDetails);
+            userDetails.Response = result;
+            return Ok(userDetails);
         }
 
 
