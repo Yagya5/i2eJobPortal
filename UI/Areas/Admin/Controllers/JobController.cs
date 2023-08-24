@@ -48,7 +48,7 @@ namespace UI.Areas.Admin.Controllers
 
 
             job.PostDate = DateTime.Now;
-            job.IsActive = bool.Parse(Request.Form["IsActive"]);
+            //job.IsActive = bool.Parse(Request.Form["IsActive"]);
             _jobServices.CreateJob(job);
             return RedirectToAction("Index");
 
