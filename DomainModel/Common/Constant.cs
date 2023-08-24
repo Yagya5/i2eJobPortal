@@ -19,6 +19,9 @@ namespace DomainModel.Common
         #region [All STORED PROCEDURES]:
         AuditUserLoginStoredProcedure = "spAuditUserLogin",  //To audit data of User who login into their account.
         SignUpJobSeekerStoredProcedure = "spJobSeekerSignUp", // inserting data of New Job Seeker into database from Sign-up page.
+        CreateNewJob = "spCreateJob",
+        DeleteAJob = "spDeleteJob",
+        UpdateAJob = "spUpdateJob",
         #endregion
 
 

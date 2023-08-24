@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using Repository.Connection;
 using Repository.EditAdminFullDetails;
+using Repository.Jobs;
 using Repository.RegisteredJobSeekers;
 using Repository.Users;
 using Services.EditAdminFullDetails;
+using Services.Jobs;
 using Services.RegisteredJobSeekers;
 using Services.Users;
 
@@ -49,6 +51,9 @@ namespace i2eJobPortal
 
             builder.Services.AddTransient<IEditAdminFullDetailsRepository, EditAdminFullDetailsRepository>();
             builder.Services.AddTransient<IEditAdminFullDetailsServices, EditAdminFullDetailsServices>();
+
+            builder.Services.AddTransient<IJobRepository, JobRepository>();
+            builder.Services.AddTransient<IJobServices, JobServices>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
