@@ -77,7 +77,27 @@
                             items: _datasource.CountryList,
                             searchEnabled: true,
                             onValueChanged: function (e) {
-                                LoadState(e.value);
+                                console.log(_datasource.StateList);
+                                console.log(e.value)
+                                $.ajax({
+                                    url: "/EditUserFullDetails/GetState",
+                                    method: 'GET',
+                                    data: { country : e.value },
+                                    success: function (ResponseData) {
+                                        let temparray = [];
+                                        for (var i = 0; i < ResponseData.length; i++) {
+                                            var value = ResponseData[i].Value;
+                                            temparray.push(value);
+                                        }
+                                        _datasource.StateList = temparray;
+                                        console.log("Updated StateList", _datasource.StateList);
+                                        $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
+                                    },
+                                    error: function (err) {
+                                        // Handle the error if any
+                                        console.error(err);
+                                    }
+                                });
                             }
                         },
                         validationRules: [{
@@ -95,9 +115,28 @@
                         editorOptions: {
                             items: _datasource.StateList,
                             searchEnabled: true,
-                            onValueChanged: function (e)
-                            {
-                                LoadCity(e.value);
+                            onValueChanged: function (e) {
+                                console.log(_datasource.CityList);
+                                console.log(e.value)
+                                $.ajax({
+                                    url: "/EditUserFullDetails/GetCity",
+                                    method: 'GET',
+                                    data: { state: e.value },
+                                    success: function (ResponseData) {
+                                        let temparray = [];
+                                        for (var i = 0; i < ResponseData.length; i++) {
+                                            var value = ResponseData[i].Value;
+                                            temparray.push(value);
+                                        }
+                                        _datasource.CityList = temparray;
+                                        console.log("Updated StateList", _datasource.CityList);
+                                        $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
+                                    },
+                                    error: function (err) {
+                                        // Handle the error if any
+                                        console.error(err);
+                                    }
+                                });
                             }
                         },
                         validationRules: [{
@@ -505,10 +544,14 @@
                 data: { country: Country },
                 method: "GET",
                 success: function (ResponseData) {
+                    /*StateList = [];*/
+                    let temparray = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        StateList.push(value);
+                        temparray.push(value);
                     }
+                    StateList = temparray;
+                    console.log(StateList);
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -528,10 +571,13 @@
                 method: "GET",
                 data: { state: State },
                 success: function (ResponseData) {
+                    let temparray = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        CityList.push(value);
+                        temparray.push(value);
                     }
+                    CityList = temparray;
+                    console.log(CityList);
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -542,7 +588,6 @@
     }
 
     async function LoadRecords() {
-        console.log(userId);
         try {
             const response = await $.ajax({
                 url: "/EditUserFullDetails/GetUserDetails",
