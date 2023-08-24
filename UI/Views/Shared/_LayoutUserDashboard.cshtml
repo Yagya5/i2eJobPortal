@@ -12,24 +12,58 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
-        
-       
-        .nav-link {
-            font-weight: bold;
-        }
 
-        .footerBackground {
+        .footer {
             background-color: #202020;
+            color: #FFFFFF;
+            padding: 20px 0;
         }
-
-            .footerBackground small {
-                color: white;
-                float: right;
-            }
 
         .footerLogoSection {
-            padding: 30px;
+            display: flex;
+            align-items: center;
         }
+
+            .footerLogoSection img {
+                width: 92px;
+                float: left;
+            }
+
+            .footerLogoSection small {
+                font-size: 10px;
+                float: right;
+                color: #FFFFFF;
+            }
+
+        .footerBackground {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar {
+            width: 85%;
+            margin: auto;
+        }
+
+            .navbar .navbar-brand {
+                display: flex;
+                align-items: center;
+            }
+
+            .navbar .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                justify-content: flex-end;
+            }
+
+            .navbar .navbar-nav .nav-item {
+                margin: 0px 10px;
+            }
+
+            .navbar .nav-link {
+                color: #202020;
+                font-weight: 600;
+            }
     </style>
 </head>
 <body>
@@ -49,20 +83,26 @@
 
                                                
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="MyProfile">My Profile</a>
+                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="MyProfile">Home</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AllJobs">All Jobs</a>
+                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AllJobs">Jobs</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AppliedJobs">Applied Jobs</a>
                         </li>   
-                        
+
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AboutUs">About Us</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="ContactUs">Contact Us</a>
+                        </li>
 
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img id="profileImage" src="#" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid black;" />
-                                <span class="badge rounded-pill" style="background-color: white; color: black;">
+                                <img id="profileImage" src="#" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #202020;" />
+                                <span class="badge rounded-pill" style="background-color: white; color: #202020;">
                                     <span id="firstNameSpan"></span><br />
                                     @User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value
                                 </span>
@@ -84,11 +124,11 @@
 
         
     </header>
-    <div class="container">
+    @*<div class="container">*@
 
         @RenderBody()
-        
-    </div>
+        @*
+    </div>*@
 
     <footer class="border-top footer text-muted" style="background-color:#202020">
         <div class="container">

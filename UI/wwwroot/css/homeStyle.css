@@ -1,0 +1,228 @@
+body {
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  font-family: "Kodchasan", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
+.maincontainer {
+  max-width: 1920px;
+  margin: auto;
+  background-color: #FFFFFF;
+}
+.maincontainer .navbars {
+  width: 85%;
+  margin: auto;
+}
+.maincontainer .navbars .logo-section {
+  display: flex;
+  align-self: center;
+}
+.maincontainer .navbars .menu-contains .navbar-expand-lg .navbar-collapse {
+  display: flex !important;
+  flex-basis: auto;
+  justify-content: flex-end;
+}
+.maincontainer .navbars .menu-contains .nav-item {
+  margin: 0px 10px;
+}
+.maincontainer .navbars .menu-contains .nav-item .nav-link {
+  color: #000000;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+.maincontainer .navbars .menu-contains .nav-item .active {
+  color: #000000;
+  font-family: "Poppins";
+  font-weight: 800;
+}
+.maincontainer .second-section {
+  width: 85%;
+  margin: auto;
+}
+.maincontainer .second-section .text-section {
+  align-self: center;
+  margin-top: -60px;
+}
+.maincontainer .second-section .text-title {
+  font-size: 48px;
+  font-weight: 600;
+  font-family: "Poppins";
+  line-height: normal;
+  margin-bottom: 17px;
+}
+.maincontainer .second-section span {
+  color: #73D9E7;
+}
+.maincontainer .second-section .text-details {
+  font-size: 24px;
+  margin-bottom: 25px;
+  font-family: "Poppins";
+}
+.maincontainer .second-section .searchtab {
+  width: 70%;
+  box-shadow: 0 0 10px #dce9fb;
+}
+.maincontainer .second-section .searchtab .form-control {
+  background-color: #EBF2FF;
+  border: none;
+  border-radius: 0px;
+}
+.maincontainer .second-section .searchtab .btn {
+  width: 50%;
+  border: 0px;
+  border-radius: 0px;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+.maincontainer .third-section {
+  padding: 50px 0px;
+  background-color: #EBF2FF;
+}
+.maincontainer .third-section h1 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 48px;
+  margin-bottom: 50px;
+  font-family: "Poppins";
+}
+.maincontainer .third-section .job-details {
+  margin: auto;
+  width: 85%;
+}
+.maincontainer .third-section .job-cards {
+  width: 21%;
+  color: #000000;
+  text-decoration: none;
+  text-align: center;
+  background-color: #FFFFFF;
+  padding: 40px;
+  border-radius: 10px;
+}
+.maincontainer .third-section .job-cards:hover {
+  rotate: 5deg;
+}
+.maincontainer .third-section .second-job-card {
+  background-color: #D4EBFF;
+}
+.maincontainer .opening-details {
+  width: 85%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.maincontainer .opening-details h1 {
+  font-weight: 600;
+  font-size: 48px;
+  margin-bottom: 50px;
+  font-family: "Poppins";
+}
+.maincontainer .opening-details .opening-list {
+  margin-left: 0%;
+}
+.maincontainer .opening-details .opening-list .cardmain {
+  width: 50%;
+}
+.maincontainer .opening-details .opening-list .cardmain .card {
+  background-color: #EBF2FF;
+  border: none;
+}
+.maincontainer .opening-details .opening-list .cardmain .card-body-main {
+  min-height: 140px;
+}
+.maincontainer .opening-details .opening-list .cardmain .card-body {
+  padding: 20px 15px 0px 15px;
+}
+.maincontainer .opening-details .opening-list .cardmain .job-name {
+  font-size: 24px;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+.maincontainer .opening-details .opening-list .cardmain .job-location {
+  font-size: 12px;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+.maincontainer .opening-details .opening-list .apply {
+  background-color: #008BFF;
+  color: #FFFFFF;
+  border: none;
+  padding: 5px 20px 5px 20px;
+}
+.maincontainer .opening-details .loadmore {
+  padding: 10px 50px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  color: #FFFFFF;
+  background-color: #000000;
+  text-decoration: none;
+  box-shadow: 0 0 10px #dce9fb;
+}
+.maincontainer .mission-vision {
+  width: 85%;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+.maincontainer .mission-vision .our-mission {
+  text-align: center;
+}
+.maincontainer .mission-vision h1 {
+  font-weight: 600;
+  font-family: "Poppins";
+  font-size: 48px;
+}
+.maincontainer .sixth-section {
+  width: 85%;
+  margin: auto;
+}
+.maincontainer .sixth-section h1 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 48px;
+  font-weight: 600;
+  font-family: "Poppins";
+}
+.maincontainer .sixth-section .our-culture {
+  display: flex;
+  justify-content: space-evenly;
+  justify-items: center;
+}
+.maincontainer .more-about {
+  background-color: #EEEBFF;
+}
+.maincontainer .more-about .about-main {
+  width: 85%;
+  margin: auto;
+  align-items: end;
+  padding: 50px 20px 50px 134px;
+}
+.maincontainer .more-about .text-about {
+  font-size: 48px;
+  font-family: "Poppins";
+  font-weight: 600;
+}
+.maincontainer .more-about .explore-more {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-family: "Poppins";
+  font-weight: 600;
+  border: none;
+}
+.maincontainer .footer-main {
+  background-color: #202020;
+}
+.maincontainer .footer-main .footer-contain {
+  width: 85%;
+  margin: auto;
+  padding: 20px 0px 20px 0px;
+}
+.maincontainer .footer-main .text-footer {
+  color: #FFFFFF;
+  font-size: 10px;
+}/*# sourceMappingURL=homeStyle.css.map */
