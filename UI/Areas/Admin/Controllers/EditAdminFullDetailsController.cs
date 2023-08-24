@@ -3,6 +3,7 @@ using DomainModel.EditUserFullDetails;
 using Microsoft.AspNetCore.Mvc;
 using Services.EditAdminFullDetails;
 
+
 namespace UI.Areas.Admin.Controllers
 {
     public class EditAdminFullDetailsController : Controller
@@ -31,7 +32,7 @@ namespace UI.Areas.Admin.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost]        
         public IActionResult UpdateAdminDetails(EditAdminFullDetails adminDetails)
         {
             if (TempData["ImagePath"] != null)

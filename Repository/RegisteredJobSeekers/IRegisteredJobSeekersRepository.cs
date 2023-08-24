@@ -12,6 +12,8 @@ namespace Repository.RegisteredJobSeekers
     {
         IEnumerable<RegisteredJobSeeker> GetRegisteredJobSeekers();
 
+        RegisteredJobSeeker GetJobSeekerById(int id);
+
         public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker);
     }
 

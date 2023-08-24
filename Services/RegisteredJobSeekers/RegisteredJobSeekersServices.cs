@@ -19,6 +19,13 @@ namespace Services.RegisteredJobSeekers
             _JobSeekersRepository = RegisteredJobSeekersRepository;
             
         }
+
+        public RegisteredJobSeeker GetJobSeekerById(int id)
+        {
+            var result = _JobSeekersRepository.GetJobSeekerById(id);
+            return result;
+        }
+
         public IEnumerable<RegisteredJobSeeker> GetRegisteredJobSeekers()
         {
             var result = _JobSeekersRepository.GetRegisteredJobSeekers();
