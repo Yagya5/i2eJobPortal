@@ -421,6 +421,21 @@
                 // Get the updated form data
                 const updatedData = $('#form').dxForm('instance').option('formData');
 
+                var parsedDate = new Date(String(updatedData.BirthDate));
+
+                var parsedDate = new Date(String(updatedData.BirthDate));
+
+                var year = parsedDate.getFullYear();
+                var month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+                var day = String(parsedDate.getDate()).padStart(2, '0');
+                var hours = String(parsedDate.getHours()).padStart(2, '0');
+                var minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+                var seconds = String(parsedDate.getSeconds()).padStart(2, '0');
+
+                var formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                updatedData.BirthDate = formattedDate;
+
                 // Send the updated data to the server
                 $.ajax({
                     url: "/EditUserFullDetails/UpdateUserDetails",
