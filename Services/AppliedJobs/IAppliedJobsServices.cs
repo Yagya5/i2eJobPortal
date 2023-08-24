@@ -13,5 +13,6 @@ namespace Services.AppliedJobs
     {
 
         IEnumerable<DM_AppliedJobs> GetAppliedJobs();
+        Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
     }
 }

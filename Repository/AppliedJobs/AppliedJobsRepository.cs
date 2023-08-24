@@ -73,6 +73,18 @@ namespace Repository.AppliedJobs
 
         //        connection.Execute(query, appliedJob);
         //    }
+
+        public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
+        {
+            IEnumerable<ViewModel_AppliedJob> result = new List<ViewModel_AppliedJob>();
+            using var connection = _dapperConnection.CreateConnection();
+            var param = new DynamicParameters();
+            param.Add("@User_ID", userId);
+            result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs", param: param, commandType: CommandType.StoredProcedure);
+
+            // result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
     }
 }
 
