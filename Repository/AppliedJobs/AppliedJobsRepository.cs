@@ -95,7 +95,7 @@ namespace Repository.AppliedJobs
 
 
 
-}
+
 
 
 
