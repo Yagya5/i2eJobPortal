@@ -71,30 +71,97 @@
                     },
 
                     {
-                        dataField: 'State',
+                        dataField: 'Country',
+                        editorType: 'dxSelectBox',
                         editorOptions: {
-                            disabled: false,
+                            items: _datasource.CountryList,
+                            searchEnabled: true,
+                            onValueChanged: function (e) {
+                                console.log(_datasource.StateList);
+                                console.log(e.value)
+                                $.ajax({
+                                    url: "/EditAdminFullDetails/GetState",
+                                    method: 'GET',
+                                    data: { country: e.value },
+                                    success: function (ResponseData) {
+                                        let temparray = [];
+                                        for (var i = 0; i < ResponseData.length; i++) {
+                                            var value = ResponseData[i].Value;
+                                            temparray.push(value);
+                                        }
+                                        _datasource.StateList = temparray;
+                                        console.log("Updated StateList", _datasource.StateList);
+                                        $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
+                                    },
+                                    error: function (err) {
+                                        // Handle the error if any
+                                        console.error(err);
+                                    }
+                                });
+                            }
+                        },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'Country is required',
+                        }],
+                        label: {
+                            template: labelTemplate('info'),
+                        },
+                    },
+
+                    {
+                        dataField: 'State',
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            items: _datasource.StateList,
+                            searchEnabled: true,
+                            onValueChanged: function (e) {
+                                console.log(_datasource.CityList);
+                                console.log(e.value)
+                                $.ajax({
+                                    url: "/EditAdminFullDetails/GetCity",
+                                    method: 'GET',
+                                    data: { state: e.value },
+                                    success: function (ResponseData) {
+                                        let temparray = [];
+                                        for (var i = 0; i < ResponseData.length; i++) {
+                                            var value = ResponseData[i].Value;
+                                            temparray.push(value);
+                                        }
+                                        _datasource.CityList = temparray;
+                                        console.log("Updated StateList", _datasource.CityList);
+                                        $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
+                                    },
+                                    error: function (err) {
+                                        // Handle the error if any
+                                        console.error(err);
+                                    }
+                                });
+                            }
                         },
                         validationRules: [{
                             type: 'required',
                             message: 'State is required',
                         }],
                         label: {
-                            template: labelTemplate('home'),
+                            template: labelTemplate('info'),
                         },
                     },
 
                     {
                         dataField: 'City',
+                        editorType: 'dxSelectBox',
                         editorOptions: {
-                            disabled: false,
+                            items: _datasource.CityList,
+                            searchEnabled: true,
+
                         },
                         validationRules: [{
                             type: 'required',
                             message: 'City is required',
                         }],
                         label: {
-                            template: labelTemplate('home'),
+                            template: labelTemplate('info'),
                         },
                     },
 
@@ -197,7 +264,18 @@
                 // Get the updated form data
                 const updatedData = $('#form').dxForm('instance').option('formData');
 
+                var parsedDate = new Date(String(updatedData.BirthDate));
 
+                var year = parsedDate.getFullYear();
+                var month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+                var day = String(parsedDate.getDate()).padStart(2, '0');
+                var hours = String(parsedDate.getHours()).padStart(2, '0');
+                var minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+                var seconds = String(parsedDate.getSeconds()).padStart(2, '0');
+
+                var formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                updatedData.BirthDate = formattedDate;
 
                 // Send the updated data to the server
                 $.ajax({
@@ -209,6 +287,7 @@
                         "Gender": updatedData.Gender,
                         "BirthDate": updatedData.BirthDate,
                         "Address": updatedData.Address,
+                        "Country": updatedData.Country,
                         "City": updatedData.City,
                         "State": updatedData.State,
                         "PhoneNumber": updatedData.PhoneNumber,
@@ -240,29 +319,111 @@
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
 
-    function LoadRecords() {
-        console.log(userId)
-        $.ajax({
-            url: "/EditAdminFullDetails/GetAdminDetails",
-            method: "GET",
-            data: { "id": userId },
-            success: function (ResponseData) {
-                const user = ResponseData[0];
-                if (user.ProfilePicture != null) {
-                    user.ProfilePictureUrl = user.ProfilePicture;
+    var CountryList = [];
+
+    function LoadCountry() {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditAdminFullDetails/GetCountry",
+                method: "GET",
+                success: function (ResponseData) {
+                    let temparray = [];
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        temparray.push(value);
+                    }
+                    CountryList = temparray;
+                    console.log(StateList);
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
                 }
+            });
+        });
+    }
 
-                user.ProfilePicture = '';
-                
-                ShowUserProfileDetails(user);
+    var StateList = [];
+
+    function LoadState(Country) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditAdminFullDetails/GetState",
+                method: "GET",
+                data: { country: Country },
+                success: function (ResponseData) {
+                    /*StateList = [];*/
+                    let temparray = [];
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        temparray.push(value);
+                    }
+                    StateList = temparray;
+                    console.log(StateList);
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
+                }
+            });
+        });
+    }
 
 
-            },
-            error: function (err) {
-                alert(err);
+    var CityList = [];
+
+    function LoadCity(State) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/EditAdminFullDetails/GetCity",
+                method: "GET",
+                data: { state: State },
+                success: function (ResponseData) {
+                    let temparray = [];
+                    for (var i = 0; i < ResponseData.length; i++) {
+                        var value = ResponseData[i].Value;
+                        temparray.push(value);
+                    }
+                    CityList = temparray;
+                    console.log(CityList);
+                    resolve(); // Resolve the promise when data is loaded
+                },
+                error: function (err) {
+                    reject(err); // Reject the promise in case of an error
+                }
+            });
+        });
+    }
+
+    async function LoadRecords() {
+        console.log(userId);
+        try {
+            const ResponseData = await $.ajax({
+                url: "/EditAdminFullDetails/GetAdminDetails",
+                method: "GET",
+                data: { "id": userId }
+            });
+
+            const user = ResponseData[0];
+            if (user.ProfilePicture != null) {
+                user.ProfilePictureUrl = user.ProfilePicture;
             }
 
-        })
+            user.ProfilePicture = '';
+
+            await LoadCountry(); // Wait for LoadCountry to complete
+            user.CountryList = CountryList;
+
+            await LoadState(user.Country); // Wait for LoadState to complete
+            user.StateList = StateList;
+
+            await LoadCity(user.State); // Wait for LoadCity to complete
+            user.CityList = CityList;
+
+            ShowUserProfileDetails(user);
+        } catch (err) {
+            alert(err);
+        }
     }
 
     LoadRecords();
