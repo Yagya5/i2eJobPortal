@@ -2,6 +2,8 @@
 using DomainModel.Users;
 using DomainModel.AppliedJobs;
 using Repository.Connection;
+using DomainModel.MasterDetails;
+using DomainModel.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using System.Data.Common;
 using NuGet.Protocol.Plugins;
-
+using System.Reflection.Metadata;
 
 
 namespace Repository.AppliedJobs
@@ -40,16 +42,17 @@ namespace Repository.AppliedJobs
             IEnumerable<DM_AppliedJobs> result = new List<DM_AppliedJobs>();
             using var connection = _dapperConnection.CreateConnection();
             IDbTransaction transaction = connection.BeginTransaction();
-            string Query = @"Select UserId
-,FirstName
+            string Query = @"Select FirstName
 ,LastName
 ,Gender
-,JobId
 ,JobTitle
 ,DepartmentName
 ,MinExperience
 ,Location
-,ProfilePicture from v_AppliedJobs";
+,ProfilePicture 
+,Status
+,Round
+,Resume from v_AppliedJobs";
             result = connection.Query<DM_AppliedJobs>(Query,transaction:transaction);
             return result;
 
@@ -57,30 +60,27 @@ namespace Repository.AppliedJobs
 
 
 
-        //    public void UpdateAppliedJob(DM_AppliedJobs appliedJob)
-        //    {
-        //        using var connection = _dapperConnection.CreateConnection();
-        //        string query = @"UPDATE v_AppliedJobs
-        //                        SET FirstName = @FirstName,
-        //                            LastName = @LastName,
-        //                            Gender = @Gender,
-        //                            JobId = @JobId,
-        //                            JobTitle=@JobTitle,
-        //                            DepartmentName=@DepartmentName,
-        //                            MinExperience=@MinExperience,
-        //                            Location=@Location
-        //                        WHERE UserId = @UserId";
+        ////To get the dropdown elements
+        //public IEnumerable<Master> GetStatusAndRoundByCategory(string category)
+        //{
+        //    using var connection = _dapperConnection.CreateConnection();
+        //    var sql = "SELECT Value FROM " + DomainModel.Common.Constant.MasterDetailsTableName + " WHERE Category = @Category";
 
-        //        connection.Execute(query, appliedJob);
-        //    }
+        //    return connection.Query<Master>(sql, new { Category = category });
+        //}
+        ////End
+
+
+
     }
+
+
+
+
+
+
+
 }
-
-
-
-
-    
-
 
 
 

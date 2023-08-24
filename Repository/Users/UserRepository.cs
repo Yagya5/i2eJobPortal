@@ -12,13 +12,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
+
+
 namespace Repository.Users
 {
     public class UserRepository : IUserRepository
     {
 
+
+
         private readonly IDapperConnection _dapperConnection;
         private readonly string _schemaName;
+
+
 
         public UserRepository(IDapperConnection dapperConnection)
         {
@@ -26,29 +32,37 @@ namespace Repository.Users
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
+
+
         public bool AuditUserLogin(AuditLogin model)
         {
-            
+
             using var connection = _dapperConnection.CreateConnection();
             var param = new DynamicParameters();
             param.Add(nameof(AuditLogin.FirstName), model.FirstName);
             param.Add(nameof(AuditLogin.LastName), model.LastName);
             param.Add(nameof(AuditLogin.Email), model.Email);
             param.Add(nameof(AuditLogin.UserId), model.UserId);
-            param.Add(nameof(AuditLogin.RoleId), model.RoleId);            
+            param.Add(nameof(AuditLogin.RoleId), model.RoleId);
+
+
 
             connection.Execute(Constant.AuditUserLoginStoredProcedure, param, null, 0, CommandType.StoredProcedure);
             return true;
         }
 
+
+
         public User AuthenticateUser(string Email, string Password)
         {
             var result = new User();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "select * from "+Constant.GetAllUsersViewName+" where Email='"+Email+"' and Password = '"+Password+"'";
-            result = connection.QueryFirstOrDefault<User>(Query,null,null,0,null);
+            string Query = "select * from " + Constant.GetAllUsersViewName + " where Email='" + Email + "' and Password = '" + Password + "'";
+            result = connection.QueryFirstOrDefault<User>(Query, null, null, 0, null);
             return result;
         }
+
+
 
         public IEnumerable<AuditLogin> GetRecentLogins()
         {
@@ -59,6 +73,8 @@ namespace Repository.Users
             return result;
         }
 
+
+
         public int GetRecentSignedUp_UserId(string Email)
         {
             var result = new User();
@@ -68,16 +84,20 @@ namespace Repository.Users
             return result.UserId;
         }
 
+
+
         public IEnumerable<User> GetUsers()
         {
             IEnumerable<User> result = new List<User>();
             using var connection = _dapperConnection.CreateConnection();
             string Query = "select * from v_Users";
-            result =  connection.Query<User>(Query,null,null,true,0,null);
-            
+            result = connection.Query<User>(Query, null, null, true, 0, null);
+
             // result = connection.Query<User>("spGetUsers", null, commandType: CommandType.StoredProcedure);
             return result;
         }
+
+
 
         public bool JobSeekerSignUp(string FirstName, string LastName, string Email, string Password)
         {
@@ -94,7 +114,7 @@ namespace Repository.Users
                 return true;
             }
             else
-                return false;            
+                return false;
         }
     }
 }

@@ -42,7 +42,6 @@ namespace i2eJobPortal
             builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserServices, UserServices>();
-
             builder.Services.AddTransient<IRegisteredJobSeekersRepository, RegisteredJobSeekersRepository>();
             builder.Services.AddTransient<IRegisteredJobSeekersServices, RegisteredJobSeekersServices>();
 

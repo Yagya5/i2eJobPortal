@@ -13,12 +13,15 @@ namespace DomainModel.Common
         #region [All VIEWS]:
         GetAllUsersViewName = "v_Users",   //To get details of All Users include their Role Name also.
         GetAllUserLoginsViewName = "v_AuditedLogins", //To get details of Users who login in past.
+        GetAllUsersAppliedJobViewName="v_AppliedJobs",//To get the details of Users who applied for the Jobs.
+
         #endregion
 
 
         #region [All STORED PROCEDURES]:
         AuditUserLoginStoredProcedure = "spAuditUserLogin",  //To audit data of User who login into their account.
         SignUpJobSeekerStoredProcedure = "spJobSeekerSignUp", // inserting data of New Job Seeker into database from Sign-up page.
+        UpdateStatusRoundStoredProcedure= "spUpdateStatusAndRound",//Updating the Status and Round Of Users which Applied for the Jobs.
         #endregion
 
 
