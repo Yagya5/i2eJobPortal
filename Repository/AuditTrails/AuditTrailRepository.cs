@@ -41,21 +41,26 @@ namespace Repository.AuditTrails
 
             if(compResult.Differences.Count != 0)
             {
-                string DataField =  compResult.Differences[0].PropertyName;
-                string OldValue = compResult.Differences[0].Object1Value;
-                string NewValue = compResult.Differences[0].Object2Value;
+                for(int Index = 0; Index < compResult.Differences.Count; Index++)
+                {
+                    string DataField = compResult.Differences[Index].PropertyName;
+                    string OldValue = compResult.Differences[Index].Object1Value;
+                    string NewValue = compResult.Differences[Index].Object2Value;
 
-                using var connection = _dapperConnection.CreateConnection();
-                var param = new DynamicParameters();
-                param.Add(nameof(AuditTrail.UserId), UserId);
-                param.Add(nameof(AuditTrail.TaskId), TaskId);
-                param.Add(nameof(AuditTrail.OldValue), OldValue);
-                param.Add(nameof(AuditTrail.NewValue), NewValue);
-                param.Add(nameof(AuditTrail.DataField), DataField);
-                param.Add(nameof(AuditTrail.Module), Module);
-                param.Add(nameof(AuditTrail.Url), Url);
-                param.Add(nameof(AuditTrail.Action), Action);
-                connection.Execute(Constant.InsertAuditTrailStoredProcedure, param, null, 0, CommandType.StoredProcedure);
+                    using var connection = _dapperConnection.CreateConnection();
+                    var param = new DynamicParameters();
+                    param.Add(nameof(AuditTrail.UserId), UserId);
+                    param.Add(nameof(AuditTrail.TaskId), TaskId);
+                    param.Add(nameof(AuditTrail.OldValue), OldValue);
+                    param.Add(nameof(AuditTrail.NewValue), NewValue);
+                    param.Add(nameof(AuditTrail.DataField), DataField);
+                    param.Add(nameof(AuditTrail.Module), Module);
+                    param.Add(nameof(AuditTrail.Url), Url);
+                    param.Add(nameof(AuditTrail.Action), Action);
+                    connection.Execute(Constant.InsertAuditTrailStoredProcedure, param, null, 0, CommandType.StoredProcedure);
+
+                }
+                
                 return true;
 
             }
