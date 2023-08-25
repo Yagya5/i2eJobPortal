@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using System.Data.Common;
 using NuGet.Protocol.Plugins;
+using DomainModel.AuditLogins;
+using System.Reflection;
 
 namespace Repository.RegisteredJobSeekers
 {
@@ -25,6 +27,18 @@ namespace Repository.RegisteredJobSeekers
         {
             _dapperConnection = dapperConnection;
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
+        }
+
+        public RegisteredJobSeeker GetJobSeekerById(int id)
+        {
+            RegisteredJobSeeker result = new RegisteredJobSeeker();
+            using var connection = _dapperConnection.CreateConnection();
+
+            var param = new DynamicParameters();
+            param.Add(nameof(RegisteredJobSeeker.UserId), id);
+            
+            result = connection.Query<RegisteredJobSeeker>("spGetJobSeekerById",param,null,true,0,CommandType.StoredProcedure).Single();
+            return result;
         }
 
         public IEnumerable<RegisteredJobSeeker> GetRegisteredJobSeekers()

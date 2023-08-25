@@ -80,6 +80,7 @@ namespace Repository.RegisteredJobSeekers
             return result;
         }
 
+
         public string UpdateProfileDetails(EditUserFullDetails userDetails)
         {
             using var connection = _dapperConnection.CreateConnection();
