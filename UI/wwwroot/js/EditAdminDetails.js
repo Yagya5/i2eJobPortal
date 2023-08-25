@@ -229,7 +229,7 @@
                                         success: function (response) {
                                             // On success, update the form data with the new image URL
                                             const newFormData = $.extend({}, $('#form').dxForm('option', 'formData'), { ProfilePicture: response.url });
-                                            updateFormData(newFormData);
+                                            /*updateFormData(newFormData);*/
                                         },
                                         error: function (err) {
                                             // Handle the error if any
@@ -300,6 +300,7 @@
                     success: function (ResponseData) {
                         // Optionally, you can show a success message or perform other actions on success
                         console.log('Data updated successfully');
+                        LoadRecords();
                     },
                     error: function (err) {
                         // Handle the error if any
