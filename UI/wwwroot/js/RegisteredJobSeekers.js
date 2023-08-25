@@ -49,6 +49,7 @@
                     "UserId": e.data.UserId,
                     "Address": e.data.Address,
                     "BirthDate": e.data.BirthDate,
+                    "Country": e.data.Country,
                     "City": e.data.City,
                     "Email": e.data.Email,
                     "FirstName": e.data.FirstName,
@@ -100,6 +101,14 @@
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
 
+            },
+
+            {
+                dataField: "Country",
+                caption: "Country",
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                groupIndex: 0
             },
 
             {
