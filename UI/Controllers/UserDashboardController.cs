@@ -15,7 +15,7 @@ namespace UI.Controllers
             _appliedJobsServices = appliedJobsServices;
         }
 
-        public IActionResult MyProfile()
+        
        
         public IActionResult MyProfile() /*Used as a home page controller*/
         {
@@ -28,7 +28,7 @@ namespace UI.Controllers
         }
 
 
-        public IActionResult AppliedJobs(int id)
+        
         public IActionResult AboutUs()
         {
             return View();
@@ -37,7 +37,7 @@ namespace UI.Controllers
         {
             return View();
         }
-        public IActionResult AppliedJobs()
+        public IActionResult AppliedJobs(int id)
         {
             ViewBag.UserId = id;
             return View();
