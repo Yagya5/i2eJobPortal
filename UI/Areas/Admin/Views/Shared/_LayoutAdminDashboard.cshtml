@@ -145,7 +145,6 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a asp-controller="EditAdminFullDetails" asp-action="Index" asp-route-id="@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" class="dropdown-item">Manage Profile Details</a>
-                                @*<a asp-controller="" asp-action="" class="dropdown-item">Link 2</a>*@
                                 <div class="dropdown-divider"></div>
                                 <a  asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item">Logout</a>
                             </div>
