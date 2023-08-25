@@ -126,11 +126,13 @@ function showJob(dataSource) {
         columnAutoWidth: true,
         columns: [
             /*{ dataField: "JobId", caption: "Job ID" },*/
-            { dataField: "JobTitle", caption: "Job Title" },
+            { dataField: "JobTitle", caption: "Job Title", validationRules: [{ type: "required" }], },
+           
             /*{ dataField: "JobTypeValue", caption: "Job Type" },*/
             {
                 dataField: "JobTypeValue",
                 caption: "Job Type",
+                validationRules: [{ type: "required" }],
                 groupIndex: 0,
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -146,6 +148,7 @@ function showJob(dataSource) {
             {
                 dataField: "JobCurrencyValue",
                 caption: "Currency",
+                validationRules: [{ type: "required" }],
                 groupIndex: 0,
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -159,6 +162,7 @@ function showJob(dataSource) {
             {
                 dataField: "JobModeValue",
                 caption: "Job Mode",
+                validationRules: [{ type: "required" }],
                 groupIndex: 0,
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -168,9 +172,9 @@ function showJob(dataSource) {
                     placeholder: "Select a Job Mode",
                 }
             },
-            { dataField: "MinExperience", caption: "Min Experience" },
-            { dataField: "MaxExperience", caption: "Max Experience" },
-            { dataField: "Description", caption: "Description" },
+            { dataField: "MinExperience", caption: "Min Experience", validationRules: [{ type: "required" }], },
+            { dataField: "MaxExperience", caption: "Max Experience", validationRules: [{ type: "required" }], },
+            { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], },
             { dataField: "IsActive", caption: "Post Active Status" },
             { dataField: "urgentRequirement", caption: "Urgent Requirement" },
             { dataField: "Location", caption: "Location" },

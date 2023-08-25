@@ -89,9 +89,12 @@
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AllJobs">Jobs</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AppliedJobs">Applied Jobs</a>
-                        </li>   
+                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AppliedJobs" asp-route-id="@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value">Applied Jobs</a>
+                        </li>
 
+                           @* <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AppliedJobs">Applied Jobs</a>
+                        </li>   
+*@
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AboutUs">About Us</a>
                         </li>
