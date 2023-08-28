@@ -3,6 +3,7 @@ using DomainModel.EditUserFullDetails;
 using Microsoft.AspNetCore.Mvc;
 using Services.EditAdminFullDetails;
 
+
 namespace UI.Areas.Admin.Controllers
 {
     public class EditAdminFullDetailsController : Controller
@@ -29,9 +30,30 @@ namespace UI.Areas.Admin.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public IActionResult GetCountry()
+        {
+            var result = _EditAdminFullDetailServices.GetCountryList().ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetState(string country)
+        {
+            var result = _EditAdminFullDetailServices.GetStateList(country).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult GetCity(string state)
+        {
+            var result = _EditAdminFullDetailServices.GetCityList(state).ToList();
+            return Ok(result);
+        }
 
 
-        [HttpPost]
+
+        [HttpPost]        
         public IActionResult UpdateAdminDetails(EditAdminFullDetails adminDetails)
         {
             if (TempData["ImagePath"] != null)

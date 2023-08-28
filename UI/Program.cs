@@ -1,12 +1,16 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
+using Repository.AuditTrails;
+using Repository.AppliedJobs;
 using Repository.Connection;
 using Repository.EditAdminFullDetails;
-using Repository.MyAppliedJos;
+using Repository.Jobs;
 using Repository.RegisteredJobSeekers;
 using Repository.Users;
+using Services.AuditTrails;
 using Services.EditAdminFullDetails;
-using Services.MyApplied;
+using Services.AppliedJobs;
+using Services.Jobs;
 using Services.RegisteredJobSeekers;
 using Services.Users;
 
@@ -20,9 +24,14 @@ namespace i2eJobPortal
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            
+
 
             // Add services to the container.
+            //builder.Services.AddControllersWithViews(Options =>
+            //{
+            //    Options.Filters.Add(typeof(AuditTrailFilter));
+            //});
+
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
@@ -43,6 +52,9 @@ namespace i2eJobPortal
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserServices, UserServices>();
 
+            builder.Services.AddTransient<IAuditTrailRepository, AuditTrailRepository>();
+            builder.Services.AddTransient<IAuditTrailServices, AuditTrailServices>();
+
             builder.Services.AddTransient<IRegisteredJobSeekersRepository, RegisteredJobSeekersRepository>();
             builder.Services.AddTransient<IRegisteredJobSeekersServices, RegisteredJobSeekersServices>();
 
@@ -52,8 +64,13 @@ namespace i2eJobPortal
             builder.Services.AddTransient<IEditAdminFullDetailsRepository, EditAdminFullDetailsRepository>();
             builder.Services.AddTransient<IEditAdminFullDetailsServices, EditAdminFullDetailsServices>();
 
-            builder.Services.AddTransient<IAppliedJobsReposiotory, AppliedJobsReposiotory>();
+
+            builder.Services.AddTransient<IAppliedJobsRepository, AppliedJobsRepository>();
             builder.Services.AddTransient<IAppliedJobsServices, AppliedJobsServices>();
+
+
+            builder.Services.AddTransient<IJobRepository, JobRepository>();
+            builder.Services.AddTransient<IJobServices, JobServices>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 

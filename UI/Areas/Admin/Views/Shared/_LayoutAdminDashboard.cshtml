@@ -12,9 +12,64 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
-        .nav-link {
-            font-weight: bold;
-            /* color: black !important; */
+
+        .footer {
+            background-color: #202020;
+            color: #FFFFFF;
+            padding: 20px 0;
+        }
+
+        .footerLogoSection {
+            display: flex;
+            align-items: center;
+        }
+
+            .footerLogoSection img {
+                width: 92px;
+                float: left;
+            }
+
+            .footerLogoSection small {
+                font-size: 10px;
+                float: right;
+                color: #FFFFFF;
+            }
+
+        .footerBackground {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar {
+            width: 85%;
+            margin: auto;
+        }
+
+            .navbar .navbar-brand {
+                display: flex;
+                align-items: center;
+            }
+
+            .navbar .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                justify-content: flex-end;
+            }
+
+            .navbar .navbar-nav .nav-item {
+                margin: 0px 10px;
+            }
+
+            .navbar .nav-link {
+                color: #202020;
+                font-weight: 600;
+            }
+
+
+
+        /*.nav-link {
+            font-weight: bold;*/
+            /* color: black !important; 
         }
 
         a{
@@ -36,7 +91,7 @@
 
         .dx-theme-generic-typography {
             font-size: 16px !important;
-        }
+        }*/
 
     </style>
 </head>
@@ -56,9 +111,9 @@
                     <ul class="navbar-nav ms-auto">
 
                                                
-                        <li class="nav-item px-2">
+                       @* <li class="nav-item px-2">
                             <a class="nav-link" asp-area="Admin" asp-controller="AdminDashboard" asp-action="MyProfile">My Profile</a>
-                        </li>
+                        </li>*@
 
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="Admin" asp-controller="RegisteredJobSeekers" asp-action="Index">JobSeekers Management</a>
@@ -82,15 +137,14 @@
 
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img id="profileImage" src="#" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid black;" />
-                                <span class="badge rounded-pill" style="background-color: white; color: black;">
+                                <img id="profileImage" src="#" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #202020;" />
+                                <span class="badge rounded-pill" style="background-color: white; color: #202020;">
                                     <span id="firstNameSpan"></span><br />
                                     @User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a asp-controller="EditAdminFullDetails" asp-action="Index" asp-route-id="@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" class="dropdown-item">Manage Details</a>
-                                <a asp-controller="" asp-action="" class="dropdown-item">Link 2</a>
+                                <a asp-controller="EditAdminFullDetails" asp-action="Index" asp-route-id="@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" class="dropdown-item">Manage Profile Details</a>
                                 <div class="dropdown-divider"></div>
                                 <a  asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item">Logout</a>
                             </div>
@@ -111,23 +165,26 @@
 
     </div>
 
-    @* <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            <div class="row footerBackground">
-                <div class="col-sm-3 footerLogoSection">
-                    <div class="col-sm-4" style="text-align: left;">
-                        <img src="~/Images/i2e_Logo_White.png" alt="i2e Logo" style="width:92px; float: left;" />
+    <footer class="border-top footer text-muted">
+        <div class="container">
+
+            <div class="container-fluid">
+                <div class="row footerBackground">
+                    <div class="col-sm-3 footerLogoSection">
+                        <div class="col-sm-4" style="text-align: left;">
+                            <img src="~/Images/i2e_Logo_White.png" alt="i2e Logo" style="width:92px; float: left;" />
+                        </div>
+                        <div class="col-sm-8" style="float: right;">
+                            <small style="font-size:10px;">i2e consulting named among the fastest growing private companies in the US (2018 Inc. 5000), a Microsoft Gold partner has been delivering tailored solutions to Fortune 100 companies for over a decade.</small>
+                        </div>
                     </div>
-                    <div class="col-sm-8" style="float: right;">
-                        <small style="font-size:10px;">i2e consulting named among the fastest growing private companies in the US (2018 Inc. 5000), a Microsoft Gold partner has been delivering tailored solutions to Fortune 100 companies for over a decade.</small>
+                    <div class="col-sm-9">
                     </div>
                 </div>
-                <div class="col-sm-9">
-                </div>
-            </div>            
+            </div>
         </div>
-    </footer> *@
-    
+    </footer>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 

@@ -13,5 +13,7 @@ namespace Services.RegisteredJobSeekers
         IEnumerable<RegisteredJobSeeker> GetRegisteredJobSeekers();
 
         public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker);
+
+        RegisteredJobSeeker GetJobSeekerById(int id);
     }
 }

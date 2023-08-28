@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Services.MyApplied;
+using Services.AppliedJobs;
 
 namespace UI.Controllers
 {
@@ -15,7 +15,9 @@ namespace UI.Controllers
             _appliedJobsServices = appliedJobsServices;
         }
 
-        public IActionResult MyProfile()
+        
+       
+        public IActionResult MyProfile() /*Used as a home page controller*/
         {
             return View();
         }
@@ -25,16 +27,28 @@ namespace UI.Controllers
             return View();
         }
 
-        public IActionResult AppliedJobs()
-        {            
+
+        
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+        public IActionResult AppliedJobs(int id)
+        {
+            ViewBag.UserId = id;
             return View();
         }
 
-        public async Task<IActionResult>GetMyAppliedJobs()
-        {            
-            return Json(await _appliedJobsServices.MyAppliedJobs(1));
+        public async Task<IActionResult> GetMyAppliedJobs(int id)
+        {
+            return Json(await _appliedJobsServices.MyAppliedJobs(id));
         }
 
+       
         public IActionResult Logout()
         {
             return View();

@@ -64,7 +64,7 @@ function ShowEvent(_datasource) {
                 dataField: "JobAppliedDateTime",
                 caption: "AppliedDateTime",
                 dataType: 'date',
-                format:'dd-MMM-yyyy'
+                format: 'dd-MMM-yyyy'
             },
             {
                 dataField: "Status",
@@ -79,11 +79,13 @@ function ShowEvent(_datasource) {
     });
 }
 $(document).ready(function () {
-    LoadRecords();
+    let currentUserId = $("#currentUserId").val();
+    LoadRecords(currentUserId);
 });
-function LoadRecords() {
+console.log()
+function LoadRecords(userid) {
     $.ajax({
-        url: "/UserDashboard/GetMyAppliedJobs",
+        url: "/UserDashboard/GetMyAppliedJobs?id=" + userid,
         method: 'GET',
         success: function (responseData) {
             ShowEvent(responseData);

@@ -29,6 +29,48 @@ namespace Repository.RegisteredJobSeekers
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
+        public IEnumerable<EditUserFullDetails> GetBachelorsList()
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<EditUserFullDetails>("spGetBachelors", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
+        public IEnumerable<EditUserFullDetails> GetCityList(string state)
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            var para = new { State = state };
+            result = connection.Query<EditUserFullDetails>("spGetCity", para, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
+        public IEnumerable<EditUserFullDetails> GetCountryList()
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<EditUserFullDetails>("spGetCountry", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
+        public IEnumerable<EditUserFullDetails> GetMastersList()
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<EditUserFullDetails>("spGetMasters", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
+        public IEnumerable<EditUserFullDetails> GetStateList(string country)
+        {
+            IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            var para = new { Country = country };
+            result = connection.Query<EditUserFullDetails>("spGetState", para, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
         public IEnumerable<EditUserFullDetails> GetUserFullDetails(int id)
         {
             IEnumerable<EditUserFullDetails> result = new List<EditUserFullDetails>();
@@ -37,6 +79,7 @@ namespace Repository.RegisteredJobSeekers
             result = connection.Query<EditUserFullDetails>("spUserDetails", para, commandType: CommandType.StoredProcedure);
             return result;
         }
+
 
         public string UpdateProfileDetails(EditUserFullDetails userDetails)
         {
@@ -48,6 +91,7 @@ namespace Repository.RegisteredJobSeekers
                 Gender = userDetails.Gender,
                 BirthDate = userDetails.BirthDate,
                 PhoneNumber = userDetails.PhoneNumber,
+                Country = userDetails.Country,
                 State = userDetails.State,
                 City = userDetails.City,
                 Address = userDetails.Address,

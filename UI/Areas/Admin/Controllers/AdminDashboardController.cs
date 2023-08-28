@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Services.Users;
 
+
 namespace UI.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Super Admin, Admin")]
+    [Authorize(Roles = "Super Admin, Admin")]    
     public class AdminDashboardController : Controller
     {
         private readonly IUserServices _userServices;
