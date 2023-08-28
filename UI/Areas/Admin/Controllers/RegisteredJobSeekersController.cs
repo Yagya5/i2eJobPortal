@@ -42,7 +42,7 @@ namespace UI.Areas.Admin.Controllers
 
             string Module = "JobSeeker";
 
-            string Action = AuditAction.Modified;
+            string Action = AuditAction.Modified;            
 
             var result = _RegisteredJobSeekerServices.UpdateJobSeekerAccountStatus(jobSeeker);
 
