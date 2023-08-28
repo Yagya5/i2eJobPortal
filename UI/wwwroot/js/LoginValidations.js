@@ -11,15 +11,15 @@ form.addEventListener('submit', (e) => {
 
     if (Email.trim() === "") {
         e.preventDefault()
-        errors.push("Please enter your Email Address. ")
+        errors.push("Please enter your Email Address.")
     } else if (!isValidEmail(Email)) {
         e.preventDefault()
-        errors.push("Please enter valid Email Address. ")
+        errors.push("Please enter valid Email Address.")
     }
 
     if (Password.trim() === "") {
         e.preventDefault()
-        errors.push("Please enter your Password. ")
+        errors.push("Please enter your Password.")
     } 
 
 
@@ -29,10 +29,11 @@ form.addEventListener('submit', (e) => {
     }
 
     if (errors.length > 0) {
-        Swal.fire({
+        Swal.fire({            
             icon: 'error',
             title: 'Validation Error',
-            text: errors.join('\n')
+            html: errors.join("</br>")
+            
         })
         return false
     }
