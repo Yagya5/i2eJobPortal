@@ -17,5 +17,6 @@ namespace Services.Jobs
         bool DeleteJob(int JobId);
         Job GetJobById(int jobId);
         bool UpdateJob(Job job);
+        int GetMasterIdByValue(string category, string value);
     }
 }

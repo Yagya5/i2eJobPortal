@@ -8,7 +8,7 @@ namespace DomainModel.MasterDetails
 {
     public class Master
     {
-        public int MasterId { get; set; }
+        public int Id { get; set; }
         public string? Category { get; set; }
         public string? Value { get; set; }
     }
