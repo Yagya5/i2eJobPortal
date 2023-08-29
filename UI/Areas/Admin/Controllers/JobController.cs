@@ -24,11 +24,11 @@ namespace UI.Areas.Admin.Controllers
         public IActionResult GetJobs()
         {
             var jobs = _jobServices.GetJobs();
-          
+
             return Ok(jobs);
         }
-        
-     
+
+
         [HttpGet]
         public IActionResult FindJobIdInMaster(int jobId)
         {
@@ -78,14 +78,16 @@ namespace UI.Areas.Admin.Controllers
 
                 job.PostDate = DateTime.Now;
 
-            var response = _jobServices.UpdateJob(job);
+                var response = _jobServices.UpdateJob(job);
 
-            return Ok(response); // Redirect to the job listing after editing
 
                 _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
+                return Ok(response); // Redirect to the job listing after editing
+
+            }
+            return Ok(null);
 
         }
-
     }
 }
 
