@@ -11,5 +11,7 @@ namespace Repository.AuditTrails
     public interface IAuditTrailRepository
     {
         bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject);
+
+        IEnumerable<AuditTrail> GetAuditTrail();
     }
 }

@@ -1,15 +1,19 @@
-﻿using DomainModel.Jobs;
+﻿using DomainModel.AuditTrails;
+using DomainModel.Jobs;
 using Microsoft.AspNetCore.Mvc;
 using Services.Jobs;
+using Services.AuditTrails;
 
 namespace UI.Areas.Admin.Controllers
 {
     public class JobController : Controller
     {
         private readonly IJobServices _jobServices;
-        public JobController(IJobServices JobServices)
+        private readonly IAuditTrailServices _auditTrailServices;
+        public JobController(IJobServices JobServices, IAuditTrailServices auditTrailServices)
         {
             _jobServices = JobServices;
+            _auditTrailServices = auditTrailServices;
         }
         //View data with the values of categories instead of ids
         public IActionResult Index()
@@ -71,9 +75,16 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                job.PostDate = DateTime.Now;
+                var OldObject = _jobServices.GetJobById(job.JobId);
+                int TaskId = OldObject.JobId;
+                string Module = "Job";
+                string Action = AuditAction.Modified;
 
+
+                job.PostDate = DateTime.Now;
                 _jobServices.UpdateJob(job);
+
+                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
 
                 return RedirectToAction("Index"); // Redirect to the job listing after editing
             }
