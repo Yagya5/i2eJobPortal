@@ -88,12 +88,11 @@
             {
                 dataField: "UserId",
                 caption: "User Id",
-                alignment: "left"
-                
+                alignment: "left",  
             },
             {
                 dataField: "TaskId",
-                alignment: "left"
+                alignment: "left",              
             },
             {
                 dataField: "OldValue",
@@ -112,14 +111,16 @@
                 groupIndex: 0
             },
             {
-                dataField: "Url",                
+                dataField: "Url",  
+                width: "350"
             },
             {
                 dataField: "Action",                
             },
             {
                 dataField: "DateTimeStamp",
-                caption: "Date & Time"
+                caption: "Date & Time",
+                width: "200"
             }
         ]
 
