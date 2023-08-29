@@ -24,22 +24,17 @@ namespace UI.Areas.Admin.Controllers
         public IActionResult GetJobs()
         {
             var jobs = _jobServices.GetJobs();
-            foreach (var job in jobs)
-            {
-                job.JobTypeValue = GetJobValue(job.JobType);
-                job.JobModeValue = GetJobValue(job.JobMode);
-                job.JobCurrencyValue = GetJobValue(job.CurrencyType);
-            }
+          
             return Ok(jobs);
         }
-        //fetch the Value of the particular element ID to store it to the Table_Jobs DB
-        private string GetJobValue(int jobId)
+        
+     
+        [HttpGet]
+        public IActionResult FindJobIdInMaster(int jobId)
         {
-            var jobValue = _jobServices.FindJobIdInMaster(jobId)?.Value;
-            return jobValue ?? "N/A"; // Default value if not found
+            var values = _jobServices.FindJobIdInMaster(jobId);
+            return Json(values);
         }
-
-
         [HttpGet]
         public IActionResult GetMasterValuesByCategory(string category)
         {
@@ -52,9 +47,9 @@ namespace UI.Areas.Admin.Controllers
 
 
             job.PostDate = DateTime.Now;
-            //job.IsActive = bool.Parse(Request.Form["IsActive"]);
-            _jobServices.CreateJob(job);
-            return RedirectToAction("Index");
+
+            var response = _jobServices.CreateJob(job);
+            return Ok(response);
 
         }
 
@@ -65,7 +60,7 @@ namespace UI.Areas.Admin.Controllers
 
             var response = _jobServices.DeleteJob(JobId);
 
-            return RedirectToAction("Index", "Job");
+            return Ok(response);
 
         }
 
@@ -82,13 +77,13 @@ namespace UI.Areas.Admin.Controllers
 
 
                 job.PostDate = DateTime.Now;
-                _jobServices.UpdateJob(job);
+
+            var response = _jobServices.UpdateJob(job);
+
+            return Ok(response); // Redirect to the job listing after editing
 
                 _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
 
-                return RedirectToAction("Index"); // Redirect to the job listing after editing
-            }
-            return View(job);
         }
 
     }
