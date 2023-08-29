@@ -202,13 +202,10 @@
                         console.log(user.ProfilePicture);
                         console.log(user.FirstName)
                         const profileImageElement = document.getElementById("profileImage");
-                        if (user.ProfilePictrure == null || user.ProfilePictrure == "") {
-                            profileImageElement.src = "/AdminProfile/DefaultProfileAdmin.png";
+                        if (user.ProfilePicture == null || user.ProfilePicture == "") {
+                            user.ProfilePicture = "/AdminProfile/DefaultProfileAdmin.png"; // Set the src attribute
                         }
-                        else{
-                            profileImageElement.src = user.ProfilePicture; // Set the src attribute
-                        }
-                        
+                        profileImageElement.src = user.ProfilePicture;
 
                         const firstNameSpan = document.getElementById("firstNameSpan");
                         firstNameSpan.textContent = "Hi " + user.FirstName; // Set the content of the span
