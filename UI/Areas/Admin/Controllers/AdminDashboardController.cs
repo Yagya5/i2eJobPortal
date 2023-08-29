@@ -20,10 +20,6 @@ namespace UI.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult GetRecentLogins()
-        {
-            var result = _userServices.GetRecentLogins();
-            return Ok(result);
-        }
+        
     }
 }

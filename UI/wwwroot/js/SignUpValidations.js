@@ -50,7 +50,7 @@ form.addEventListener('submit', (e) => {
         Swal.fire({
             icon: 'error',
             title: 'Validation Error',
-            text: errors.join('\n')
+            html: errors.join('</br>')
         })
         return false
     }
