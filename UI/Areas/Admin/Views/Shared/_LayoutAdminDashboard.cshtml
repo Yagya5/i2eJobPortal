@@ -202,7 +202,13 @@
                         console.log(user.ProfilePicture);
                         console.log(user.FirstName)
                         const profileImageElement = document.getElementById("profileImage");
-                        profileImageElement.src = user.ProfilePicture; // Set the src attribute
+                        if (user.ProfilePictrure == null || user.ProfilePictrure == "") {
+                            profileImageElement.src = "/AdminProfile/DefaultProfileAdmin.png";
+                        }
+                        else{
+                            profileImageElement.src = user.ProfilePicture; // Set the src attribute
+                        }
+                        
 
                         const firstNameSpan = document.getElementById("firstNameSpan");
                         firstNameSpan.textContent = "Hi " + user.FirstName; // Set the content of the span
