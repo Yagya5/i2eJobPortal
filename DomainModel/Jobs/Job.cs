@@ -27,10 +27,5 @@ namespace DomainModel.Jobs
         public string? Location { get; set; }
         public bool urgentRequirement { get; set; }
 
-        //These are used to view Table_MasterDetails values for the ids fetched
-        public string? JobTypeValue { get; set; }
-        public string? JobModeValue { get; set; }
-
-        public string? JobCurrencyValue { get; set; }
     }
 }
