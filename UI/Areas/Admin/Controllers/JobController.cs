@@ -75,8 +75,8 @@ namespace UI.Areas.Admin.Controllers
                 string Module = "Job";
                 string Action = AuditAction.Modified;
 
-
-                job.PostDate = DateTime.Now;
+                OldObject.PostDate = null;
+                job.PostDate = null;
 
                 var response = _jobServices.UpdateJob(job);
 

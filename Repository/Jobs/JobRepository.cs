@@ -95,7 +95,7 @@ namespace Repository.Jobs
         public Job GetJobById(int jobId)
         {
             using var connection = _dapperConnection.CreateConnection();
-            var sql = "SELECT * FROM " + Constant.JobsTableName + " WHERE JobId = @JobId";
+            var sql = "SELECT * FROM " + Constant.JobsTableName + " WHERE JobId = @JobId";           
             return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
         }
         //Updating a Job
