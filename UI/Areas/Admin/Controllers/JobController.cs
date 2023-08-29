@@ -66,28 +66,17 @@ namespace UI.Areas.Admin.Controllers
 
         //Edit a Job
         [HttpPost]
-        public IActionResult EditJob(Job job)
+        IActionResult EditJob(Job job)
         {
-            if (ModelState.IsValid)
-            {
-                var OldObject = _jobServices.GetJobById(job.JobId);
-                int TaskId = OldObject.JobId;
-                string Module = "Job";
-                string Action = AuditAction.Modified;
 
+            job.PostDate = DateTime.Now;
+            _jobServices.UpdateJob(job);
 
-                job.PostDate = DateTime.Now;
-
-                var response = _jobServices.UpdateJob(job);
-
-
-                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
-                return Ok(response); // Redirect to the job listing after editing
-
-            }
-            return Ok(null);
+            var response = _jobServices.UpdateJob(job);
+            return Ok(response); // Redirect to the job listing after editing
 
         }
     }
+
 }
 
