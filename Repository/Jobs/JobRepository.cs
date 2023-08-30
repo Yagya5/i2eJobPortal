@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DomainModel.AuditLogins;
 using DomainModel.Common;
 using DomainModel.Jobs;
 using DomainModel.MasterDetails;
@@ -123,5 +124,13 @@ namespace Repository.Jobs
             return true;
         }
 
+        public IEnumerable<Job> GetJobsForHomePage()
+        {
+            IEnumerable<Job> result = new List<Job>();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "SELECT * FROM v_GetJobsForHomePage";
+            result = connection.Query<Job>(Query, null, null, true, 0, null);
+            return result;
+        }
     }
 }

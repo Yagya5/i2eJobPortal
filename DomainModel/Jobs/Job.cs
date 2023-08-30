@@ -10,6 +10,11 @@ namespace DomainModel.Jobs
     {
         public int JobId { get; set; }
         public int JobType { get; set; }   /*Call from Master table*/
+        
+        public string? JobType_Home { get; set; }
+        public string? JobMode_Home { get; set; }
+        public string? CurrencyType_Home { get; set; }
+
         public string? JobTitle { get; set; }
         public string? DepartmentName { get; set; }
         public int Salary { get; set; }

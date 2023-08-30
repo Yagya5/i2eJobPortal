@@ -37,10 +37,6 @@
             allowAdding: false
         },
 
-        onContentReady: function () {
-            $(".dx-link-edit").addClass("btn btn-primary");
-        },
-
         onRowUpdated: function (e) {
             $.ajax({
                 url: "/RegisteredJobSeekers/UpdateRegisteredJobSeekers/",

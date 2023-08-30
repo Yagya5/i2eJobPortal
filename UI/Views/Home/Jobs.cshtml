@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<DomainModel.Jobs.Job>
+
+
 @{
     ViewData["Title"] = "Jobs";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -67,24 +69,33 @@
 
                 <div class="col-lg-9 mb-5 opening-list">
                     <div class="row ms-5 g-4">
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">Content Writer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
+
+
+                        @foreach(var item in Model)
+                        {
+                            <div class="col-sm-4 cardmain">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-lg d-flex justify-content-between card-body-main">
+                                            <div class="job-type">
+                                                <div class="job-name">@item.JobTitle</div>
+                                                <div class="job-location">
+                                                    <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply" id="apply-jobs">Apply Now</button>
+                                            <div class="apply-btn d-flex align-items-end flex-column mb-3">
+                                                <button class="mt-auto apply" id="apply-jobs">
+                                                    Apply Now
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
+
+                        }       
+
+                       @*  <div class="col-sm-4 cardmain">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-lg d-flex justify-content-between card-body-main">
@@ -121,83 +132,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">AWS Glue Data<br>Engineer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply" id="apply-jobs">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">software Tester</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply" id="apply-jobs">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">UI Developer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply" id="apply-jobs">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">Front-end <br>Developer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply" id="apply-jobs">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div> *@
+                   
+
+
                     </div>
                 </div>
             </div>
