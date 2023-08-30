@@ -173,8 +173,9 @@ function showJob(dataSource) {
                 }
             });
         },
-
+      
         columnAutoWidth: true,
+       
        
         columns: [
             /*{ dataField: "JobId", caption: "Job ID" },*/
@@ -191,6 +192,14 @@ function showJob(dataSource) {
                     valueExpr: "Id",  // Update with the actual property name in your jobTypeValues1 objects
                     displayExpr: "Value", // Update with the actual property name in your jobTypeValues1 objects
                     placeholder: "Select a Job Type",
+                },
+               cellTemplate: function (container, options) {
+                    const jobTypeId = options.value; // Get the selected job type ID
+                    const jobTypeValue = jobTypeValues1.find(jobType => jobType.Id === jobTypeId);
+                    const jobTypeText = jobTypeValue.Value;
+                    $("<div>")
+                        .text(jobTypeText)
+                        .appendTo(container);
                 }
             },
             
@@ -233,8 +242,9 @@ function showJob(dataSource) {
                     placeholder: "Select a Currency",
                 },
                 cellTemplate: function (container, options) {
-                    const currencyValue = options.value;
-                    const currencySymbol = currencySymbols[currencyValue] || ""; // Make sure currencySymbols is defined and correct
+                    const currencyId = options.value; // Get the selected currency ID
+                    const currencyValue = currencyValues1.find(currency => currency.Id === currencyId);
+                    const currencySymbol = currencySymbols[currencyValue.Value] || "";
                     $("<div>")
                         .text(currencySymbol)
                         .appendTo(container);
@@ -252,11 +262,54 @@ function showJob(dataSource) {
                     valueExpr: "Id",
                     displayExpr: "Value",
                     placeholder: "Select a Job Mode",
+                },
+                cellTemplate: function (container, options) {
+                    const jobModeID = options.value; // Get the selected job type ID
+                    const jobModeValues = jobModeValues1.find(JobMode => JobMode.Id === jobModeID);
+                    const jobModeValuesText = jobModeValues.Value;
+                    $("<div>")
+                        .text(jobModeValuesText)
+                        .appendTo(container);
                 }
             },
-           
-            { dataField: "MinExperience", caption: "Min Experience" },
-            { dataField: "MaxExperience", caption: "Max Experience" },
+            {
+                dataField: "MinExperience",
+                caption: "Min Experience in Years",
+                //editorOptions: {
+                   
+                //    placeholder: "Enter number of years",
+                //    // Add any other relevant editor options
+                //},
+                validationRules: [
+                    {
+                        type: "required",
+                        message: "Min Experience is required"
+                    }
+                ],
+                cellTemplate: function (container, options) {
+                    $("<div>")
+                        .text(options.value + " years")
+                        .appendTo(container);
+                }
+            },
+            {
+                dataField: "MaxExperience",
+                caption: "Max Experience in Years",
+                validationRules: [
+                    {
+                        type: "required",
+                        message: "Max Experience is required and more then Min Experience"
+                    }
+                ],
+                cellTemplate: function (container, options) {
+                    $("<div>")
+                        .text(options.value + " years")
+                        .appendTo(container);
+                }
+            },
+            
+            /*{ dataField: "MinExperience", caption: "Min Experience" },*/
+           /* { dataField: "MaxExperience", caption: "Max Experience" },*/
             { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], editorType: "dxTextArea", },
             { dataField: "IsActive", caption: "Post Active Status" },
             { dataField: "urgentRequirement", caption: "Urgent Requirement" },
