@@ -77,21 +77,26 @@
                             items: _datasource.CountryList,
                             searchEnabled: true,
                             onValueChanged: function (e) {
-                                console.log(_datasource.StateList);
-                                console.log(e.value)
+                                console.log(e.value);
+                                _datasource.State = "";
+                                _datasource.City = "";
                                 $.ajax({
                                     url: "/EditAdminFullDetails/GetState",
                                     method: 'GET',
                                     data: { country: e.value },
                                     success: function (ResponseData) {
                                         let temparray = [];
+                                        let temparray2 = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
                                             temparray.push(value);
                                         }
                                         _datasource.StateList = temparray;
+                                        _datasource.CityList = temparray2;
                                         console.log("Updated StateList", _datasource.StateList);
+                                        console.log("Updated CityList", _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
+                                        $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
                                     error: function (err) {
                                         // Handle the error if any
@@ -118,6 +123,7 @@
                             onValueChanged: function (e) {
                                 console.log(_datasource.CityList);
                                 console.log(e.value)
+                                _datasource.City = "";
                                 $.ajax({
                                     url: "/EditAdminFullDetails/GetCity",
                                     method: 'GET',
@@ -515,17 +521,6 @@
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
