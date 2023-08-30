@@ -24,11 +24,7 @@ function showJob(dataSource) {
             showInfo: true,
             showNavigationButtons: true,
         },
-        summary: {
-            groupItems: [{
-                summaryType: "count"
-            }]
-        },
+       
 
         editing: {
             mode: "popup",
@@ -41,6 +37,7 @@ function showJob(dataSource) {
         onContentReady: function () {
             $(".dx-link-edit")/*.addClass("btn btn-primary");*/
             $(".dx-link-delete")/*.addClass("btn btn-danger");*/
+
         },
 
         onRowRemoving: function (e) {
@@ -62,8 +59,6 @@ function showJob(dataSource) {
         onRowUpdated: function (e) {
             var jobId = e.key.JobId;
 
-            //// Redirect to the edit page with the corresponding JobId
-            //window.location.href = `/Admin/Job/EditJob/${jobId}`;
             $.ajax({
                 url: "/Job/EditJob/",
                 method: "POST",
@@ -77,9 +72,9 @@ function showJob(dataSource) {
                     "Description": e.data.Description,
                     "IsActive": e.data.IsActive,
                     "Location": e.data.Location,
-                    "JobTypeValue": e.data.JobTypeValue, // Set to the appropriate dropdown value
-                    "JobModeValue": e.data.JobModeValue, // Set to the appropriate dropdown value
-                    "JobCurrencyValue": e.data.JobCurrencyValue, // Set to the appropriate dropdown value
+                    "JobType": e.data.JobType, // Set to the appropriate dropdown value
+                    "JobMode": e.data.JobMode, // Set to the appropriate dropdown value
+                    "CurrencyType": e.data.CurrencyType,
                     "urgentRequirement": e.data.urgentRequirement,
                 },
                 success: function (ResponseData) {
@@ -93,6 +88,7 @@ function showJob(dataSource) {
         },
         onRowInserted: function (e) {
             // Prepared the data to send to the server
+           
             var dataToSend = {
                 "JobId": e.data.JobId,
                 "JobTitle": e.data.JobTitle,
@@ -103,9 +99,9 @@ function showJob(dataSource) {
                 "Description": e.data.Description,
                 "IsActive": e.data.IsActive,
                 "Location": e.data.Location,
-                "JobTypeValue": e.data.JobTypeValue, // Set to the appropriate dropdown value
-                "JobModeValue": e.data.JobModeValue, // Set to the appropriate dropdown value
-                "JobCurrencyValue": e.data.JobCurrencyValue, // Set to the appropriate dropdown value
+                "JobType": e.data.JobType, // Set to the appropriate dropdown value
+                "JobMode": e.data.JobMode, // Set to the appropriate dropdown value
+                "CurrencyType": e.data.CurrencyType,
                 "urgentRequirement": e.data.urgentRequirement,
             };
 
@@ -115,66 +111,99 @@ function showJob(dataSource) {
                 method: "POST",
                 data: dataToSend,
                 success: function (ResponseData) {
+                    
                     LoadRecords(); // Reload the grid after successful creation
                 },
                 error: function (err) {
-                    alert(err); // Show an error message if the request fails
+                    console.log(err); // Show an error message if the request fails
                 }
             });
         },
 
         columnAutoWidth: true,
+       
         columns: [
             /*{ dataField: "JobId", caption: "Job ID" },*/
             { dataField: "JobTitle", caption: "Job Title", validationRules: [{ type: "required" }], },
            
-            /*{ dataField: "JobTypeValue", caption: "Job Type" },*/
+           /* { dataField: "JobTypeValue", caption: "Job Type" },*/
             {
-                dataField: "JobTypeValue",
+                dataField: "JobType",
                 caption: "Job Type",
                 validationRules: [{ type: "required" }],
-                groupIndex: 0,
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: jobTypeValues1,
-                    valueExpr: "value",
-                    displayExpr: "value",
+                    valueExpr: "Id",  // Update with the actual property name in your jobTypeValues1 objects
+                    displayExpr: "Value", // Update with the actual property name in your jobTypeValues1 objects
                     placeholder: "Select a Job Type",
                 }
             },
+            
             { dataField: "DepartmentName", caption: "Department Name" },
-            { dataField: "Salary", caption: "Salary" },
-            /*{ dataField: "JobCurrencyValue", caption: "Currency Type" },*/
+           /* { dataField: "Salary", caption: "Salary" },*/
             {
-                dataField: "JobCurrencyValue",
+                dataField: "Salary",
+                caption: "Salary",
+                validationRules: [{ type: "required" }],
+                editCellTemplate: function (container, options) {
+                    var inputContainer = $("<div>").addClass("input-container");
+
+                    var input = $("<div>").dxNumberBox({
+                        value: options.value,
+                        showSpinButtons: true,
+                        format: "#,##0",
+                        onValueChanged: function (e) {
+                            options.setValue(e.value);
+                        }
+                    }).addClass("salary-input");
+
+                    inputContainer.append(input);
+                    container.append(inputContainer);
+                },
+                cellTemplate: function (container, options) {
+                    $("<div>")
+                        .text(options.value.toLocaleString('en-US', { style: 'decimal' })) // Omit currency options
+                        .appendTo(container);
+                }
+            },
+            {
+                dataField: "CurrencyType",
                 caption: "Currency",
                 validationRules: [{ type: "required" }],
-                groupIndex: 0,
                 editorType: "dxSelectBox",
                 editorOptions: {
-                    dataSource: currencyValues1,
-                    valueExpr: "value",
-                    displayExpr: "value",
+                    dataSource: currencyValues1, // Make sure this is defined and correct
+                    valueExpr: "Id", // Property name for the unique identifier in currency objects
+                    displayExpr: "Value", // Property name for the display text in currency objects
                     placeholder: "Select a Currency",
+                },
+                cellTemplate: function (container, options) {
+                    const currencyValue = options.value;
+                    const currencySymbol = currencySymbols[currencyValue] || ""; // Make sure currencySymbols is defined and correct
+                    $("<div>")
+                        .text(currencySymbol)
+                        .appendTo(container);
                 }
             },
             /*{ dataField: "JobModeValue", caption: "Job Mode" },*/
             {
-                dataField: "JobModeValue",
+                dataField: "JobMode",
                 caption: "Job Mode",
                 validationRules: [{ type: "required" }],
-                groupIndex: 0,
+                /*groupIndex: 0,*/
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: jobModeValues1,
-                    valueExpr: "value",
-                    displayExpr: "value",
+                    valueExpr: "Id",
+                    displayExpr: "Value",
                     placeholder: "Select a Job Mode",
                 }
             },
-            { dataField: "MinExperience", caption: "Min Experience", validationRules: [{ type: "required" }], },
-            { dataField: "MaxExperience", caption: "Max Experience", validationRules: [{ type: "required" }], },
-            { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], },
+           
+            { dataField: "MinExperience", caption: "Min Experience" },
+            { dataField: "MaxExperience", caption: "Max Experience" },
+            { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], editorType: "dxTextArea", },
             { dataField: "IsActive", caption: "Post Active Status" },
             { dataField: "urgentRequirement", caption: "Urgent Requirement" },
             { dataField: "Location", caption: "Location" },
@@ -193,9 +222,63 @@ function showJob(dataSource) {
     });
 }
 $(document).ready(function () {
-    LoadRecords();
     fetchMasterValues();
+    LoadRecords();
+    
+    
 });
+const currencySymbols = {
+    USD: "$",
+    EUR: "€",
+    GBP: "£",
+    INR: "₹",
+  
+};
+
+
+let jobTypeValues1 = [];
+let jobModeValues1 = [];
+let currencyValues1 = [];
+
+function fetchMasterValues() {
+    $.ajax({
+        url: "/Job/GetMasterValuesByCategory",
+        method: "GET",
+        data: { category: "Job Type" },
+        success: function (response) {
+            jobTypeValues1 = response/*.map(item => ({ value: item.Value }))*/;
+        },
+        error: function (err) {
+            alert("Error fetching Job Types: " + err);
+        }
+    });
+
+    $.ajax({
+        url: "/Job/GetMasterValuesByCategory",
+        method: "GET",
+        data: { category: "Job Mode" },
+        success: function (response) {
+            jobModeValues1 = response/*.map(item => ({ value: item.Value }))*/;
+        },
+        error: function (err) {
+            alert("Error fetching Job Modes: " + err);
+        }
+    });
+
+    $.ajax({
+        url: "/Job/GetMasterValuesByCategory",
+        method: "GET",
+        data: { category: "Currency" },
+        success: function (response) {
+            currencyValues1 = response/*.map(item => ({ value: item.Value }))*/;
+
+             LoadRecords();
+        },
+        error: function (err) {
+            alert("Error fetching Currencies: " + err);
+        }
+    });
+}
 
 function LoadRecords() {
     $.ajax({
@@ -210,46 +293,4 @@ function LoadRecords() {
     });
 }
 
-let jobTypeValues1 = [];
-let jobModeValues1 = [];
-let currencyValues1 = [];
 
-function fetchMasterValues() {
-    $.ajax({
-        url: "/Job/GetMasterValuesByCategory",
-        method: "GET",
-        data: { category: "Job Type" },
-        success: function (response) {
-            jobTypeValues1 = response.map(item => ({ value: item.Value }));
-        },
-        error: function (err) {
-            alert("Error fetching Job Types: " + err);
-        }
-    });
-
-    $.ajax({
-        url: "/Job/GetMasterValuesByCategory",
-        method: "GET",
-        data: { category: "Job Mode" },
-        success: function (response) {
-            jobModeValues1 = response.map(item => ({ value: item.Value }));
-        },
-        error: function (err) {
-            alert("Error fetching Job Modes: " + err);
-        }
-    });
-
-    $.ajax({
-        url: "/Job/GetMasterValuesByCategory",
-        method: "GET",
-        data: { category: "Currency" },
-        success: function (response) {
-            currencyValues1 = response.map(item => ({ value: item.Value }));
-
-            /* LoadRecords();*/
-        },
-        error: function (err) {
-            alert("Error fetching Currencies: " + err);
-        }
-    });
-}

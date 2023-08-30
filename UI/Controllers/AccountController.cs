@@ -69,7 +69,7 @@ namespace UI.Controllers
 
                     var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
 
-                    return RedirectToAction("MyProfile", "AdminDashboard", new { area = "Admin" });
+                    return RedirectToAction("Index", "RegisteredJobSeekers", new { area = "Admin" });
                 }
 
                 if (result.RoleName == "Admin")
@@ -91,7 +91,7 @@ namespace UI.Controllers
 
                     var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
 
-                    return RedirectToAction("MyProfile", "AdminDashboard", new {area = "Admin"});
+                    return RedirectToAction("Index", "RegisteredJobSeekers", new {area = "Admin"});
                 }
 
                 if (result.RoleName == "Job Seeker")

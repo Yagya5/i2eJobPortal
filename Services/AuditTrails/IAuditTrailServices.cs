@@ -13,6 +13,8 @@ namespace Services.AuditTrails
 {
     public interface IAuditTrailServices
     {
-        bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject);        
+        bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject);
+
+        IEnumerable<AuditTrail> GetAuditTrail();
     }
 }

@@ -20,6 +20,11 @@ namespace Services.AuditTrails
             _auditTrailRepository = auditTrailRepository;
         }
 
+        public IEnumerable<AuditTrail> GetAuditTrail()
+        {
+            var result = _auditTrailRepository.GetAuditTrail();
+            return result;
+        }
 
         public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject)
         {                        

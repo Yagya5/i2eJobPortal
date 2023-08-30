@@ -68,7 +68,7 @@ namespace Repository.Users
         {
             IEnumerable<AuditLogin> result = new List<AuditLogin>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT top 10 * FROM v_AuditedLogins ORDER BY LoginTimeStamp DESC";
+            string Query = "SELECT top 50 * FROM v_AuditedLogins ORDER BY LoginTimeStamp DESC";
             result = connection.Query<AuditLogin>(Query, null, null, true, 0, null);
             return result;
         }
