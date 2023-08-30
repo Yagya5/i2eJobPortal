@@ -91,7 +91,7 @@ function showJob(dataSource) {
         onContentReady: function () {
             $(".dx-link-edit")/*.addClass("btn btn-primary");*/
             $(".dx-link-delete")/*.addClass("btn btn-danger");*/
-
+            
         },
 
         onRowRemoving: function (e) {
@@ -126,8 +126,8 @@ function showJob(dataSource) {
                     "Description": e.data.Description,
                     "IsActive": e.data.IsActive,
                     "Location": e.data.Location,
-                    "JobType": e.data.JobType, // Set to the appropriate dropdown value
-                    "JobMode": e.data.JobMode, // Set to the appropriate dropdown value
+                    "JobType": e.data.JobType, 
+                    "JobMode": e.data.JobMode, 
                     "CurrencyType": e.data.CurrencyType,
                     "urgentRequirement": e.data.urgentRequirement,
                 },
@@ -141,7 +141,7 @@ function showJob(dataSource) {
 
         },
         onRowInserted: function (e) {
-            // Prepared the data to send to the server
+          
            
             var dataToSend = {
                 "JobId": e.data.JobId,
@@ -153,23 +153,23 @@ function showJob(dataSource) {
                 "Description": e.data.Description,
                 "IsActive": e.data.IsActive,
                 "Location": e.data.Location,
-                "JobType": e.data.JobType, // Set to the appropriate dropdown value
-                "JobMode": e.data.JobMode, // Set to the appropriate dropdown value
+                "JobType": e.data.JobType, 
+                "JobMode": e.data.JobMode, 
                 "CurrencyType": e.data.CurrencyType,
                 "urgentRequirement": e.data.urgentRequirement,
             };
 
-            // Send the data to the server
+            
             $.ajax({
                 url: "/Job/CreateJob/",
                 method: "POST",
                 data: dataToSend,
                 success: function (ResponseData) {
                     
-                    LoadRecords(); // Reload the grid after successful creation
+                    LoadRecords(); 
                 },
                 error: function (err) {
-                    console.log(err); // Show an error message if the request fails
+                    console.log(err); 
                 }
             });
         },
@@ -178,10 +178,10 @@ function showJob(dataSource) {
        
        
         columns: [
-            /*{ dataField: "JobId", caption: "Job ID" },*/
+           
             { dataField: "JobTitle", caption: "Job Title", validationRules: [{ type: "required" }], },
            
-           /* { dataField: "JobTypeValue", caption: "Job Type" },*/
+          
             {
                 dataField: "JobType",
                 caption: "Job Type",
@@ -189,12 +189,12 @@ function showJob(dataSource) {
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: jobTypeValues1,
-                    valueExpr: "Id",  // Update with the actual property name in your jobTypeValues1 objects
-                    displayExpr: "Value", // Update with the actual property name in your jobTypeValues1 objects
+                    valueExpr: "Id",  
+                    displayExpr: "Value",
                     placeholder: "Select a Job Type",
                 },
                cellTemplate: function (container, options) {
-                    const jobTypeId = options.value; // Get the selected job type ID
+                    const jobTypeId = options.value; 
                     const jobTypeValue = jobTypeValues1.find(jobType => jobType.Id === jobTypeId);
                     const jobTypeText = jobTypeValue.Value;
                     $("<div>")
@@ -204,7 +204,7 @@ function showJob(dataSource) {
             },
             
             { dataField: "DepartmentName", caption: "Department Name" },
-           /* { dataField: "Salary", caption: "Salary" },*/
+           
             {
                 dataField: "Salary",
                 caption: "Salary",
@@ -226,7 +226,7 @@ function showJob(dataSource) {
                 },
                 cellTemplate: function (container, options) {
                     $("<div>")
-                        .text(options.value.toLocaleString('en-US', { style: 'decimal' })) // Omit currency options
+                        .text(options.value.toLocaleString('en-US', { style: 'decimal' })) 
                         .appendTo(container);
                 }
             },
@@ -236,13 +236,13 @@ function showJob(dataSource) {
                 validationRules: [{ type: "required" }],
                 editorType: "dxSelectBox",
                 editorOptions: {
-                    dataSource: currencyValues1, // Make sure this is defined and correct
-                    valueExpr: "Id", // Property name for the unique identifier in currency objects
-                    displayExpr: "Value", // Property name for the display text in currency objects
+                    dataSource: currencyValues1, 
+                    valueExpr: "Id", 
+                    displayExpr: "Value", 
                     placeholder: "Select a Currency",
                 },
                 cellTemplate: function (container, options) {
-                    const currencyId = options.value; // Get the selected currency ID
+                    const currencyId = options.value; 
                     const currencyValue = currencyValues1.find(currency => currency.Id === currencyId);
                     const currencySymbol = currencySymbols[currencyValue.Value] || "";
                     $("<div>")
@@ -250,12 +250,12 @@ function showJob(dataSource) {
                         .appendTo(container);
                 }
             },
-            /*{ dataField: "JobModeValue", caption: "Job Mode" },*/
+            
             {
                 dataField: "JobMode",
                 caption: "Job Mode",
                 validationRules: [{ type: "required" }],
-                /*groupIndex: 0,*/
+               
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: jobModeValues1,
@@ -264,7 +264,7 @@ function showJob(dataSource) {
                     placeholder: "Select a Job Mode",
                 },
                 cellTemplate: function (container, options) {
-                    const jobModeID = options.value; // Get the selected job type ID
+                    const jobModeID = options.value; 
                     const jobModeValues = jobModeValues1.find(JobMode => JobMode.Id === jobModeID);
                     const jobModeValuesText = jobModeValues.Value;
                     $("<div>")
@@ -275,11 +275,7 @@ function showJob(dataSource) {
             {
                 dataField: "MinExperience",
                 caption: "Min Experience in Years",
-                //editorOptions: {
-                   
-                //    placeholder: "Enter number of years",
-                //    // Add any other relevant editor options
-                //},
+                
                 validationRules: [
                     {
                         type: "required",
@@ -308,18 +304,17 @@ function showJob(dataSource) {
                 }
             },
             
-            /*{ dataField: "MinExperience", caption: "Min Experience" },*/
-           /* { dataField: "MaxExperience", caption: "Max Experience" },*/
+           
             { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], editorType: "dxTextArea", },
             { dataField: "IsActive", caption: "Post Active Status" },
             { dataField: "urgentRequirement", caption: "Urgent Requirement" },
-            /*{ dataField: "Location", caption: "Location" },*/
+            
 
             {
                 dataField: "Location",
                 caption: "Location",
                 validationRules: [{ type: "required" }],
-                /*groupIndex: 0,*/
+               
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: JobLocation,
