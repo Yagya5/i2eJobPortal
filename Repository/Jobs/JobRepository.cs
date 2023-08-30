@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DomainModel.AuditLogins;
 using DomainModel.Common;
 using DomainModel.Jobs;
 using DomainModel.MasterDetails;
@@ -52,17 +53,14 @@ namespace Repository.Jobs
             using var connection = _dapperConnection.CreateConnection();
             var param = new DynamicParameters();
 
-            // Fetch IDs for job type, currency type, and job mode
-            var jobTypeId = GetMasterIdByValue("Job Type", job_Obj.JobTypeValue);
-            var currencyTypeId = GetMasterIdByValue("Currency", job_Obj.JobCurrencyValue);
-            var jobModeId = GetMasterIdByValue("Job Mode", job_Obj.JobModeValue);
+           
 
-            param.Add("JobType", jobTypeId);
+            param.Add("JobType", job_Obj.JobType);
             param.Add("JobTitle", job_Obj.JobTitle);
             param.Add("DepartmentName", job_Obj.DepartmentName);
             param.Add("Salary", job_Obj.Salary);
-            param.Add("CurrencyType", currencyTypeId);
-            param.Add("JobMode", jobModeId);
+            param.Add("CurrencyType", job_Obj.CurrencyType);
+            param.Add("JobMode", job_Obj.JobMode);
             param.Add("MinExperience", job_Obj.MinExperience);
             param.Add("MaxExperience", job_Obj.MaxExperience);
             param.Add("Description", job_Obj.Description);
@@ -78,7 +76,7 @@ namespace Repository.Jobs
         public IEnumerable<Master> GetMasterValuesByCategory(string category)
         {
             using var connection = _dapperConnection.CreateConnection();
-            var sql = "SELECT Value FROM " + Constant.MasterDetailsTableName + " WHERE Category = @Category";
+            var sql = "SELECT Id, Category, Value FROM " + Constant.MasterDetailsTableName + " WHERE Category = @Category";
             return connection.Query<Master>(sql, new { Category = category });
         }
         //End
@@ -98,7 +96,7 @@ namespace Repository.Jobs
         public Job GetJobById(int jobId)
         {
             using var connection = _dapperConnection.CreateConnection();
-            var sql = "SELECT * FROM " + Constant.JobsTableName + " WHERE JobId = @JobId";
+            var sql = "SELECT * FROM " + Constant.JobsTableName + " WHERE JobId = @JobId";           
             return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
         }
         //Updating a Job
@@ -108,17 +106,14 @@ namespace Repository.Jobs
             var param = new DynamicParameters();
 
 
-            var jobTypeId = GetMasterIdByValue("Job Type", job.JobTypeValue);
-            var currencyTypeId = GetMasterIdByValue("Currency", job.JobCurrencyValue);
-            var jobModeId = GetMasterIdByValue("Job Mode", job.JobModeValue);
 
             param.Add("JobId", job.JobId);
-            param.Add("JobType", jobTypeId);
+            param.Add("JobType", job.JobType);
             param.Add("JobTitle", job.JobTitle);
             param.Add("DepartmentName", job.DepartmentName);
             param.Add("Salary", job.Salary);
-            param.Add("CurrencyType", currencyTypeId);
-            param.Add("JobMode", jobModeId);
+            param.Add("CurrencyType", job.CurrencyType);
+            param.Add("JobMode", job.JobMode);
             param.Add("MinExperience", job.MinExperience);
             param.Add("MaxExperience", job.MaxExperience);
             param.Add("Description", job.Description);
@@ -129,5 +124,13 @@ namespace Repository.Jobs
             return true;
         }
 
+        public IEnumerable<Job> GetJobsForHomePage()
+        {
+            IEnumerable<Job> result = new List<Job>();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "SELECT * FROM v_GetJobsForHomePage";
+            result = connection.Query<Job>(Query, null, null, true, 0, null);
+            return result;
+        }
     }
 }

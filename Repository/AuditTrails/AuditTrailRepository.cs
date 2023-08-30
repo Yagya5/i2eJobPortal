@@ -28,6 +28,14 @@ namespace Repository.AuditTrails
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
+        public IEnumerable<AuditTrail> GetAuditTrail()
+        {
+            IEnumerable<AuditTrail> result = new List<AuditTrail>();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "SELECT * FROM v_AuditTrail";
+            result = connection.Query<AuditTrail>(Query, null, null, true, 0, null);
+            return result;
+        }
 
         public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject)
         {   

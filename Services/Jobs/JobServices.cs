@@ -58,5 +58,16 @@ namespace Services.Jobs
             var result = _jobRepository.UpdateJob(job);
             return result;
         }
+        public int GetMasterIdByValue(string category, string value)
+        {
+            var result = _jobRepository.GetMasterIdByValue(category, value);
+            return result;
+        }
+
+        public IEnumerable<Job> GetJobsForHomePage()
+        {
+            var result = _jobRepository.GetJobsForHomePage();
+            return result;
+        }
     }
 }

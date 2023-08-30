@@ -77,21 +77,26 @@
                             items: _datasource.CountryList,
                             searchEnabled: true,
                             onValueChanged: function (e) {
-                                console.log(_datasource.StateList);
-                                console.log(e.value)
+                                console.log(e.value);
+                                _datasource.State = "";
+                                _datasource.City = "";
                                 $.ajax({
                                     url: "/EditAdminFullDetails/GetState",
                                     method: 'GET',
                                     data: { country: e.value },
                                     success: function (ResponseData) {
                                         let temparray = [];
+                                        let temparray2 = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
                                             temparray.push(value);
                                         }
                                         _datasource.StateList = temparray;
+                                        _datasource.CityList = temparray2;
                                         console.log("Updated StateList", _datasource.StateList);
+                                        console.log("Updated CityList", _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
+                                        $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
                                     error: function (err) {
                                         // Handle the error if any
@@ -118,6 +123,7 @@
                             onValueChanged: function (e) {
                                 console.log(_datasource.CityList);
                                 console.log(e.value)
+                                _datasource.City = "";
                                 $.ajax({
                                     url: "/EditAdminFullDetails/GetCity",
                                     method: 'GET',
@@ -202,44 +208,7 @@
 
                     //},
 
-                    {
-                        dataField: 'ProfilePicture', // Property name for the profile picture URL
-                        editorType: 'dxFileUploader',
-                        editorOptions: {
-                            accept: 'image/*',
-                            uploadMode: "useForm",
-                            selectButtonText: 'Select Image',
-                            labelText: '',
-                            showClearButton: true,
 
-                            onValueChanged: function (e) {
-                                // When the profile picture changes, update the form data
-                                /*updateFormData($.extend({}, $('#form').dxForm('option', 'formData'), { profilePicture: e.value }));*/
-
-                                if (e.value && e.value.length > 0) {
-                                    const formData = new FormData();
-                                    formData.append('ProfilePicture', e.value[0]);
-
-                                    $.ajax({
-                                        url: "/EditAdminFullDetails/UploadProfilePicture",
-                                        method: 'POST',
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                        success: function (response) {
-                                            // On success, update the form data with the new image URL
-                                            const newFormData = $.extend({}, $('#form').dxForm('option', 'formData'), { ProfilePicture: response.url });
-                                            /*updateFormData(newFormData);*/
-                                        },
-                                        error: function (err) {
-                                            // Handle the error if any
-                                            console.error(err);
-                                        }
-                                    });
-                                }
-                            }
-                        },
-                    },
 
                 ],
             }],
@@ -247,16 +216,19 @@
 
         $('#form').dxForm('instance').validate();
 
-        if (_datasource.ProfilePictureUrl != null) {
-            $('#form').prepend(`<div class="row justify-content-center">
+        $('#form').prepend(`
+        <div class="row justify-content-center">
             <div class="col-12 text-center">
-                <img src="${_datasource.ProfilePictureUrl}" asp-append-version="true" style="width: 150px; height: 150px; border-radius: 85px; border: 2px solid black;">
+                <img src="${_datasource.ProfilePictureUrl}" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
             </div>
         </div>`);
-        }
 
-        
-        $('#form').append('<br /><div id="updateButton"></div>');
+        $('#profileImageInform').click(() => {
+            modal.style.display = 'flex';
+            modalImage.src = _datasource.ProfilePictureUrl;
+        });
+
+        $('#form').append('<div style="float:right;"><div id="updateButton"></div>&nbsp; &nbsp;<div id="cancelButton"></div></div> <br /><br /><br /> <br /><br /><br /> <br /><br />');
 
         $('#updateButton').dxButton({
             text: 'Save',
@@ -277,7 +249,6 @@
 
                 updatedData.BirthDate = formattedDate;
 
-                // Send the updated data to the server
                 $.ajax({
                     url: "/EditAdminFullDetails/UpdateAdminDetails",
                     method: 'POST',
@@ -310,6 +281,15 @@
             }
         });
 
+        $('#cancelButton').dxButton({
+            text: 'Reset',
+            onClick: function () {
+                LoadRecords();
+
+            }
+        });
+
+
 
 
     }
@@ -334,7 +314,6 @@
                         temparray.push(value);
                     }
                     CountryList = temparray;
-                    console.log(StateList);
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -360,7 +339,6 @@
                         temparray.push(value);
                     }
                     StateList = temparray;
-                    console.log(StateList);
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -386,7 +364,6 @@
                         temparray.push(value);
                     }
                     CityList = temparray;
-                    console.log(CityList);
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -406,8 +383,12 @@
             });
 
             const user = ResponseData[0];
-            if (user.ProfilePicture != null) {
+
+            if (user.ProfilePicture != null && user.ProfilePicture.length != 0) {
                 user.ProfilePictureUrl = user.ProfilePicture;
+            }
+            else {
+                user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png"
             }
 
             user.ProfilePicture = '';
@@ -422,6 +403,14 @@
             user.CityList = CityList;
 
             ShowUserProfileDetails(user);
+
+            if (user.ProfilePictureUrl === "/AdminProfile/DefaultProfileAdmin.png") {
+                $('#removeProfilePictureButton').dxButton('instance').option('disabled', true);
+            } else {
+                $('#removeProfilePictureButton').dxButton('instance').option('disabled', false);
+            }
+
+
         } catch (err) {
             alert(err);
         }
@@ -429,19 +418,109 @@
 
     LoadRecords();
 
+    const modal = document.createElement('div');
+    modal.id = 'profilePictureModal';
+    modal.classList.add('modal');
+    document.body.appendChild(modal);
+
+    modal.innerHTML = `
+            <div class="modal-content" style="max-width: 719px; max-height: 500px;
+                margin: 0 auto;">
+                <span class="close" style="position: absolute; top: 10px; right: 10px;">&times;</span>
+                <h2>Change profile picture</h2>
+                <br/>
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <img id="modalProfileImage" src="" style="width: 150px; height: 150px; border-radius: 85px; border: 2px solid black;">
+                    </div>
+                </div>
+                <br/>
+                <div>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <div style="float:right;">
+                    <div id="addProfilePictureButton"></div>
+                    &nbsp; &nbsp;
+                    <div id="removeProfilePictureButton"></div>
+                    </div>
+                </div>
+                <br/>
+                
+            </div>`;
+
+
+
+    $('#addProfilePictureButton').dxButton({
+        text: 'Upload',
+        onClick: function () {
+            $('#fileInput').click();
+        }
+    });
+
+    $('#removeProfilePictureButton').dxButton({
+        text: 'Remove',
+        onClick: function () {
+            let file = "AdminProfile/DefaultProfileAdmin.png";
+            const formData = new FormData();
+            formData.append('ProfilePicture', file);
+            $.ajax({
+                url: "/EditAdminFullDetails/RemoveProfilePicture",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // Update the image source with the uploaded image URL
+                    $('#profileImageInform').attr('src', response.url);
+                    $('#modalProfileImage').attr('src', response.url);
+                },
+                error: function (err) {
+                    // Handle the error if any
+                    console.error(err);
+                }
+            });
+
+        }
+    });
+
+    const modalImage = document.getElementById('modalProfileImage');
+    const closeButton = modal.querySelector('.close');
+
+    $('#fileInput').change((event) => {
+        const file = event.target.files[0];
+        if (file) {
+            // Perform your upload logic here
+            const formData = new FormData();
+            formData.append('ProfilePicture', file);
+            $.ajax({
+                url: "/EditAdminFullDetails/UploadProfilePicture",
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    $('#profileImageInform').attr('src', response.url);
+                    $('#modalProfileImage').attr('src', response.url);
+                },
+                error: function (err) {
+                    // Handle the error if any
+                    console.error(err);
+                }
+            });
+        }
+    });
+
+    closeButton.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+
 
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 

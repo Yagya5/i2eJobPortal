@@ -1,9 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DomainModel.Jobs;
+using Microsoft.AspNetCore.Mvc;
+using Services.Jobs;
 
 namespace UI.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IJobServices _jobServices;
+
+        public HomeController(IJobServices jobServices)
+        {
+            _jobServices = jobServices;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -16,7 +25,9 @@ namespace UI.Controllers
 
         public IActionResult Jobs()
         {
-            return View();
+            IEnumerable<Job> Records = new List<Job>();
+            Records = _jobServices.GetJobsForHomePage();
+            return View(Records);
         }
 
         public IActionResult ContactUs()

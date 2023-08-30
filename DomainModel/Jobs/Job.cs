@@ -10,6 +10,11 @@ namespace DomainModel.Jobs
     {
         public int JobId { get; set; }
         public int JobType { get; set; }   /*Call from Master table*/
+        
+        public string? JobType_Home { get; set; }
+        public string? JobMode_Home { get; set; }
+        public string? CurrencyType_Home { get; set; }
+
         public string? JobTitle { get; set; }
         public string? DepartmentName { get; set; }
         public int Salary { get; set; }
@@ -23,14 +28,9 @@ namespace DomainModel.Jobs
 
         public bool IsActive { get; set; }
 
-        public DateTime PostDate { get; set; }
+        public DateTime? PostDate { get; set; }
         public string? Location { get; set; }
         public bool urgentRequirement { get; set; }
 
-        //These are used to view Table_MasterDetails values for the ids fetched
-        public string? JobTypeValue { get; set; }
-        public string? JobModeValue { get; set; }
-
-        public string? JobCurrencyValue { get; set; }
     }
 }

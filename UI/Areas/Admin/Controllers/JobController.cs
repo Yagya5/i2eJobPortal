@@ -1,15 +1,19 @@
-﻿using DomainModel.Jobs;
+﻿using DomainModel.AuditTrails;
+using DomainModel.Jobs;
 using Microsoft.AspNetCore.Mvc;
 using Services.Jobs;
+using Services.AuditTrails;
 
 namespace UI.Areas.Admin.Controllers
 {
     public class JobController : Controller
     {
         private readonly IJobServices _jobServices;
-        public JobController(IJobServices JobServices)
+        private readonly IAuditTrailServices _auditTrailServices;
+        public JobController(IJobServices JobServices, IAuditTrailServices auditTrailServices)
         {
             _jobServices = JobServices;
+            _auditTrailServices = auditTrailServices;
         }
         //View data with the values of categories instead of ids
         public IActionResult Index()
@@ -20,22 +24,17 @@ namespace UI.Areas.Admin.Controllers
         public IActionResult GetJobs()
         {
             var jobs = _jobServices.GetJobs();
-            foreach (var job in jobs)
-            {
-                job.JobTypeValue = GetJobValue(job.JobType);
-                job.JobModeValue = GetJobValue(job.JobMode);
-                job.JobCurrencyValue = GetJobValue(job.CurrencyType);
-            }
+
             return Ok(jobs);
         }
-        //fetch the Value of the particular element ID to store it to the Table_Jobs DB
-        private string GetJobValue(int jobId)
+
+
+        [HttpGet]
+        public IActionResult FindJobIdInMaster(int jobId)
         {
-            var jobValue = _jobServices.FindJobIdInMaster(jobId)?.Value;
-            return jobValue ?? "N/A"; // Default value if not found
+            var values = _jobServices.FindJobIdInMaster(jobId);
+            return Json(values);
         }
-
-
         [HttpGet]
         public IActionResult GetMasterValuesByCategory(string category)
         {
@@ -48,9 +47,9 @@ namespace UI.Areas.Admin.Controllers
 
 
             job.PostDate = DateTime.Now;
-            //job.IsActive = bool.Parse(Request.Form["IsActive"]);
-            _jobServices.CreateJob(job);
-            return RedirectToAction("Index");
+
+            var response = _jobServices.CreateJob(job);
+            return Ok(response);
 
         }
 
@@ -61,7 +60,7 @@ namespace UI.Areas.Admin.Controllers
 
             var response = _jobServices.DeleteJob(JobId);
 
-            return RedirectToAction("Index", "Job");
+            return Ok(response);
 
         }
 
@@ -71,15 +70,24 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                job.PostDate = DateTime.Now;
+                var OldObject = _jobServices.GetJobById(job.JobId);
+                int TaskId = OldObject.JobId;
+                string Module = "Job";
+                string Action = AuditAction.Modified;
 
-                _jobServices.UpdateJob(job);
+                OldObject.PostDate = null;
+                job.PostDate = null;
 
-                return RedirectToAction("Index"); // Redirect to the job listing after editing
+                var response = _jobServices.UpdateJob(job);
+
+
+                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
+                return Ok(response); // Redirect to the job listing after editing
+
             }
-            return View(job);
-        }
+            return Ok(null);
 
+        }
     }
 }
 
