@@ -23,7 +23,7 @@ namespace DomainModel.Jobs
 
         public bool IsActive { get; set; }
 
-        public DateTime PostDate { get; set; }
+        public DateTime? PostDate { get; set; }
         public string? Location { get; set; }
         public bool urgentRequirement { get; set; }
 

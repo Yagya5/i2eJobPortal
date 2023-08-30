@@ -1,5 +1,6 @@
 ﻿
 function showJob(dataSource) {
+    window.jsPDF = window.jspdf.jsPDF;
     $("#dataGrid").dxDataGrid({
         dataSource: dataSource,
         keyExpr: "JobId",
@@ -23,6 +24,59 @@ function showJob(dataSource) {
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
+        },
+
+        columnChooser: {
+            enabled: true,
+            mode: "select",
+
+            search: {
+                enabled: true,
+                editorOptions: { placeholder: 'Search column' },
+            },
+            selection: {
+                recursive: true,
+                selectByClick: true,
+                allowSelectAll: true,
+
+            },
+        },
+
+        loadPanel: {
+            enabled: true,
+            showPane: true,
+            shading: true,
+            shadingColor: 'rgba(0,0,0,0.4)'
+        },
+
+        export: {
+            enabled: true,
+            formats: ['xlsx', 'pdf']
+        },
+
+        onExporting(e) {
+            if (e.format === 'xlsx') {
+                const workbook = new ExcelJS.Workbook();
+                const worksheet = workbook.addWorksheet("Main sheet");
+                DevExpress.excelExporter.exportDataGrid({
+                    worksheet: worksheet,
+                    component: e.component,
+                }).then(function () {
+                    workbook.xlsx.writeBuffer().then(function (buffer) {
+                        saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Jobs Posting.xlsx");
+                    });
+                });
+            }
+            else if (e.format === 'pdf') {
+                const doc = new jsPDF();
+
+                DevExpress.pdfExporter.exportDataGrid({
+                    jsPDFDocument: doc,
+                    component: e.component,
+                }).then(() => {
+                    doc.save('Jobs Posting.pdf');
+                });
+            }
         },
        
 

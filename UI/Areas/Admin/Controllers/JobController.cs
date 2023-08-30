@@ -68,9 +68,15 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         IActionResult EditJob(Job job)
         {
+            if (ModelState.IsValid)
+            {
+                var OldObject = _jobServices.GetJobById(job.JobId);
+                int TaskId = OldObject.JobId;
+                string Module = "Job";
+                string Action = AuditAction.Modified;
 
-            job.PostDate = DateTime.Now;
-            _jobServices.UpdateJob(job);
+                OldObject.PostDate = null;
+                job.PostDate = null;
 
             var response = _jobServices.UpdateJob(job);
             return Ok(response); // Redirect to the job listing after editing
