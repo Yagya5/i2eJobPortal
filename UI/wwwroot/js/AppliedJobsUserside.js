@@ -17,29 +17,29 @@ function ShowEvent(_datasource) {
         },
         showBorders: true,
         showRowLines: true,
-        rowAlternationEnabled: true,
+      // rowAlternationEnabled: true,
         wordWrapEnabled: true,
 
         //selection: {
         //    mode: 'multiple',
         //},
 
-        //paging: {
-        //    pageSize: 10,
-        //},
-        //pager: {
-        //    visible: true,
-        //    allowedPageSizes: [10, 20, 'all'],
+     //   paging: {
+       //     pageSize: 10,
+     //   },
+       // pager: {
+       //    visible: true,
+      //      allowedPageSizes: [10, 20, 'all'],
         //    showPageSizeSelector: true,
         //    showInfo: true,
         //    showNavigationButtons: true,
-        //},
-
-        summary: {
-            groupItems: [{
-                summaryType: "count"
-            }]
         },
+
+       // summary: {
+        //    groupItems: [{
+      //          summaryType: "count"
+        //    }]
+      //  },
 
         columns: [
 
