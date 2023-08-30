@@ -11,6 +11,9 @@ namespace Repository.Jobs
     public interface IJobRepository
     {
         IEnumerable<Job> GetJobs();
+
+        IEnumerable<Job> GetJobsForHomePage();
+
         bool CreateJob(Job job_Obj);
         Master FindJobIdInMaster(int jobId); /*This will be use to fetch the values of the id*/
         IEnumerable<Master> GetMasterValuesByCategory(string category);

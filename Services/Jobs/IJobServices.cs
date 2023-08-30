@@ -11,6 +11,8 @@ namespace Services.Jobs
     public interface IJobServices
     {
         IEnumerable<Job> GetJobs();
+
+        IEnumerable<Job> GetJobsForHomePage();
         Master FindJobIdInMaster(int jobId);
         bool CreateJob(Job job_Obj);
         IEnumerable<Master> GetMasterValuesByCategory(string category);
