@@ -313,9 +313,21 @@ function showJob(dataSource) {
             { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], editorType: "dxTextArea", },
             { dataField: "IsActive", caption: "Post Active Status" },
             { dataField: "urgentRequirement", caption: "Urgent Requirement" },
-            { dataField: "Location", caption: "Location" },
+            /*{ dataField: "Location", caption: "Location" },*/
 
-
+            {
+                dataField: "Location",
+                caption: "Location",
+                validationRules: [{ type: "required" }],
+                /*groupIndex: 0,*/
+                editorType: "dxSelectBox",
+                editorOptions: {
+                    dataSource: JobLocation,
+                    valueExpr: "Value",
+                    displayExpr: "Value",
+                    placeholder: "Select a Job Location",
+                },
+            },
         ],
         showBorders: true,
         filterRow: { visible: true },
@@ -346,6 +358,7 @@ const currencySymbols = {
 let jobTypeValues1 = [];
 let jobModeValues1 = [];
 let currencyValues1 = [];
+let JobLocation = [];
 
 function fetchMasterValues() {
     $.ajax({
@@ -371,6 +384,18 @@ function fetchMasterValues() {
             alert("Error fetching Job Modes: " + err);
         }
     });
+
+    $.ajax({
+        url: "/Job/GetMasterValuesByCategory",
+        method: "GET",
+        data: { category: "Job Location" },
+        success: function (response) {
+            JobLocation = response/*.map(item => ({ value: item.Value }))*/;
+        },
+        error: function (err) {
+            alert("Error fetching Job Location: " + err);
+        }
+    }); 
 
     $.ajax({
         url: "/Job/GetMasterValuesByCategory",
