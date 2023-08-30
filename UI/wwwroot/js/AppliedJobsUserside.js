@@ -33,7 +33,7 @@ function ShowEvent(_datasource) {
         //    showPageSizeSelector: true,
         //    showInfo: true,
         //    showNavigationButtons: true,
-        },
+        //},
 
        // summary: {
         //    groupItems: [{
@@ -42,7 +42,6 @@ function ShowEvent(_datasource) {
       //  },
 
         columns: [
-
             {
                 dataField: "JobTitle",
                 caption: "Job Title"
