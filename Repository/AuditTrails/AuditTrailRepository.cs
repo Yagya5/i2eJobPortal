@@ -2,6 +2,7 @@
 using DomainModel.AuditLogins;
 using DomainModel.AuditTrails;
 using DomainModel.Common;
+using DomainModel.ContactQueries;
 using DomainModel.Users;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +30,16 @@ namespace Repository.AuditTrails
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
+        public IEnumerable<AuditTrail> GetAuditTrail()
+        {
+            IEnumerable<AuditTrail> result = new List<AuditTrail>();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "SELECT * FROM v_AuditTrail";
+            result = connection.Query<AuditTrail>(Query, null, null, true, 0, null);
+            return result;
+        }
+
+       
 
         public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject)
         {   
@@ -70,6 +82,36 @@ namespace Repository.AuditTrails
             }
             
         }
-        
+
+        public bool InsertContactQuery(ContactQuery query, HttpContext context)
+        {
+            int result = 0;
+            using var connection = _dapperConnection.CreateConnection();
+            var param = new DynamicParameters();
+            param.Add(nameof(ContactQuery.FirstName), query.FirstName);
+            param.Add(nameof(ContactQuery.LastName), query.LastName);
+            param.Add(nameof(ContactQuery.Email), query.Email);
+            param.Add(nameof(ContactQuery.Phone), query.Phone);
+            param.Add(nameof(ContactQuery.Message), query.Message);
+            param.Add(nameof(ContactQuery.IPAddress), context.Connection.LocalIpAddress.ToString());
+
+
+            result = connection.Execute("spInsertContactQuery", param, null, 0, CommandType.StoredProcedure);
+            if (result != 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public IEnumerable<ContactQuery> GetContactQueries()
+        {
+            IEnumerable<ContactQuery> result = new List<ContactQuery>();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = "SELECT * FROM v_ContactQueries";
+            result = connection.Query<ContactQuery>(Query, null, null, true, 0, null);
+            return result;
+        }
     }
 }

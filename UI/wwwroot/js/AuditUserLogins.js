@@ -26,7 +26,15 @@
                 recursive: true,
                 selectByClick: true,
                 allowSelectAll: true,
+                
             },
+        },
+
+        loadPanel: {
+            enabled: true,
+            showPane: true,
+            shading: true,
+            shadingColor: 'rgba(0,0,0,0.4)'            
         },
 
         export: {

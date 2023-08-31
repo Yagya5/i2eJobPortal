@@ -128,6 +128,29 @@ namespace UI.Controllers
             return Json(new { success = false, error = "No image was uploaded." });
         }
 
+        public async Task<IActionResult> RemoveProfilePicture(string profilePicture)
+        {
+            if (profilePicture != null && profilePicture.Length > 0)
+            {
+                try
+                {
+                    var fileName = profilePicture;
+
+                    TempData["ImagePath"] = fileName;
+
+                    // Return the URL of the default image
+                    return Json(new { success = true, url = $"/{fileName}" });
+                }
+                catch (Exception ex)
+                {
+                    // Handle the error if any
+                    return Json(new { success = false, error = ex.Message });
+                }
+            }
+
+            return Json(new { success = false, error = "Failed" });
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadResume(IFormFile resume)
         {
