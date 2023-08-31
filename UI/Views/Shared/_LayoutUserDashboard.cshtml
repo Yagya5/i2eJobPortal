@@ -169,6 +169,11 @@
                         console.log(user.FirstName)
                         const profileImageElement = document.getElementById("profileImage");
                         profileImageElement.src = user.ProfilePicture; // Set the src attribute
+                        if (user.ProfilePicture == null || user.ProfilePicture == "") {
+                            user.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png"; // Set the src attribute
+                        }
+                        profileImageElement.src = user.ProfilePicture;
+
                         const firstNameSpan = document.getElementById("firstNameSpan");
                         firstNameSpan.textContent = "Hi " + user.FirstName; // Set the content of the span
                     },
