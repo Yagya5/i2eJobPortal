@@ -1,0 +1,38 @@
+﻿@model DomainModel.Jobs.Job
+@{
+    ViewData["Title"] = "Job Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid p-0 maincontainer">
+    <div class="col-lg-12 opening-details">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1>@Model.JobTitle</h1>
+                <p>@Model.Description</p>
+                <p><strong>Department:</strong> @Model.DepartmentName</p>
+                <p><strong>Location:</strong> @Model.Location</p>
+                <p><strong>Salary:</strong> @Model.Salary @Model.CurrencyType_Home</p>
+                <p><strong>Experience:</strong> @Model.MinExperience - @Model.MaxExperience years</p>
+                <p><strong>Job Type:</strong> @Model.JobType_Home</p>
+                <p><strong>Job Mode:</strong> @Model.JobMode_Home</p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-8">
+                <a href="#" class="btn btn-primary apply" onclick="login_page()">Apply Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function login_page() {
+   
+    var loginUrl = "/Account/Login";
+
+    // Redirect the user to the login page
+    window.location.href = loginUrl;
+    }
+</script>

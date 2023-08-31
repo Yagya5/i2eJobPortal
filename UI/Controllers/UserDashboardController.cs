@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DomainModel.Jobs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.AppliedJobs;
+using Services.Jobs;
 
 namespace UI.Controllers
 {
@@ -9,10 +11,11 @@ namespace UI.Controllers
     {
 
         private readonly IAppliedJobsServices _appliedJobsServices;
-
-        public UserDashboardController(IAppliedJobsServices appliedJobsServices)
+        private readonly IJobServices _jobServices;
+        public UserDashboardController(IAppliedJobsServices appliedJobsServices, IJobServices jobServices)
         {
             _appliedJobsServices = appliedJobsServices;
+            _jobServices = jobServices;
         }
 
         
@@ -21,11 +24,36 @@ namespace UI.Controllers
         {
             return View();
         }
-
+        //Job fetching 
         public IActionResult AllJobs()
-        {            
-            return View();
+        {
+            IEnumerable<Job> Records = new List<Job>();
+            Records = _jobServices.GetJobsForHomePage();
+            return View(Records);
         }
+        public IActionResult Details(int id)
+        {
+
+            var JobDetails = _jobServices.GetJobById(id);
+
+            if (JobDetails == null)
+            {
+
+                return NotFound();
+            }
+            var currencyType = _jobServices.FindJobIdInMaster(JobDetails.CurrencyType);
+            var jobType = _jobServices.FindJobIdInMaster(JobDetails.JobType);
+            var jobMode = _jobServices.FindJobIdInMaster(JobDetails.JobMode);
+
+            // Assign the fetched values to the Job object
+            JobDetails.CurrencyType_Home = currencyType.Value;
+            JobDetails.JobType_Home = jobType.Value;
+            JobDetails.JobMode_Home = jobMode.Value;
+            return View(JobDetails);
+        }
+        //end
+
+
         public IActionResult AboutUs()
         {
             return View();
