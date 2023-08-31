@@ -1,7 +1,9 @@
 ﻿using DomainModel.AuditTrails;
+using DomainModel.ContactQueries;
 using Microsoft.AspNetCore.Http;
 using Repository.AuditTrails;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -24,13 +26,24 @@ namespace Services.AuditTrails
         {
             var result = _auditTrailRepository.GetAuditTrail();
             return result;
-        }
+        }        
 
         public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject)
         {                        
             var result = _auditTrailRepository.InsertAuditTrail(TaskId, Module, Action, context, OldObject, NewObject);
             return result;
         }
-                
+
+        public bool InsertContactQuery(ContactQuery query, HttpContext context)
+        {
+            var result = _auditTrailRepository.InsertContactQuery(query, context);
+            return result;
+        }
+
+        public IEnumerable<ContactQuery> GetContactQueries()
+        {
+            var result = _auditTrailRepository.GetContactQueries();
+            return result;
+        }
     }
 }
