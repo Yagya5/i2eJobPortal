@@ -214,6 +214,7 @@ let jobTypeValues1 = [];
 let jobModeValues1 = [];
 let currencyValues1 = [];
 
+
 function fetchMasterValues() {
     $.ajax({
         url: "/Job/GetMasterValuesByCategory",
@@ -253,3 +254,6 @@ function fetchMasterValues() {
         }
     });
 }
+
+    });
+});

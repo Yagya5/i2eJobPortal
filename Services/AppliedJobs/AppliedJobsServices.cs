@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DomainModel.AppliedJobs;
+using DomainModel.Jobs;
+using DomainModel.MasterDetails;
+using DomainModel.RegisteredJobSeekers;
+using DomainModel.Users;
 using Repository.AppliedJobs;
 
 
@@ -25,14 +29,28 @@ namespace Services.AppliedJobs
             return result;
         }
 
-        public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
+        //public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
+        //{
+        //    var result = _AppliedJobsRepository.MyAppliedJobs(userId);
+        //    return await result;
+        //}
+
+        public IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category)
         {
-            var result = _AppliedJobsRepository.MyAppliedJobs(userId);
-            return await result;
+
+            var result = _AppliedJobsRepository.GetMasterValuesByCategoryForAppliedJobs(category);
+            return result;
         }
 
 
 
+
+        public bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj)
+        {
+            var result = _AppliedJobsRepository.UpdateAppliedJob(appliedJobs_Obj);
+           
+            return result;
+        }
 
     }
 }

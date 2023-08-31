@@ -2,6 +2,9 @@
 using Services.AppliedJobs;
 using DomainModel.AppliedJobs;
 using Services.Users;
+using DomainModel.AuditTrails;
+using DomainModel.RegisteredJobSeekers;
+using DomainModel.Jobs;
 
 namespace UI.Areas.Admin.Controllers
 {
@@ -27,8 +30,28 @@ namespace UI.Areas.Admin.Controllers
             var result = _AppliedJobsServices.GetAppliedJobs().ToList();
             return Ok(result);
         }
+
+
+        [HttpGet]
+        public IActionResult GetMasterValuesByCategoryForAppliedJobs(string category)
+        {
+            var values = _AppliedJobsServices.GetMasterValuesByCategoryForAppliedJobs(category);
+            return Json(values);
+        }
+
+
+        [HttpPost]
+        public IActionResult UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj)
+        {
+            if(ModelState.IsValid)
+            {
+                _AppliedJobsServices.UpdateAppliedJob(appliedJobs_Obj);
+            }
+            return View (appliedJobs_Obj);
+        }
+
+
     }
 }
-
 
 
