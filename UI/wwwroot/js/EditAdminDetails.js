@@ -388,7 +388,7 @@
                 user.ProfilePictureUrl = user.ProfilePicture;
             }
             else {
-                user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png"
+                user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png";
             }
 
             user.ProfilePicture = '';
