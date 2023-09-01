@@ -62,6 +62,7 @@ namespace UI.Controllers
         {
             return View();
         }
+        [HttpGet]
         public IActionResult CreateAppliedJob(int job_Id )
         {
 
@@ -69,15 +70,12 @@ namespace UI.Controllers
             var response = _appliedJobsServices.CreateAppliedJob(job_Id, User_Id);
             return Ok(response);
 
-        }
-
-        
+        }  
         public IActionResult AppliedJobs(int id)
         {
             ViewBag.UserId = id;
             return View();
         }
-
         public async Task<IActionResult> GetMyAppliedJobs(int id)
         {
             return Json(await _appliedJobsServices.MyAppliedJobs(id));
