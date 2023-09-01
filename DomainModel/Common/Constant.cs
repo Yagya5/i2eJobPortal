@@ -26,6 +26,7 @@ namespace DomainModel.Common
         DeleteAJob = "spDeleteJob",
         UpdateAJob = "spUpdateJob",
         UpdateStatusRoundStoredProcedure= "spUpdateStatusAndRound",//Updating the Status and Round Of Users which Applied for the Jobs.
+            CreateAppliedJob = "spAppliedJobdata",
         #endregion
 
 

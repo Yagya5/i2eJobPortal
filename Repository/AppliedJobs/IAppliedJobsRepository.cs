@@ -1,4 +1,5 @@
 ﻿using DomainModel.AppliedJobs;
+using DomainModel.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Repository.AppliedJobs
     {
         IEnumerable<DM_AppliedJobs> GetAppliedJobs();
         Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
+        bool CreateAppliedJob(int job_Id, int User_Id);
 
     }
 }

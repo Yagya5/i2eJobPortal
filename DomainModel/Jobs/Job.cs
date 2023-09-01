@@ -32,5 +32,6 @@ namespace DomainModel.Jobs
         public string? Location { get; set; }
         public bool urgentRequirement { get; set; }
 
+
     }
 }

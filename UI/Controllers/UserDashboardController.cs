@@ -18,8 +18,8 @@ namespace UI.Controllers
             _jobServices = jobServices;
         }
 
-        
-       
+
+
         public IActionResult MyProfile() /*Used as a home page controller*/
         {
             return View();
@@ -62,6 +62,14 @@ namespace UI.Controllers
         {
             return View();
         }
+        public IActionResult CreateAppliedJob(int job_Id, int User_Id)
+        {
+            var response = _appliedJobsServices.CreateAppliedJob(job_Id, User_Id);
+            return Ok(response);
+
+        }
+
+        
         public IActionResult AppliedJobs(int id)
         {
             ViewBag.UserId = id;

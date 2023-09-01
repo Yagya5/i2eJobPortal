@@ -34,6 +34,7 @@ function ShowEvent(_datasource) {
         //    showInfo: true,
         //    showNavigationButtons: true,
         //},
+      
 
        // summary: {
         //    groupItems: [{
@@ -94,6 +95,8 @@ function LoadRecords(userid) {
         }
     });
 }
+
+
 
 
 

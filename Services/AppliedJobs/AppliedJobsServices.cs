@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DomainModel.AppliedJobs;
+using DomainModel.Jobs;
 using Repository.AppliedJobs;
 
 
@@ -29,6 +30,12 @@ namespace Services.AppliedJobs
         {
             var result = _AppliedJobsRepository.MyAppliedJobs(userId);
             return await result;
+        }
+
+        public bool CreateAppliedJob(int job_Id, int User_Id)
+        {
+            var result = _AppliedJobsRepository.CreateAppliedJob(job_Id,User_Id);
+            return result;
         }
 
 
