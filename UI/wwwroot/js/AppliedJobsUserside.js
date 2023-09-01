@@ -34,6 +34,17 @@ function ShowEvent(_datasource) {
         //    showInfo: true,
         //    showNavigationButtons: true,
         //},
+
+        loadPanel: {
+            enabled: true,
+            showPane: true,
+            shading: true,
+            shadingColor: 'rgba(0,0,0,0.4)'
+        },
+        searchPanel: { visible: true },
+       
+
+        
       
 
        // summary: {
