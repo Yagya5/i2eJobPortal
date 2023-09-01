@@ -12,6 +12,9 @@ namespace DomainModel.AppliedJobs
 {
     public class DM_AppliedJobs
     {
+
+        public string? Response { get; set; }
+
         public int AppliedJobId { get; set; }
         public int UserId { get; set; } /*Call from Users table*/
         public int JobId { get; set; } /*Call from Jobs table*/
@@ -35,6 +38,8 @@ namespace DomainModel.AppliedJobs
         public string ? ProfilePicture { get; set; } /*Call from Users table*/
         public string? Resume { get; set; } /*Call from EducationalDetails table*/
 
+        public string? StatusValue { get; set; }
+        public string? RoundValue { get; set; }
     }
 
     public class AppliedJob
@@ -54,6 +59,7 @@ namespace DomainModel.AppliedJobs
 
         public string? Status { get; set; }
         public string? Round { get; set; }
+      
 
     }
 

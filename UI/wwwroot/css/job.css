@@ -59,6 +59,11 @@ body {
 .maincontainer .opening-details .select-box2 {
   position: relative;
 }
+    .maincontainer .opening-details .select-box3 {
+        position: relative;
+    }
+
+   
 .maincontainer .opening-details .select-btn {
   width: 130px;
   font-size: 15px;
