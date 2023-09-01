@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.AppliedJobs;
 using Services.Jobs;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace UI.Controllers
 {
     [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
