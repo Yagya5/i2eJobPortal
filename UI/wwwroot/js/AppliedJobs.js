@@ -8,6 +8,8 @@ $(document).ready(function () {
     /*   fetchRoundData();*/
     fetchDataRound();
 
+
+
     // PDF Button
     //$('#pdfButton').on('click', function () {
     //    // Check if the data is loaded before exporting
@@ -120,6 +122,9 @@ $(document).ready(function () {
 
 
 
+
+
+
 function ShowEvent(_datasource) {
     window.jsPDF = window.jspdf.jsPDF;
 
@@ -167,6 +172,7 @@ function ShowEvent(_datasource) {
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
+            visible: true,
         },
 
         summary: {
@@ -174,14 +180,35 @@ function ShowEvent(_datasource) {
                 summaryType: "count"
             }]
         },
+        headerFilter: {
+            visible: true,
+        },
 
         editing: {
             mode: "popup",
             allowUpdating: true,
-            allowDeleting: true,
-            allowAdding: true,
+            allowDeleting: false,
+            allowAdding: false,
             
 
+        },
+        allowColumnReordering: true,
+        allowColumnResizing: true,
+        columnFixing: {
+            enabled: true,
+        },
+      /*  columnHidingEnabled: true,*/
+
+
+        remoteOperations: { groupPaging: true },
+        scrolling: {
+            mode: 'virtual',
+        },
+        grouping: {
+            autoExpandAll: true,
+        },
+        groupPanel: {
+            visible: true,
         },
 
         export: {
@@ -220,15 +247,6 @@ function ShowEvent(_datasource) {
         },
 
 
-        //// export: {
-        //    enabled: true,
-        //    formats: ['xlsx', 'pdf'],
-        //},
-        //onContentReady: function () {
-        //    $(".dx-link-edit").addClass("btn btn-primary text-white");
-        //   /* $(".dx-link-delete").addClass("btn btn-danger text-white")*/
-        //},
-
 
 
         onRowUpdated: function (e) {
@@ -264,74 +282,139 @@ function ShowEvent(_datasource) {
 
 
         columns: [
-           
-            {
-                dataField: "FirstName",
-                caption: "First Name",
-                /* validationRules: [{ type: "required" }],*/
-                allowFiltering: true,
-                allowSorting: false,
-                allowEditing: false,
-                width: 80
 
-            },
             {
-                dataField: "LastName",
-                caption: "Last Name",
-                allowFiltering: false,
-                allowSorting: false,
-                /*validationRules: [{ type: "required" }],*/
+                caption: "Full Name",
+                calculateCellValue: function (data) {
+                    return data.FirstName + " " + data.LastName;
+                },
+                allowFiltering: true,
+                allowSorting: true,
                 allowEditing: false,
-                width: 80
+                width: 150,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
             },
+
+           
+            //{
+            //    dataField: "FirstName",
+            //    caption: "First Name",
+            //    /* validationRules: [{ type: "required" }],*/
+            //    allowFiltering: true,
+            //    allowSorting: true,
+            //    allowEditing: true,
+            //    width: 80,
+            //    headerFilter: {
+            //        allowSelectAll: true,
+            //        search: {
+            //            enabled: false,
+            //        }
+            //    }
+            //},
+            //{
+            //    dataField: "LastName",
+            //    caption: "Last Name",
+            //    allowFiltering: true,
+            //    allowSorting: true,
+            //    /*validationRules: [{ type: "required" }],*/
+            //    allowEditing: true,
+            //    width: 80,
+            //    headerFilter: {
+            //        allowSelectAll: true,
+            //        search: {
+            //            enabled: false,
+            //        }
+            //    }
+            //},
 
             {
                 dataField: "Gender",
                 caption: "Gender",
-                allowFiltering: false,
-                allowSorting: false,
+                allowFiltering: true,
+                allowSorting: true,
                /* validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                width: 70,
-                groupIndex: 1,
+                width: 100,
+            
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
             },
 
             {
                 dataField: "JobTitle",
                 caption: "Job Applied For",
-                allowFiltering: false,
-                allowSorting: false,
+                allowFiltering: true,
+                allowSorting: true,
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 width: 150,
-                groupIndex: 0,
+              
+              
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
             },
             {
                 dataField: "DepartmentName",
-                caption: " Applied Department ",
-                allowFiltering: false,
-                allowSorting: false,
+                caption: "Applied Department",
+                allowFiltering: true,
+                allowSorting: true,
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                width:120
+                width: 130,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
             },
             {
                 dataField: "MinExperience",
-                caption: "Min Experience (in years)",
-                allowFiltering: false,
-                allowSorting: false,
+                caption: "Min Experience(in years)",
+                allowFiltering: true,
+                allowSorting: true,
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                width: 100
+                width: 150,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                },
+                cellTemplate: function (container, options) {
+                    $("<div>")
+                        .text(options.value + " years")
+                        .appendTo(container);
+                }
             },
             {
                 dataField: "Location",
                 caption: "Location",
-                allowFiltering: false,
-                allowSorting: false,
+                allowFiltering: true,
+                allowSorting: true,
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                width: 120
+                width: 120,
+                headerFilter: {
+                    allowSelectAll: false,
+                    search: {
+                        enabled: true,
+                    }
+                }
             },
             {
                 dataField: "ProfilePicture",
@@ -340,12 +423,18 @@ function ShowEvent(_datasource) {
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 width: 120,
-                allowFiltering: false,
-                allowSorting: false,
+                allowFiltering: true,
+                allowSorting: true,
                 cellTemplate(container, options) {
                     $('<div>')
                         .append($('<img>', { src: options.data.ProfilePicture }))
                         .appendTo(container);
+                },
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
                 }
                
             },
@@ -354,8 +443,8 @@ function ShowEvent(_datasource) {
                 dataField: "Status",
                 caption: "Current Status",
                 validationRules: [{ type: "required" }],
-                allowFiltering: false,
-                allowSorting: false,
+                allowFiltering: true,
+                allowSorting: true,
                 allowEditing: true,
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -365,13 +454,19 @@ function ShowEvent(_datasource) {
                     displayExpr: "value",
                     placeholder: "Select Current Status",
                 },
-                width: 100
+                width: 110,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
             },
             {
                 dataField: "Round",
                 caption: "Round",
-                allowFiltering: false,
-                allowSorting: false,
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [{ type: "required" }],
                 allowEditing: true,
                 editorType: "dxSelectBox",
@@ -383,7 +478,13 @@ function ShowEvent(_datasource) {
                     placeholder: "Select Round",
                 },
                      
-              width: 100
+                width: 110,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
             },
 
 
@@ -579,7 +680,16 @@ async function fetchDataRound() {
 //        });
 //    });
 //}
-
+//$(() => {
+//    $('#icon-edit').dxButton({
+//        icon: 'check',
+//        type: 'success',
+//        text: 'Done',
+//        onClick() {
+//            DevExpress.ui.notify('The Done button was clicked');
+//        },
+//    });
+//}
 
 
 function LoadRecords() {
