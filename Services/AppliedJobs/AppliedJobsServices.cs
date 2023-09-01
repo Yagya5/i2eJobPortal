@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DomainModel.AppliedJobs;
 using DomainModel.Jobs;
+using DomainModel.MasterDetails;
+using DomainModel.RegisteredJobSeekers;
+using DomainModel.Users;
 using Repository.AppliedJobs;
 
 
@@ -32,6 +35,13 @@ namespace Services.AppliedJobs
             return await result;
         }
 
+        public IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category)
+        {
+
+            var result = _AppliedJobsRepository.GetMasterValuesByCategoryForAppliedJobs(category);
+            return result;
+        }
+
         public bool CreateAppliedJob(int job_Id, int User_Id)
         {
             var result = _AppliedJobsRepository.CreateAppliedJob(job_Id,User_Id);
@@ -40,6 +50,13 @@ namespace Services.AppliedJobs
 
 
 
+
+        public bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj)
+        {
+            var result = _AppliedJobsRepository.UpdateAppliedJob(appliedJobs_Obj);
+           
+            return result;
+        }
 
     }
 }

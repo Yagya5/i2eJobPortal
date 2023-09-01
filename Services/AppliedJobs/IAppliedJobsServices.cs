@@ -1,4 +1,5 @@
 ﻿using DomainModel.AppliedJobs;
+using DomainModel.MasterDetails;
 using DomainModel.RegisteredJobSeekers;
 using Repository.AppliedJobs;
 using System;
@@ -14,7 +15,8 @@ namespace Services.AppliedJobs
 
         IEnumerable<DM_AppliedJobs> GetAppliedJobs();
         Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
+        IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category);
 
-        bool CreateAppliedJob(int job_Id, int User_Id);
+        bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj);
     }
 }

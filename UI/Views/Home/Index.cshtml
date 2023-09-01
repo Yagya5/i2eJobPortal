@@ -1,11 +1,9 @@
-﻿
+﻿@model IEnumerable<DomainModel.Jobs.Job>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
 
-<!DOCTYPE html>
 
-<html>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -22,7 +20,7 @@
     <link rel="stylesheet" href="~/css/homeStyle.css">
     <title>Job Portal</title>
 </head>
-<body>
+
     <div class="container-fluid p-0 maincontainer">
        
         <br />
@@ -35,10 +33,10 @@
                     You'll be the <span>right fit</span>
                 </div>
                 <div class="text-details slide-left">We ideate, execute, and have loads of fun.<br> Want to join us?</div>
-                <form class="d-flex searchtab slide-left" role="search">
+               @* <form class="d-flex searchtab slide-left" role="search">
                     <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                </form>*@
             </div>
             <div class="col-lg-6 image-section">
                 <img src="~/images/Croods Mobile.png" alt="" srcset="">
@@ -74,87 +72,43 @@
         <div class="col-lg mb-5 fourth-section">
             <div class="opening-details mb-4">
                 <h1>Current Job Openings</h1>
-                <div class="col-lg-9 mb-5 opening-list">
-                    <div class="row ms-5 g-4">
+            <div class="col-lg-9 mb-5 opening-list">
+                <div class="row ms-5 g-4">
+                    @foreach (var item in Model.Take(4))
+                    {
+
                         <div class="col-sm-4 cardmain">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-lg d-flex justify-content-between card-body-main">
                                         <div class="job-type">
-                                            <div class="job-name">Content Writer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
+
+                                            <div class="job-name">
+
+                                                @item.JobTitle
                                             </div>
+                                            <div class="job-location">
+                                                <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home
+                                                <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience
+                                            </div>
+
                                         </div>
                                         <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply">
-                                                Apply Now
+                                            <button class="mt-auto apply" id="apply-jobs" onclick="OpenDetails(@item.JobId)">
+                                                View Details
                                             </button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">.Net Developer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">SharePoint<br>Developer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 cardmain">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="col-lg d-flex justify-content-between card-body-main">
-                                        <div class="job-type">
-                                            <div class="job-name">AWS Glue Data<br>Engineer</div>
-                                            <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>Remote
-                                            </div>
-                                        </div>
-                                        <div class="apply-btn d-flex align-items-end flex-column mb-3">
-                                            <button class="mt-auto apply">
-                                                Apply Now
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
+
+
                 </div>
-                <a type="button" id="load-more" class="loadmore mt-5 mb-5" href="job.html">Load More</a>
+            </div>
+            <a type="button" id="load-more" class="loadmore mt-5 mb-5" href="/Home/Jobs/">Load More</a>
             </div>
         </div>
         <br /><br />
@@ -215,5 +169,11 @@
             </div>
         </div>
    </div>
-</body>
-</html>
+
+<script type="text/javascript">
+    function OpenDetails(JobId) {
+        // Redirect to the event details page, passing the event ID as a query parameter
+        window.location.href = '/Home/Details?id=' + JobId;
+    }
+
+</script> 

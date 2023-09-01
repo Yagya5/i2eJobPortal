@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.AppliedJobs;
 using Services.Jobs;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace UI.Controllers
 {
     [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
@@ -27,9 +27,17 @@ namespace UI.Controllers
         //Job fetching 
         public IActionResult AllJobs()
         {
-            IEnumerable<Job> Records = new List<Job>();
-            Records = _jobServices.GetJobsForHomePage();
-            return View(Records);
+            var jobs = _jobServices.GetJobs();
+            foreach (var job in jobs)
+            {
+                var currencyType = _jobServices.FindJobIdInMaster(job.CurrencyType);
+                var jobType = _jobServices.FindJobIdInMaster(job.JobType);
+                var jobMode = _jobServices.FindJobIdInMaster(job.JobMode);
+                job.CurrencyType_Home = currencyType.Value;
+                job.JobType_Home = jobType.Value;
+                job.JobMode_Home = jobMode.Value;
+            }
+            return View(jobs);
         }
         public IActionResult Details(int id)
         {
@@ -45,7 +53,7 @@ namespace UI.Controllers
             var jobType = _jobServices.FindJobIdInMaster(JobDetails.JobType);
             var jobMode = _jobServices.FindJobIdInMaster(JobDetails.JobMode);
 
-            // Assign the fetched values to the Job object
+          
             JobDetails.CurrencyType_Home = currencyType.Value;
             JobDetails.JobType_Home = jobType.Value;
             JobDetails.JobMode_Home = jobMode.Value;
