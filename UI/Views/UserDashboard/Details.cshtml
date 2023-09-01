@@ -20,10 +20,18 @@
         </div>
         <div class="row mt-4">
             <div class="col-lg-8">
-                <button class="mt-auto apply" id="apply-jobs" onclick=" CreateAppliedJob(@Model.JobId)">
+                <button class="mt-auto apply" id="apply-jobs" onclick="CreateAppliedJob(@Model.JobId)">
                     Apply Now
                 </button>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function CreateAppliedJob() {
+
+        var CreateAppliedJobUrl = "/UserDashboard/CreateAppliedJob";
+
+      
+    }
+</script>
