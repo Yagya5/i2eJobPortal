@@ -31,7 +31,7 @@ namespace UI.Areas.Admin.Controllers
         public IActionResult GetContactQueries()
         {
             var result = _auditTrailServices.GetContactQueries();
-            return View(result);
+            return Ok(result);
         }
 
 
