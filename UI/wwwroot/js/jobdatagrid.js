@@ -356,6 +356,7 @@ let currencyValues1 = [];
 let JobLocation = [];
 
 
+
 function fetchMasterValues() {
     $.ajax({
         url: "/Job/GetMasterValuesByCategory",
