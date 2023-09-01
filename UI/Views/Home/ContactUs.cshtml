@@ -36,28 +36,28 @@
     <h1 class="title-info">Get In Touch</h1>
     <div class="col-lg contact-us-main">
         <div class="col-lg-8 mb-5 contact-us">
-            <form class="row g-5 needs-validation" asp-controller="Home" asp-action="ContactUs">
+            <form class="row g-5 needs-validation" asp-controller="Home" asp-action="ContactUs" id="ContactForm">
                 <div class="col-md-5">
                     <label for="validationCustom01" class="form-label">First name <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="FirstName" name="FirstName"  placeholder="First name" asp-for="FirstName" required>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName"  placeholder="First name" asp-for="FirstName">
 
                 </div>
                 <div class="col-md-5">
                     <label for="validationCustom02" class="form-label">Last name <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="LastName" name="LastName"  placeholder="Last name" asp-for="LastName" required>
+                    <input type="text" class="form-control" id="LastName" name="LastName"  placeholder="Last name" asp-for="LastName">
 
                 </div>
                 <div class="col-md-5">
                     <label for="validationCustom02" class="form-label">Email <span class="redcolor">*</span></label>
-                    <input type="email" class="form-control" id="Email" name="Email"  placeholder="Email" asp-for="Email"  required>
+                    <input type="text" class="form-control" id="Email" name="Email"  placeholder="Email" asp-for="Email">
 
                 </div>
                 <div class="col-md-5">
                     <label for="validationCustom02" class="form-label">Phone Number <span class="redcolor">*</span></label>
-                    <input type="tel" class="form-control" id="Phone" name="Phone"  placeholder="Phone Number" asp-for="Phone" required>
+                    <input type="tel" class="form-control" id="Phone" name="Phone"  placeholder="Phone Number" asp-for="Phone">
                 </div>
                 <div class="form-floating col-lg-10">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message" required></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message"></textarea>
                     <label class="messges1 ms-4" for="floatingTextarea2">Message</label>
                 </div>
 
