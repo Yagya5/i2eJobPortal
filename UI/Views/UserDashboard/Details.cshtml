@@ -3,7 +3,34 @@
     ViewData["Title"] = "Job Details";
     Layout = "~/Views/Shared/_LayoutUserDashboard.cshtml";
 }
+<style>
+    .maincontainer .opening-details h1 {
+        font-weight: 600;
+        font-size: 48px;
+        margin-bottom: 25px;
+        font-family: "Poppins";
+    }
 
+
+
+    .maincontainer .opening-details p {
+        font-weight: 400;
+        font-size: 16px;
+        font-family: "Poppins";
+        margin-bottom: 0px;
+    }
+
+
+
+    .maincontainer .opening-details .apply {
+        background-color: #008BFF;
+        color: #FFFFFF;
+        border: none;
+        padding: 5px 20px 5px 20px;
+        font-family: "Poppins";
+    }
+</style>
+<div class="container">
 <div class="container-fluid p-0 maincontainer">
     <div class="col-lg-12 opening-details">
         <div class="row">
@@ -23,5 +50,6 @@
                 <a href="#" class="btn btn-primary apply" >Apply Now</a>
             </div>
         </div>
+    </div>
     </div>
 </div>
