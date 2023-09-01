@@ -20,6 +20,7 @@ using NuGet.Protocol.Plugins;
 using System.Reflection.Metadata;
 
 
+
 namespace Repository.AppliedJobs
 {
     public class AppliedJobsRepository : IAppliedJobsRepository
@@ -42,7 +43,8 @@ namespace Repository.AppliedJobs
             IEnumerable<DM_AppliedJobs> result = new List<DM_AppliedJobs>();
             using var connection = _dapperConnection.CreateConnection();
             IDbTransaction transaction = connection.BeginTransaction();
-            string Query = @"Select FirstName
+            string Query = @"Select AppliedJobId
+,FirstName
 ,LastName
 ,Gender
 ,JobTitle
@@ -58,34 +60,77 @@ namespace Repository.AppliedJobs
 
         }
 
-
-
-        ////To get the dropdown elements
-        //public IEnumerable<Master> GetStatusAndRoundByCategory(string category)
-        //{
-        //    using var connection = _dapperConnection.CreateConnection();
-        //    var sql = "SELECT Value FROM " + DomainModel.Common.Constant.MasterDetailsTableName + " WHERE Category = @Category";
-
-        //    return connection.Query<Master>(sql, new { Category = category });
-        //}
-        ////End
-
-
-
-        //        connection.Execute(query, appliedJob);
-        //    }
-
-        public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
+        //To get the dropdown elements
+        public IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category)
         {
-            IEnumerable<ViewModel_AppliedJob> result = new List<ViewModel_AppliedJob>();
+            using var connection = _dapperConnection.CreateConnection();
+            var sql = "SELECT Value FROM " + DomainModel.Common.Constant.MasterDetailsTableName + " WHERE Category = @Category";
+            return connection.Query<Master>(sql, new { Category = category });
+        }
+        //End
+
+
+
+        public int GetMasterIdByValueForAppliedJobs(string category, string value)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            var sql = "SELECT Id FROM " + DomainModel.Common.Constant.MasterDetailsTableName + " WHERE Category = @Category AND Value = @Value";
+            return connection.QuerySingleOrDefault<int>(sql, new { Category = category, Value = value });
+        }
+
+
+        public bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj)
+        {
             using var connection = _dapperConnection.CreateConnection();
             var param = new DynamicParameters();
-            param.Add("@User_ID", userId);
-            result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs", param: param, commandType: CommandType.StoredProcedure);
+            var Status = GetMasterIdByValueForAppliedJobs("Status", appliedJobs_Obj.StatusValue);
+            var Round = GetMasterIdByValueForAppliedJobs("Round", appliedJobs_Obj.RoundValue);
+            param.Add("AppliedJobId", appliedJobs_Obj.AppliedJobId);
+            //param.Add("FirstName", appliedJobs_Obj.FirstName);
+            //param.Add("lastName", appliedJobs_Obj.LastName);
+            //param.Add("Gender", appliedJobs_Obj.Gender);
+            //param.Add("JobTitle", appliedJobs_Obj.JobTitle);
+            //param.Add("DepartmentName", appliedJobs_Obj.DepartmentName);
+            //param.Add("MinExperience", appliedJobs_Obj.MinExperience);
+            //param.Add("Location", appliedJobs_Obj.Location);
+            //param.Add("ProfilePicture", appliedJobs_Obj.ProfilePicture);
+            param.Add("Status",Status);
+            param.Add("Round",Round);
+            //param.Add("Resume", appliedJobs_Obj.Resume);
+            //connection.Execute(DomainModel.Common.Constant.UpdateStatusRoundStoredProcedure, param, null, 0, CommandType.StoredProcedure);
+            var result = connection.Query<DM_AppliedJobs>("spUpdateStatusAndRound", param, commandType: CommandType.StoredProcedure);
 
-            // result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs", null, commandType: CommandType.StoredProcedure);
-            return result;
+            return true;
         }
+
+
+
+
+
+
+
+        //public bool UpdateUserStatusandRound(DM_AppliedJobs appliedJobs)
+        //{
+
+        //    using var connection = _dapperConnection.CreateConnection();
+        //    var para=new {Round = appliedJobs.Round,Status=appliedJobs.Status};
+        //    var result = connection.Query<DM_AppliedJobs>("spUpdateStatusAndRound", para, commandType: CommandType.StoredProcedure);
+
+        //    if (result != null && result.FirstOrDefault().Response == "Updated Successfully")
+        //    {
+        //        return true;
+
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        //Task<IEnumerable<ViewModel_AppliedJob>> IAppliedJobsRepository.MyAppliedJobs(int userId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
 
@@ -103,5 +148,5 @@ namespace Repository.AppliedJobs
 
 
 
-       
-       
+
+
