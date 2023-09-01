@@ -62,8 +62,10 @@ namespace UI.Controllers
         {
             return View();
         }
-        public IActionResult CreateAppliedJob(int job_Id, int User_Id)
+        public IActionResult CreateAppliedJob(int job_Id )
         {
+
+             int User_Id =  Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
             var response = _appliedJobsServices.CreateAppliedJob(job_Id, User_Id);
             return Ok(response);
 
