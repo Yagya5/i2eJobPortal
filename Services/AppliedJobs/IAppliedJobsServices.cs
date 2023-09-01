@@ -18,5 +18,7 @@ namespace Services.AppliedJobs
         IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category);
 
         bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj);
+
+        DM_AppliedJobs GetAppliedJobsById(int Id);
     }
 }

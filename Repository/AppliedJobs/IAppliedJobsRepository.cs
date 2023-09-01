@@ -11,6 +11,8 @@ namespace Repository.AppliedJobs
     public interface IAppliedJobsRepository
     {
         IEnumerable<DM_AppliedJobs> GetAppliedJobs();
+
+        DM_AppliedJobs GetAppliedJobsById(int Id);
         Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
 
         //IEnumerable<DM_AppliedJobs> UpdateUserStatusandRound();
