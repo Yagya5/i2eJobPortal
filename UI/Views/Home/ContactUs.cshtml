@@ -1,8 +1,18 @@
-﻿
+﻿@model DomainModel.ContactQueries.ContactQuery
+
 @{
     ViewData["Title"] = "ContactUs";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if(User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value != null){
+        Layout = "~/Views/Shared/_LayoutUserDashboard.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    
 }
+
 
 
 <head>
@@ -19,35 +29,35 @@
           rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="~/css/contactus.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'><link>
     <title>Job Portal</title>
 </head>
 <div class="container-fluid p-0 maincontainer">
     <h1 class="title-info">Get In Touch</h1>
     <div class="col-lg contact-us-main">
         <div class="col-lg-8 mb-5 contact-us">
-            <form class="row g-5 needs-validation" novalidate>
+            <form class="row g-5 needs-validation" asp-controller="Home" asp-action="ContactUs" id="ContactForm">
                 <div class="col-md-5">
                     <label for="validationCustom01" class="form-label">First name <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom01" value="" placeholder="First name" required>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName"  placeholder="First name" asp-for="FirstName">
 
                 </div>
                 <div class="col-md-5">
                     <label for="validationCustom02" class="form-label">Last name <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom02" value="" placeholder="Last name" required>
+                    <input type="text" class="form-control" id="LastName" name="LastName"  placeholder="Last name" asp-for="LastName">
 
                 </div>
                 <div class="col-md-5">
-                    <label for="validationCustom02" class="form-label">Company Email <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom02" value="" placeholder="Company Email" required>
+                    <label for="validationCustom02" class="form-label">Email <span class="redcolor">*</span></label>
+                    <input type="text" class="form-control" id="Email" name="Email"  placeholder="Email" asp-for="Email">
 
                 </div>
                 <div class="col-md-5">
                     <label for="validationCustom02" class="form-label">Phone Number <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="validationCustom02" value="" placeholder="Phone Number" required>
-
+                    <input type="tel" class="form-control" id="Phone" name="Phone"  placeholder="Phone Number" asp-for="Phone">
                 </div>
                 <div class="form-floating col-lg-10">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message"></textarea>
                     <label class="messges1 ms-4" for="floatingTextarea2">Message</label>
                 </div>
 
@@ -57,6 +67,7 @@
                         <button type="submit" class="wpcf7-submit btn-style-new" style="margin-top:12px">Send Message</button>
                     </p>
                 </div>
+                <h6 style="color: red; font-weight: bold; display:none" id="SuccessMessage">@ViewBag.Message</h6>
             </form>
         </div>
         <div class="contact-info">
@@ -85,3 +96,7 @@
     </div>
 
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/contactus.js"></script>

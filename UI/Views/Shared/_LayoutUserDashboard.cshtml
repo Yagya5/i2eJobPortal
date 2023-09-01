@@ -99,7 +99,7 @@
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AboutUs">About Us</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="ContactUs">Contact Us</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -169,6 +169,11 @@
                         console.log(user.FirstName)
                         const profileImageElement = document.getElementById("profileImage");
                         profileImageElement.src = user.ProfilePicture; // Set the src attribute
+                        if (user.ProfilePicture == null || user.ProfilePicture == "") {
+                            user.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png"; // Set the src attribute
+                        }
+                        profileImageElement.src = user.ProfilePicture;
+
                         const firstNameSpan = document.getElementById("firstNameSpan");
                         firstNameSpan.textContent = "Hi " + user.FirstName; // Set the content of the span
                     },

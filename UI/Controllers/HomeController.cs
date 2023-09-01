@@ -1,5 +1,7 @@
-﻿using DomainModel.Jobs;
+﻿using DomainModel.ContactQueries;
+using DomainModel.Jobs;
 using Microsoft.AspNetCore.Mvc;
+using Services.AuditTrails;
 using NuGet.Protocol.Core.Types;
 using Services.Jobs;
 
@@ -8,10 +10,12 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         private readonly IJobServices _jobServices;
+        private readonly IAuditTrailServices _auditTrailServices;
 
-        public HomeController(IJobServices jobServices)
+        public HomeController(IJobServices jobServices, IAuditTrailServices auditTrailServices)
         {
             _jobServices = jobServices;
+            _auditTrailServices = auditTrailServices;
         }
 
         public IActionResult Index()
@@ -52,8 +56,25 @@ namespace UI.Controllers
             return View(JobDetails);
         }
         //end
+        [HttpGet]
         public IActionResult ContactUs()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ContactUs(ContactQuery query)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _auditTrailServices.InsertContactQuery(query, this.HttpContext);
+                ModelState.Clear();
+                ViewBag.Message = "Your Message/Query Has Been Submitted";
+                //if (HttpContext.User.Identity.IsAuthenticated)
+                //{
+                //    return RedirectToAction("ContactUs", "UserDashboard");
+                //}
+            }
             return View();
         }
     }
