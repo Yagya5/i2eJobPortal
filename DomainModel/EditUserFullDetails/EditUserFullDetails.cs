@@ -36,7 +36,8 @@ namespace DomainModel.EditUserFullDetails
         public string? Bachelors { get; set; }
         public string? Masters { get; set; }
         public string? Skills { get; set; }
-        public int? Experience { get; set; }
+        public int? ExperienceInYears { get; set; }
+        public int? ExperienceInMonths { get; set; }
         public string? CoverLetter { get; set; }
         public string? Resume { get; set; }
 
