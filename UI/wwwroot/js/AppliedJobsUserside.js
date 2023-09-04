@@ -88,8 +88,15 @@ function ShowEvent(_datasource) {
 $(document).ready(function () {
     let currentUserId = $("#currentUserId").val();
     LoadRecords(currentUserId);
+
+    $('#JobId').click(function () {
+       CreateAppliedJob($(this).val());
+    });
+    //$('#applyjobs').click(function () {
+    //    CreateAppliedJob(JobId);
+    //});
 });
-console.log()
+
 function LoadRecords(userid) {
     $.ajax({
         url: "/UserDashboard/GetMyAppliedJobs?id=" + userid,
@@ -103,21 +110,19 @@ function LoadRecords(userid) {
     });
 }
 function CreateAppliedJob(JobId) {
-    debugger;
+    console.log(JobId);    
+   /* var jobId = job-cards.find('.job-Id-category span')*/
+    if (JobId != 0)
+    {
         $.ajax({
-            async: true,
-            url: "/UserDashboard/CreateAppliedJob?id=" + JobId,
-            type: 'Get',
+            url: "/UserDashboard/CreateAppliedJob?job_Id=" + JobId,
+            method: 'Get',
             success: function (response) {
-                
-            },
-            error: function () {
-               
-            }
-        }
+                console.log(response); 
+           },
+           error: function () {
 
-
-
-
-
-
+           }
+       });
+    }  
+}

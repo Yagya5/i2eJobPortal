@@ -5,6 +5,8 @@ using NuGet.Protocol.Core.Types;
 using Services.AppliedJobs;
 using Services.Jobs;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DomainModel.Users;
+
 namespace UI.Controllers
 {
     [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
@@ -60,7 +62,7 @@ namespace UI.Controllers
             var jobType = _jobServices.FindJobIdInMaster(JobDetails.JobType);
             var jobMode = _jobServices.FindJobIdInMaster(JobDetails.JobMode);
 
-          
+
             JobDetails.CurrencyType_Home = currencyType.Value;
             JobDetails.JobType_Home = jobType.Value;
             JobDetails.JobMode_Home = jobMode.Value;
@@ -77,15 +79,26 @@ namespace UI.Controllers
         {
             return View();
         }
-      
-        public IActionResult CreateAppliedJob(int job_Id )
+
+        [HttpGet]
+        public async Task<IActionResult> CreateAppliedJob(int job_Id)
         {
-
-             int User_Id =  Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-            var response = _appliedJobsServices.CreateAppliedJob(job_Id, User_Id);
-            return Ok(response);
-
-        }  
+            if (job_Id != 0)
+            {
+                int User_Id = Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+                bool result = await _appliedJobsServices.IsUserResumeUploaded(User_Id);
+                if (result)
+                {
+                    var response = _appliedJobsServices.CreateAppliedJob(job_Id, User_Id);
+                    return Ok(response);
+                }
+                else
+                {
+                    return Ok("Please Upload Your resume");
+                }
+            }
+            return BadRequest();
+        }
         public IActionResult AppliedJobs(int id)
         {
             ViewBag.UserId = id;
@@ -96,7 +109,7 @@ namespace UI.Controllers
             return Json(await _appliedJobsServices.MyAppliedJobs(id));
         }
 
-       
+
         public IActionResult Logout()
         {
             return View();
