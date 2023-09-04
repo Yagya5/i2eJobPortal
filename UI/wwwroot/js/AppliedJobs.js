@@ -267,6 +267,8 @@ function ShowEvent(_datasource) {
                     "ProfilePicture": e.data.ProfilePicture,
                     "StatusValue": e.data.Status,
                     "RoundValue": e.data.Round,
+                    "Status": e.data.Status,
+                    "Round": e.data.Round
 
               },
                 success: function (ResponseData) {

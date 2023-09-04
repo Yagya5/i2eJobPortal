@@ -59,7 +59,9 @@
                         editorType: 'dxDateBox',
                         editorOptions: {
                             disabled: false,
-                            width: '100%'
+                            width: '100%',
+                            min: new Date(new Date().getFullYear() - 60, new Date().getMonth(), new Date().getDate()), // 60 years ago from today
+                            max: new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate()), // 18 years ago from today
                         },
                         validationRules: [{
                             type: 'required',
@@ -173,6 +175,7 @@
 
                     {
                         dataField: 'Address',
+                        editorType: 'dxTextArea',
                         validationRules: [{
                             type: 'required',
                             message: 'Address is required',
@@ -182,10 +185,12 @@
                         },
                     },
 
+
+
                     {
                         dataField: 'PhoneNumber',
                         editorOptions: {
-                            mask: '+1 (X00) 000-0000',
+                            mask: '(X00) 000-0000',
                             maskRules: { X: /[02-9]/ },
                         },
                         validationRules: [{
@@ -197,16 +202,6 @@
                         },
                     },
 
-                    //{
-                    //    dataField: 'Email',
-                    //    label: {
-                    //        template: labelTemplate('Email'),
-                    //    },
-                    //    editorOptions: {
-                    //        disabled: true,
-                    //    },
-
-                    //},
 
                     {
                         dataField: 'Bachelors',
@@ -244,24 +239,6 @@
                     },
 
                     {
-                        dataField: 'Experience',
-                        editorType: 'dxSelectBox',
-                        editorOptions: {
-                            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                            searchEnabled: true,
-                            /*value: '',*/
-                        },
-                        validationRules: [{
-                            type: 'required',
-                            message: 'Experience is required',
-                        }],
-
-                        label: {
-                            template: labelTemplate('info'),
-                        },
-                    },
-
-                    {
                         dataField: 'Skills',
                         editorOptions: {
                             disabled: false,
@@ -276,74 +253,67 @@
                         },
                     },
 
-                    //{
-                    //    dataField: 'ProfilePicture', // Property name for the profile picture URL
-                    //    editorType: 'dxFileUploader',
-                    //    editorOptions: {
-                    //        accept: 'image/*',
-                    //        uploadMode: "useForm",
-                    //        selectButtonText: 'Select Image',
-                    //        labelText: '',
-                    //        showClearButton: true,
+                    {
+                        dataField: 'ExperienceInYears',
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14, 15],
+                            searchEnabled: true,
+                            /*value: '',*/
+                        },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'ExperienceInYears is required',
+                        }],
 
-                    //        onValueChanged: function (e) {
-                    //            // When the profile picture changes, update the form data
-                    //            /*updateFormData($.extend({}, $('#form').dxForm('option', 'formData'), { profilePicture: e.value }));*/
-
-                    //            if (e.value && e.value.length > 0) {
-                    //                const formData = new FormData();
-                    //                formData.append('ProfilePicture', e.value[0]);
-
-                    //                $.ajax({
-                    //                    url: "/EditUserFullDetails/UploadProfilePicture",
-                    //                    method: 'POST',
-                    //                    data: formData,
-                    //                    processData: false,
-                    //                    contentType: false,
-                    //                    success: function (response) {
-                    //                        // On success, update the form data with the new image URL
-                    //                        const newFormData = $.extend({}, $('#form').dxForm('option', 'formData'), { ProfilePicture: response.url });
-                    //                        updateFormData(newFormData);
-                    //                    },
-                    //                    error: function (err) {
-                    //                        // Handle the error if any
-                    //                        console.error(err);
-                    //                    }
-                    //                });
-                    //            }
-                    //        }
-                    //    },
-                    //},
+                        label: {
+                            template: function (data) {
+                                // Check if the dataField is "ExperienceInYears" and update the label text accordingly
+                                if (data.dataField === 'ExperienceInYears') {
+                                    return $('<div><i class="dx-icon dx-icon-info"></i>Experience(Years)</div>');
+                                } else {
+                                    return labelTemplate('info')(data);
+                                }
+                            }
+                        },
+                    },
 
                     {
-                        colSpan: 2,
+                        dataField: 'ExperienceInMonths',
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                            searchEnabled: true,
+                            /*value: '',*/
+                        },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'ExperienceInMonths is required',
+                        }],
+
+                        label: {
+                            template: function (data) {
+                                // Check if the dataField is "ExperienceInYears" and update the label text accordingly
+                                if (data.dataField === 'ExperienceInMonths') {
+                                    return $('<div><i class="dx-icon dx-icon-info"></i>Experience(Months)</div>');
+                                } else {
+                                    return labelTemplate('info')(data);
+                                }
+                            }
+                        },
+                    },
+
+                    
+
+                    {
                         dataField: 'CoverLetter',
                         editorType: 'dxTextArea',
-                        editorOptions: {
-                            height: 90,
-                            maxLength: 200,
-                        },
                         validationRules: [{
                             type: 'required',
                             message: 'CoverLetter is required',
                         }],
                         label: {
-                            template: (data, element) => {
-                                const lineBreak = '<br>';
-                                const infoIcon = '<i id="helpedInfo" class="dx-icon dx-icon-info"></i>';
-                                const labelText = `Additional${lineBreak}${data.text}`;
-
-                                element.append(`<div id='template-content'>${infoIcon}${labelText}</div>`);
-
-                                $('<div>').dxTooltip({
-                                    target: '#helpedInfo',
-                                    showEvent: 'mouseenter',
-                                    hideEvent: 'mouseleave',
-                                    contentTemplate(args) {
-                                        args.html('<div id="tooltip-content">This field must not exceed 200 characters</div>');
-                                    },
-                                }).appendTo(element);
-                            },
+                            template: labelTemplate('info'),
                         },
                     },
 
@@ -383,6 +353,9 @@
                                     });
                                 }
                             }
+                        },
+                        label: {
+                            template: labelTemplate('info'),
                         },
                         //validationRules: [{
                         //    type: 'required',
@@ -470,7 +443,8 @@
                         "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
                         "Bachelors": updatedData.Bachelors,
                         "Masters": updatedData.Masters,
-                        "Experience": updatedData.Experience,
+                        "ExperienceInYears": updatedData.ExperienceInYears,
+                        "ExperienceInMonths": updatedData.ExperienceInMonths,
                         "Skills": updatedData.Skills,
                         "Resume": (updatedData.Resume == '') ? updatedData.Resume : updatedData.Resume[0].name,
                         "UserId": updatedData.UserId,
@@ -480,7 +454,23 @@
                     },
                     success: function (ResponseData) {
                         // Optionally, you can show a success message or perform other actions on success
-                        console.log('Data updated successfully');
+                        if (ResponseData.Response == "Update Sucessfully") {
+                            Swal.fire(
+                                'Updated data saved successfully!',
+                                '',
+                                'success'
+                            )
+                            console.log('Updated data saved successfully!');
+                        }
+
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed...',
+                                text: 'Something went wrong!',
+                                /*footer: '<a href="">Why do I have this issue?</a>'*/
+                            })
+                        }
                         LoadRecords();
                     },
                     error: function (err) {

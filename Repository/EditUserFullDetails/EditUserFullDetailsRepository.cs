@@ -99,7 +99,8 @@ namespace Repository.RegisteredJobSeekers
                 Bachelors = userDetails.Bachelors,
                 Masters = userDetails.Masters,
                 Skills = userDetails.Skills,
-                Experience = userDetails.Experience,
+                ExperienceInYears = userDetails.ExperienceInYears,
+                ExperienceInMonths = userDetails.ExperienceInMonths,
                 CoverLetter = userDetails.CoverLetter,
                 Resume = userDetails.Resume
 

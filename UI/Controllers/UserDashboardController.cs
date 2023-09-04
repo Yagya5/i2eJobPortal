@@ -67,10 +67,10 @@ namespace UI.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> GetMyAppliedJobs(int id)
-        //{
-        //    return Json(await _appliedJobsServices.MyAppliedJobs(id));
-        //}
+        public async Task<IActionResult> GetMyAppliedJobs(int id)
+        {
+            return Json(await _appliedJobsServices.MyAppliedJobs(id));
+        }
 
        
         public IActionResult Logout()

@@ -36,15 +36,34 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]        
         public IActionResult UpdateRegisteredJobSeekers(RegisteredJobSeeker jobSeeker)
         {          
-            var OldObject = _RegisteredJobSeekerServices.GetJobSeekerById(jobSeeker.UserId);
-            
+            var OldObject = _RegisteredJobSeekerServices.GetJobSeekerById(jobSeeker.UserId);            
             int TaskId = OldObject.UserId;
-
             string Module = "JobSeeker";
+            string Action = null;
 
-            string Action = AuditAction.Modified;            
+            if (jobSeeker.Is_Deleted == true)
+            {                
+              Action = AuditAction.Deleted;
+              OldObject.ProfilePicture = jobSeeker.ProfilePicture;
+            }
+            else
+            {
+              Action = AuditAction.Modified;
+              OldObject.ProfilePicture = jobSeeker.ProfilePicture;
+            }
 
             var result = _RegisteredJobSeekerServices.UpdateJobSeekerAccountStatus(jobSeeker);
+
+            if (result == true)
+            {
+                jobSeeker.Response = "Update Sucessfully";
+                OldObject.Response = jobSeeker.Response;
+            }
+            else
+            {
+                jobSeeker.Response = "Failed";
+                OldObject.Response = jobSeeker.Response;
+            }
 
             _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, jobSeeker);
 

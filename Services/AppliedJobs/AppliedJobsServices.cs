@@ -29,11 +29,11 @@ namespace Services.AppliedJobs
             return result;
         }
 
-        //public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
-        //{
-        //    var result = _AppliedJobsRepository.MyAppliedJobs(userId);
-        //    return await result;
-        //}
+        public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
+        {
+            var result = _AppliedJobsRepository.MyAppliedJobs(userId);
+            return await result;
+        }
 
         public IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category)
         {
@@ -52,6 +52,11 @@ namespace Services.AppliedJobs
             return result;
         }
 
+        public DM_AppliedJobs GetAppliedJobsById(int Id)
+        {
+            var result = _AppliedJobsRepository.GetAppliedJobsById(Id);
+            return result;
+        }
     }
 }
 
