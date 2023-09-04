@@ -13,6 +13,7 @@ using Services.AppliedJobs;
 using Services.Jobs;
 using Services.RegisteredJobSeekers;
 using Services.Users;
+using DNTCaptcha.Core;
 
 namespace i2eJobPortal
 {
@@ -44,6 +45,12 @@ namespace i2eJobPortal
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(25);
                 options.SlidingExpiration = true;
                 
+            });
+
+            builder.Services.AddDNTCaptcha(option =>
+            {
+                option.UseCookieStorageProvider().ShowThousandsSeparators(false);
+                option.WithEncryptionKey("abdDFKDFDFjkjkdfj121212");
             });
 
             builder.Services.AddSingleton<IDapperConnection>(new DapperConnection(builder.Configuration, "DefaultConnection"));
