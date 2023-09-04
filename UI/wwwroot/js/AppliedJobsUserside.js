@@ -102,7 +102,8 @@ function LoadRecords(userid) {
         }
     });
 }
-    function CreateAppliedJob(JobId) {
+function CreateAppliedJob(JobId) {
+    debugger;
         $.ajax({
             async: true,
             url: "/UserDashboard/CreateAppliedJob?id=" + JobId,
