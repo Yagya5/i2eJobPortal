@@ -24,17 +24,10 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
-            var jobs = _jobServices.GetJobs();
-            foreach (var job in jobs)
-            {
-                var currencyType = _jobServices.FindJobIdInMaster(job.CurrencyType);
-                var jobType = _jobServices.FindJobIdInMaster(job.JobType);
-                var jobMode = _jobServices.FindJobIdInMaster(job.JobMode);
-                job.CurrencyType_Home = currencyType.Value;
-                job.JobType_Home = jobType.Value;
-                job.JobMode_Home = jobMode.Value;
-            }
-            return View(jobs);
+            var jobs = _jobServices.GetJobsForHomePage();
+            var activeJobs = jobs.Where(job => job.IsActive).ToList();
+
+            return View(activeJobs);
         }
 
         public IActionResult AboutUs()
@@ -44,19 +37,7 @@ namespace UI.Controllers
         //Job fetching 
         public IActionResult Jobs()
         {
-            var jobs = _jobServices.GetJobs();
-            foreach (var job in jobs)
-            {
-                var currencyType = _jobServices.FindJobIdInMaster(job.CurrencyType);
-                var jobType = _jobServices.FindJobIdInMaster(job.JobType);
-                var jobMode = _jobServices.FindJobIdInMaster(job.JobMode);
-                job.CurrencyType_Home = currencyType.Value;
-                job.JobType_Home = jobType.Value;
-                job.JobMode_Home = jobMode.Value;
-            }
-
-         
-           
+            var jobs = _jobServices.GetJobsForHomePage();
             var jobTypes = _jobServices.GetMasterValuesByCategory("Job Type");
             var jobModes = _jobServices.GetMasterValuesByCategory("Job Mode");
 
@@ -68,20 +49,14 @@ namespace UI.Controllers
         public IActionResult Details(int id)
         {
 
-            var JobDetails = _jobServices.GetJobById(id);
+            var JobDetails = _jobServices.GetJobByIdView(id);
 
             if (JobDetails == null)
             {
 
                 return NotFound();
             }
-            var currencyType = _jobServices.FindJobIdInMaster(JobDetails.CurrencyType);
-            var jobType = _jobServices.FindJobIdInMaster(JobDetails.JobType);
-            var jobMode = _jobServices.FindJobIdInMaster(JobDetails.JobMode);
-
-            JobDetails.CurrencyType_Home = currencyType.Value;
-            JobDetails.JobType_Home = jobType.Value;
-            JobDetails.JobMode_Home = jobMode.Value;
+            
             return View(JobDetails);
         }
         //end
