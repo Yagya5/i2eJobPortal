@@ -46,6 +46,15 @@ namespace UI.Areas.Admin.Controllers
 
             var result = _RegisteredJobSeekerServices.UpdateJobSeekerAccountStatus(jobSeeker);
 
+            if (result == true)
+            {
+                jobSeeker.Response = "Update Sucessfully";
+            }
+            else
+            {
+                jobSeeker.Response = "Failed";
+            }
+
             _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, jobSeeker);
 
             return Ok(jobSeeker);

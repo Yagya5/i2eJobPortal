@@ -59,6 +59,35 @@
                     
                 },
                 success: function (ResponseData) {
+                    if (ResponseData.Response == "Update Sucessfully") {
+                        if (ResponseData.Is_Active == false) {
+                            Swal.fire(
+                                `${ResponseData.FirstName} blocked successfully!`,
+                                '',
+                                'success'
+                            )
+                            console.log(`${ResponseData.FirstName} blocked successfully!`);
+                        }
+                        else {
+                            Swal.fire(
+                                `${ResponseData.FirstName} Actived successfully!`,
+                                '',
+                                'success'
+                            )
+                            console.log(`${ResponseData.FirstName} blocked successfully!`);
+
+                        }
+                        
+                    }
+
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed...',
+                            text: 'Something went wrong!',
+                            /*footer: '<a href="">Why do I have this issue?</a>'*/
+                        })
+                    }
                     LoadRecords();
                 },
                 error: function (err) {
@@ -89,6 +118,24 @@
 
                 },
                 success: function (ResponseData) {
+                    if (ResponseData.Response == "Update Sucessfully") {
+                        Swal.fire(
+                            `${ResponseData.FirstName} data deleted successfully!`,
+                            '',
+                            'success'
+                        )
+                        console.log(`${ResponseData.FirstName} data deleted successfully!`);
+                        
+                    }
+
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed...',
+                            text: 'Something went wrong!',
+                            /*footer: '<a href="">Why do I have this issue?</a>'*/
+                        })
+                    }
                     LoadRecords();
                 },
                 error: function (err) {
@@ -211,8 +258,16 @@
             {
                 dataField: "Is_Active",
                 width: 75,
-                caption: "Active",
-                
+                caption: "Status",
+                filterType: "lookup", // Specify the filter type as lookup
+                lookup: {
+                    dataSource: [
+                        { value: true, text: "Active" }, // Define custom text for true value
+                        { value: false, text: "Block" } // Define custom text for false value
+                    ],
+                    valueExpr: "value",
+                    displayExpr: "text"
+                }
             },
 
         ]
@@ -239,6 +294,10 @@ function LoadRecords() {
                     record.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png";
                 }
                 record.BirthDate = record.BirthDate.split('T')[0];
+
+                if (record.BirthDate === "0001-01-01") {
+                    record.BirthDate = "";
+                }
             });
             ShowEvent(ResponseData);
         },
