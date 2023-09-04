@@ -37,7 +37,7 @@ body {
   font-weight: 800;
 }
 .maincontainer .opening-details {
-  width: 85%;
+  /*width: 85%;*/
   margin: auto;
   display: flex;
   flex-direction: column;
