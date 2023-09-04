@@ -52,7 +52,7 @@ namespace Repository.RegisteredJobSeekers
         public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker)
         {
             using var connection = _dapperConnection.CreateConnection();
-            var para = new { Is_Active = jobSeeker.Is_Active, UserId = jobSeeker.UserId };
+            var para = new { Is_Active = jobSeeker.Is_Active, Is_Deleted = jobSeeker.Is_Deleted, UserId = jobSeeker.UserId };
             var result = connection.Query<RegisteredJobSeeker>("spUpdateJobSeekerAccountStatus", para,commandType: CommandType.StoredProcedure);
             
             if (result != null && result.FirstOrDefault().Response == "Update Sucessfully")

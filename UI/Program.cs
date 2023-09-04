@@ -24,8 +24,6 @@ namespace i2eJobPortal
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-
-
             // Add services to the container.
             //builder.Services.AddControllersWithViews(Options =>
             //{
@@ -64,10 +62,8 @@ namespace i2eJobPortal
             builder.Services.AddTransient<IEditAdminFullDetailsRepository, EditAdminFullDetailsRepository>();
             builder.Services.AddTransient<IEditAdminFullDetailsServices, EditAdminFullDetailsServices>();
 
-
             builder.Services.AddTransient<IAppliedJobsRepository, AppliedJobsRepository>();
             builder.Services.AddTransient<IAppliedJobsServices, AppliedJobsServices>();
-
 
             builder.Services.AddTransient<IJobRepository, JobRepository>();
             builder.Services.AddTransient<IJobServices, JobServices>();
@@ -84,7 +80,18 @@ namespace i2eJobPortal
                 app.UseHsts();
             }
 
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = "/Home";
+                    await next();
+                }
+            });
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -94,20 +101,8 @@ namespace i2eJobPortal
             app.UseAuthorization();
 
 
-
-            //app.MapControllerRoute(
-            //   name: "default",
-            //   pattern: "{controller=User}/{action=Index}/{id?}");
-
-            //app.MapControllerRoute(
-            //    name: "Admin",
-            //    pattern: "{area=Admin}/{controller=AdminDashboard}/{action=Index}/{id?}");
-
-
-
             app.UseEndpoints(endpoints =>
             {
-
                 endpoints.MapAreaControllerRoute(
                     name: "Admin",
                     areaName: "Admin",
@@ -124,28 +119,10 @@ namespace i2eJobPortal
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
 
-            });
-
-
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //      endpoints.MapControllerRoute(
-            //      name: "Admin",
-            //      pattern: "{area=Admin}/{controller=AdminDashboard}/{action=Index}/{id?}"
-            //    );
-            //});
-
+            });   
 
 
             app.MapRazorPages();
-
-
-            
-
-
-
-
 
             app.Run();
         }

@@ -8,7 +8,7 @@
         allowColumnResizing: true,
         filterRow: { visible: true },
         searchPanel: { visible: true },
-        // groupPanel: { visible: true },
+         groupPanel: { visible: true },
         showBorders: true,
         showRowLines: true,
         // rowAlternationEnabled: true,
@@ -108,7 +108,7 @@
             },
             {
                 dataField: "Module",    
-                groupIndex: 0
+                
             },
             {
                 dataField: "Url",  
@@ -120,7 +120,8 @@
             {
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
-                width: "200"
+                width: "200",
+                dataType: "datetime"
             }
         ]
 

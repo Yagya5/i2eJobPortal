@@ -173,6 +173,7 @@
 
                     {
                         dataField: 'Address',
+                        editorType: 'dxTextArea',
                         validationRules: [{
                             type: 'required',
                             message: 'Address is required',
@@ -181,6 +182,8 @@
                             template: labelTemplate('home'),
                         },
                     },
+
+
 
                     {
                         dataField: 'PhoneNumber',
@@ -197,16 +200,6 @@
                         },
                     },
 
-                    //{
-                    //    dataField: 'Email',
-                    //    label: {
-                    //        template: labelTemplate('Email'),
-                    //    },
-                    //    editorOptions: {
-                    //        disabled: true,
-                    //    },
-
-                    //},
 
                     {
                         dataField: 'Bachelors',
@@ -244,16 +237,34 @@
                     },
 
                     {
-                        dataField: 'Experience',
+                        dataField: 'ExperienceInYears',
                         editorType: 'dxSelectBox',
                         editorOptions: {
-                            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                            items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14, 15],
                             searchEnabled: true,
                             /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
-                            message: 'Experience is required',
+                            message: 'ExperienceInYears is required',
+                        }],
+
+                        label: {
+                            template: labelTemplate('info'),
+                        },
+                    },
+
+                    {
+                        dataField: 'ExperienceInMonths',
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                            searchEnabled: true,
+                            /*value: '',*/
+                        },
+                        validationRules: [{
+                            type: 'required',
+                            message: 'ExperienceInMonths is required',
                         }],
 
                         label: {
@@ -276,74 +287,15 @@
                         },
                     },
 
-                    //{
-                    //    dataField: 'ProfilePicture', // Property name for the profile picture URL
-                    //    editorType: 'dxFileUploader',
-                    //    editorOptions: {
-                    //        accept: 'image/*',
-                    //        uploadMode: "useForm",
-                    //        selectButtonText: 'Select Image',
-                    //        labelText: '',
-                    //        showClearButton: true,
-
-                    //        onValueChanged: function (e) {
-                    //            // When the profile picture changes, update the form data
-                    //            /*updateFormData($.extend({}, $('#form').dxForm('option', 'formData'), { profilePicture: e.value }));*/
-
-                    //            if (e.value && e.value.length > 0) {
-                    //                const formData = new FormData();
-                    //                formData.append('ProfilePicture', e.value[0]);
-
-                    //                $.ajax({
-                    //                    url: "/EditUserFullDetails/UploadProfilePicture",
-                    //                    method: 'POST',
-                    //                    data: formData,
-                    //                    processData: false,
-                    //                    contentType: false,
-                    //                    success: function (response) {
-                    //                        // On success, update the form data with the new image URL
-                    //                        const newFormData = $.extend({}, $('#form').dxForm('option', 'formData'), { ProfilePicture: response.url });
-                    //                        updateFormData(newFormData);
-                    //                    },
-                    //                    error: function (err) {
-                    //                        // Handle the error if any
-                    //                        console.error(err);
-                    //                    }
-                    //                });
-                    //            }
-                    //        }
-                    //    },
-                    //},
-
                     {
-                        colSpan: 2,
                         dataField: 'CoverLetter',
                         editorType: 'dxTextArea',
-                        editorOptions: {
-                            height: 90,
-                            maxLength: 200,
-                        },
                         validationRules: [{
                             type: 'required',
                             message: 'CoverLetter is required',
                         }],
                         label: {
-                            template: (data, element) => {
-                                const lineBreak = '<br>';
-                                const infoIcon = '<i id="helpedInfo" class="dx-icon dx-icon-info"></i>';
-                                const labelText = `Additional${lineBreak}${data.text}`;
-
-                                element.append(`<div id='template-content'>${infoIcon}${labelText}</div>`);
-
-                                $('<div>').dxTooltip({
-                                    target: '#helpedInfo',
-                                    showEvent: 'mouseenter',
-                                    hideEvent: 'mouseleave',
-                                    contentTemplate(args) {
-                                        args.html('<div id="tooltip-content">This field must not exceed 200 characters</div>');
-                                    },
-                                }).appendTo(element);
-                            },
+                            template: labelTemplate('info'),
                         },
                     },
 
@@ -383,6 +335,9 @@
                                     });
                                 }
                             }
+                        },
+                        label: {
+                            template: labelTemplate('info'),
                         },
                         //validationRules: [{
                         //    type: 'required',
@@ -470,7 +425,8 @@
                         "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
                         "Bachelors": updatedData.Bachelors,
                         "Masters": updatedData.Masters,
-                        "Experience": updatedData.Experience,
+                        "ExperienceInYears": updatedData.ExperienceInYears,
+                        "ExperienceInMonths": updatedData.ExperienceInMonths,
                         "Skills": updatedData.Skills,
                         "Resume": (updatedData.Resume == '') ? updatedData.Resume : updatedData.Resume[0].name,
                         "UserId": updatedData.UserId,

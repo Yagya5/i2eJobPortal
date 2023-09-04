@@ -20,5 +20,7 @@ namespace Services.AppliedJobs
         bool CreateAppliedJob( int job_Id, int User_Id);
 
         bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj);
+
+        DM_AppliedJobs GetAppliedJobsById(int Id);
     }
 }

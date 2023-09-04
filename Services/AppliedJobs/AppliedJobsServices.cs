@@ -58,6 +58,11 @@ namespace Services.AppliedJobs
             return result;
         }
 
+        public DM_AppliedJobs GetAppliedJobsById(int Id)
+        {
+            var result = _AppliedJobsRepository.GetAppliedJobsById(Id);
+            return result;
+        }
     }
 }
 

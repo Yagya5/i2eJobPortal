@@ -61,6 +61,29 @@ namespace Repository.AppliedJobs
 
         }
 
+
+        public DM_AppliedJobs GetAppliedJobsById(int Id)
+        {
+            var result = new DM_AppliedJobs();
+            using var connection = _dapperConnection.CreateConnection();
+            string Query = @"Select AppliedJobId
+,FirstName
+,LastName
+,Gender
+,JobTitle
+,DepartmentName
+,MinExperience
+,Location
+,ProfilePicture 
+,Status
+,Round
+ from v_AppliedJobs where AppliedJobId=" + Id;
+            result = connection.QueryFirstOrDefault<DM_AppliedJobs>(Query, null, null, 0, null);
+            return result;
+        }
+
+
+
         //To get the dropdown elements
         public IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category)
         {
