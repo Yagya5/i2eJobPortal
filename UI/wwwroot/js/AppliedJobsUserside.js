@@ -58,18 +58,14 @@ function ShowEvent(_datasource) {
                 dataField: "JobTitle",
                 caption: "Job Title"
             },
-            {
-                dataField: "Location",
-                caption: "Location"
-            },
+            //{
+            //    dataField: "Location",
+            //    caption: "Location"
+            //},
 
             {
-                dataField: "JobModeName",
-                caption: "JobMode"
-            },
-            {
                 dataField: "JobTypeName",
-                caption: "JobType"
+              caption: "JobType"
             },
             {
                 dataField: "JobAppliedDateTime",
@@ -106,7 +102,18 @@ function LoadRecords(userid) {
         }
     });
 }
-
+    function CreateAppliedJob(JobId) {
+        $.ajax({
+            async: true,
+            url: "/UserDashboard/CreateAppliedJob?id=" + JobId,
+            type: 'Get',
+            success: function (response) {
+                
+            },
+            error: function () {
+               
+            }
+        }
 
 
 

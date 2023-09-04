@@ -1,6 +1,7 @@
 ﻿using DomainModel.Jobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
 using Services.AppliedJobs;
 using Services.Jobs;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,6 +38,12 @@ namespace UI.Controllers
                 job.JobType_Home = jobType.Value;
                 job.JobMode_Home = jobMode.Value;
             }
+
+            var jobTypes = _jobServices.GetMasterValuesByCategory("Job Type");
+            var jobModes = _jobServices.GetMasterValuesByCategory("Job Mode");
+
+            ViewBag.JobTypes = new SelectList(jobTypes, "Id", "Value");
+            ViewBag.JobModes = new SelectList(jobModes, "Id", "Value");
             return View(jobs);
         }
         public IActionResult Details(int id)
@@ -70,7 +77,7 @@ namespace UI.Controllers
         {
             return View();
         }
-        [HttpGet]
+      
         public IActionResult CreateAppliedJob(int job_Id )
         {
 

@@ -53,7 +53,7 @@ namespace DomainModel.AppliedJobs
 
         public string? JobTitle { get; set; }
 
-        public string? Location { get; set; }
+      //  public string? Location { get; set; }
         public string? JobModeName { get; set; }
         public string? JobTypeName { get; set; }
 

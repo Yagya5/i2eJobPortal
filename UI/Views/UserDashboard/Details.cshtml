@@ -55,22 +55,3 @@
     </div>
     </div>
 </div>
-<script type="text/javascript">
-    function CreateAppliedJob(JobId) {
-        $.ajax({
-            async: true,
-            url: '/UserDashboard/CreateAppliedJob?id=' + JobId,
-            type: 'Get',
-            success: function (response) {
-                alert("You have succesfully applied.");
-            }
-
-            error: function () {
-                alert("There is no Record in insert");
-            }
-         
-          
-        
-
-    }
-</script>
