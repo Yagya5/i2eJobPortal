@@ -3,9 +3,11 @@ using DomainModel.Jobs;
 using Microsoft.AspNetCore.Mvc;
 using Services.Jobs;
 using Services.AuditTrails;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Super Admin, Admin")]
     public class JobController : Controller
     {
         private readonly IJobServices _jobServices;

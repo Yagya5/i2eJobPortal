@@ -1,11 +1,13 @@
 ﻿using DomainModel.EditAdminFullDetails;
 using DomainModel.EditUserFullDetails;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.EditAdminFullDetails;
 
 
 namespace UI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Super Admin, Admin")]
     public class EditAdminFullDetailsController : Controller
     {
         private readonly IEditAdminFullDetailsServices _EditAdminFullDetailServices;

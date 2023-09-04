@@ -6,9 +6,11 @@ using DomainModel.AuditTrails;
 using DomainModel.RegisteredJobSeekers;
 using DomainModel.Jobs;
 using Services.AuditTrails;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Super Admin, Admin")]
     public class JobApplicationsController : Controller
     {
         private readonly IAppliedJobsServices _AppliedJobsServices;

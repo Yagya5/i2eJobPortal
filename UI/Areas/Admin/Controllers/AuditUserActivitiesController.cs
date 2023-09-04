@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.AuditTrails;
 
 namespace UI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Super Admin, Admin")]
     public class AuditUserActivitiesController : Controller
     {
         private readonly IAuditTrailServices _auditTrailServices;

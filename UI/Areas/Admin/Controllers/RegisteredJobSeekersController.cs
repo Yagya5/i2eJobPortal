@@ -1,6 +1,7 @@
 ﻿using DomainModel.AuditTrails;
 using DomainModel.RegisteredJobSeekers;
 using KellermanSoftware.CompareNetObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Services.AuditTrails;
@@ -10,7 +11,7 @@ using SkiaSharp;
 
 namespace UI.Areas.Admin.Controllers
 {
-    
+    [Authorize(Roles = "Super Admin, Admin")]
     public class RegisteredJobSeekersController : Controller
     {
         private readonly IRegisteredJobSeekersServices _RegisteredJobSeekerServices;

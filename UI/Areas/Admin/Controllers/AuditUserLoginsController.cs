@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Users;
 
 namespace UI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Super Admin, Admin")]
     public class AuditUserLoginsController : Controller
     {
         private readonly IUserServices _userServices;
