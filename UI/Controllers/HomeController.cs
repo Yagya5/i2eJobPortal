@@ -5,17 +5,21 @@ using Services.AuditTrails;
 using NuGet.Protocol.Core.Types;
 using Services.Jobs;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DNTCaptcha.Core;
+
 namespace UI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IJobServices _jobServices;
         private readonly IAuditTrailServices _auditTrailServices;
+        private readonly IDNTCaptchaValidatorService dNTCaptchaValidatorService;
 
-        public HomeController(IJobServices jobServices, IAuditTrailServices auditTrailServices)
+        public HomeController(IJobServices jobServices, IAuditTrailServices auditTrailServices, IDNTCaptchaValidatorService dNTCaptchaValidatorService)
         {
             _jobServices = jobServices;
             _auditTrailServices = auditTrailServices;
+            this.dNTCaptchaValidatorService = dNTCaptchaValidatorService;
         }
 
         public IActionResult Index()
@@ -92,6 +96,12 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(!dNTCaptchaValidatorService.HasRequestValidCaptchaEntry())
+                {
+                    TempData["captchaError"] = "Incorrect captcha code!";
+                    return View(query);
+                }
+
                 var result = _auditTrailServices.InsertContactQuery(query, this.HttpContext);
                 ModelState.Clear();
                 ViewBag.Message = "Your Message/Query Has Been Submitted";
