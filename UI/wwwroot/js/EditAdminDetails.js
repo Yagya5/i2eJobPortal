@@ -187,7 +187,7 @@
                     {
                         dataField: 'PhoneNumber',
                         editorOptions: {
-                            mask: '+1 (X00) 000-0000',
+                            mask: '(X00) 000-0000',
                             maskRules: { X: /[02-9]/ },
                         },
                         validationRules: [{
