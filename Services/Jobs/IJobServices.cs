@@ -1,4 +1,6 @@
-﻿using DomainModel.Jobs;
+﻿using DomainModel.CountryStateCityTable;
+using DomainModel.EditUserFullDetails;
+using DomainModel.Jobs;
 using DomainModel.MasterDetails;
 using System;
 using System.Collections.Generic;
@@ -13,12 +15,15 @@ namespace Services.Jobs
         IEnumerable<Job> GetJobs();
 
         IEnumerable<Job> GetJobsForHomePage();
-        Master FindJobIdInMaster(int jobId);
         bool CreateJob(Job job_Obj);
         IEnumerable<Master> GetMasterValuesByCategory(string category);
         bool DeleteJob(int JobId);
-        Job GetJobById(int jobId);
         bool UpdateJob(Job job);
-        int GetMasterIdByValue(string category, string value);
+        Job GetJobByIdView(int jobId);
+        IEnumerable<Master> GetMasterValuesJob();
+        Job GetJobById(int jobId);
+        IEnumerable<CountryStateCityData> GetAllCountryStateCity();
+
+        Job GetJobById_ForAuditTrail(int jobId);
     }
 }

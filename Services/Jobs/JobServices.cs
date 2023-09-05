@@ -1,4 +1,6 @@
-﻿using DomainModel.Jobs;
+﻿using DomainModel.CountryStateCityTable;
+using DomainModel.EditUserFullDetails;
+using DomainModel.Jobs;
 using DomainModel.MasterDetails;
 using Repository.Jobs;
 using System;
@@ -24,13 +26,12 @@ namespace Services.Jobs
             var result = _jobRepository.GetJobs();
             return result;
         }
-
-        public Master FindJobIdInMaster(int jobId)
+        public IEnumerable<Master> GetMasterValuesJob()
         {
-            var result = _jobRepository.FindJobIdInMaster(jobId);
+            var result = _jobRepository.GetMasterValuesJob();
             return result;
-        }
 
+        }
         public bool CreateJob(Job job_Obj)
         {
             var result = _jobRepository.CreateJob(job_Obj);
@@ -48,25 +49,38 @@ namespace Services.Jobs
             var result = _jobRepository.DeleteJob(JobId);
             return result;
         }
-        public Job GetJobById(int jobId)
+        
+             public Job GetJobById(int jobId)
         {
             var result = _jobRepository.GetJobById(jobId);
             return result;
         }
+        public Job GetJobByIdView(int jobId)
+        {
+            var result = _jobRepository.GetJobByIdView(jobId);
+            return result;
+        }
+        
         public bool UpdateJob(Job job)
         {
             var result = _jobRepository.UpdateJob(job);
             return result;
         }
-        public int GetMasterIdByValue(string category, string value)
-        {
-            var result = _jobRepository.GetMasterIdByValue(category, value);
-            return result;
-        }
-
+        
         public IEnumerable<Job> GetJobsForHomePage()
         {
             var result = _jobRepository.GetJobsForHomePage();
+            return result;
+        }
+        public IEnumerable<CountryStateCityData> GetAllCountryStateCity()
+        {
+            var result = _jobRepository.GetAllCountryStateCity();
+            return result;
+        }
+
+        public Job GetJobById_ForAuditTrail(int jobId)
+        {
+            var result = _jobRepository.GetJobById_ForAuditTrail(jobId);
             return result;
         }
     }

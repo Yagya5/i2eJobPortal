@@ -33,7 +33,7 @@ namespace DomainModel.AuditTrails
 
     public static class AuditAction
     {
-        public const string Modified = "Modified", Insert = "Insert";
+        public const string Modified = "Modified", Insert = "Insert", Deleted = "Deleted";
 
     }
 

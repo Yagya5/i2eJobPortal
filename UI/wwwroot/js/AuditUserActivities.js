@@ -104,7 +104,8 @@
             },
             {
                 dataField: "DataField",
-                caption: "Data Field"
+                caption: "Data Field",
+                width: 150
             },
             {
                 dataField: "Module",    

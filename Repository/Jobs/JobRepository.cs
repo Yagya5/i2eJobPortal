@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using DomainModel.AuditLogins;
 using DomainModel.Common;
+using DomainModel.CountryStateCityTable;
+using DomainModel.EditUserFullDetails;
 using DomainModel.Jobs;
 using DomainModel.MasterDetails;
 using Repository.Connection;
@@ -23,7 +25,7 @@ namespace Repository.Jobs
             _dapperConnection = dapperConnection;
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
-        //Start Functions to display all the jobs list
+      
         public IEnumerable<Job> GetJobs()
         {
             IEnumerable<Job> result = new List<Job>();
@@ -31,23 +33,7 @@ namespace Repository.Jobs
             result = connection.Query<Job>("spGetJobs", null, commandType: CommandType.StoredProcedure);
             return result;
         }
-        public Master FindJobIdInMaster(int jobId)
-        {
-            using var connection = _dapperConnection.CreateConnection();
-            var sql = "SELECT Value FROM " + Constant.MasterDetailsTableName + " WHERE Id = @MasterId";
-            return connection.Query<Master>(sql, new { MasterId = jobId }).Single();
-        }
-
-        //End
-
-        //Start Create operation
-        public int GetMasterIdByValue(string category, string value)
-        {
-            using var connection = _dapperConnection.CreateConnection();
-            var sql = "SELECT Id FROM " + Constant.MasterDetailsTableName + " WHERE Category = @Category AND Value = @Value";
-            return connection.QuerySingleOrDefault<int>(sql, new { Category = category, Value = value });
-        }
-
+       
         public bool CreateJob(Job job_Obj)
         {
             using var connection = _dapperConnection.CreateConnection();
@@ -63,16 +49,28 @@ namespace Repository.Jobs
             param.Add("JobMode", job_Obj.JobMode);
             param.Add("MinExperience", job_Obj.MinExperience);
             param.Add("MaxExperience", job_Obj.MaxExperience);
+            param.Add("MinExperienceMonth", job_Obj.MinExperienceMonth);
+            param.Add("MaxExperienceMonth", job_Obj.MaxExperienceMonth);
             param.Add("Description", job_Obj.Description);
             param.Add("IsActive", job_Obj.IsActive);
             param.Add("PostDate", job_Obj.PostDate);
-            param.Add("Location", job_Obj.Location);
             param.Add("urgentRequirement", job_Obj.urgentRequirement);
+            param.Add("City", job_Obj.City);
+            param.Add("Country", job_Obj.Country);
+            param.Add("State", job_Obj.State);
             connection.Execute(Constant.CreateNewJob, param, null, 0, CommandType.StoredProcedure);
             return true;
         }
 
         //To get the dropdown elements
+        public IEnumerable<Master> GetMasterValuesJob()
+        {
+            IEnumerable<Master> result = new List<Master>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<Master>("GetMasterValuesJobs", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
         public IEnumerable<Master> GetMasterValuesByCategory(string category)
         {
             using var connection = _dapperConnection.CreateConnection();
@@ -96,7 +94,13 @@ namespace Repository.Jobs
         public Job GetJobById(int jobId)
         {
             using var connection = _dapperConnection.CreateConnection();
-            var sql = "SELECT * FROM " + Constant.JobsTableName + " WHERE JobId = @JobId";           
+            var sql = "SELECT * FROM " + Constant.JobsTableName + " WHERE JobId = @JobId";
+            return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
+        }
+        public Job GetJobByIdView(int jobId)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            var sql = "SELECT * FROM v_GetJobData  WHERE JobId = @JobId";
             return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
         }
         //Updating a Job
@@ -104,8 +108,6 @@ namespace Repository.Jobs
         {
             using var connection = _dapperConnection.CreateConnection();
             var param = new DynamicParameters();
-
-
 
             param.Add("JobId", job.JobId);
             param.Add("JobType", job.JobType);
@@ -116,10 +118,14 @@ namespace Repository.Jobs
             param.Add("JobMode", job.JobMode);
             param.Add("MinExperience", job.MinExperience);
             param.Add("MaxExperience", job.MaxExperience);
+            param.Add("MinExperienceMonth", job.MinExperienceMonth);
+            param.Add("MaxExperienceMonth", job.MaxExperienceMonth);
             param.Add("Description", job.Description);
             param.Add("IsActive", job.IsActive);
-            param.Add("Location", job.Location);
             param.Add("urgentRequirement", job.urgentRequirement);
+            param.Add("City", job.City);
+            param.Add("Country", job.Country);
+            param.Add("State", job.State);
             connection.Execute(Constant.UpdateAJob, param, null, 0, CommandType.StoredProcedure);
             return true;
         }
@@ -128,9 +134,24 @@ namespace Repository.Jobs
         {
             IEnumerable<Job> result = new List<Job>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT * FROM v_GetJobsForHomePage";
+            string Query = "SELECT * FROM v_GetJobData";
             result = connection.Query<Job>(Query, null, null, true, 0, null);
             return result;
+        }
+
+        public IEnumerable<CountryStateCityData> GetAllCountryStateCity()
+        {
+            IEnumerable<CountryStateCityData> result = new List<CountryStateCityData>();
+            using var connection = _dapperConnection.CreateConnection();
+            result = connection.Query<CountryStateCityData>("spGetAllCountryStateCity", null, commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
+        public Job GetJobById_ForAuditTrail(int jobId)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            var sql = "SELECT * FROM v_GetJobDetails_ForOldObject_AuditTrail WHERE JobId = @JobId";
+            return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
         }
     }
 }

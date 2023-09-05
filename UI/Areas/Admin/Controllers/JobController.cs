@@ -3,9 +3,11 @@ using DomainModel.Jobs;
 using Microsoft.AspNetCore.Mvc;
 using Services.Jobs;
 using Services.AuditTrails;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Super Admin, Admin")]
     public class JobController : Controller
     {
         private readonly IJobServices _jobServices;
@@ -24,23 +26,24 @@ namespace UI.Areas.Admin.Controllers
         public IActionResult GetJobs()
         {
             var jobs = _jobServices.GetJobs();
+          
 
             return Ok(jobs);
         }
-
-
+        
         [HttpGet]
-        public IActionResult FindJobIdInMaster(int jobId)
+        public IActionResult GetAllCountryStateCity()
         {
-            var values = _jobServices.FindJobIdInMaster(jobId);
+            var values = _jobServices.GetAllCountryStateCity();
             return Json(values);
         }
         [HttpGet]
-        public IActionResult GetMasterValuesByCategory(string category)
+        public IActionResult GetMasterValues()
         {
-            var values = _jobServices.GetMasterValuesByCategory(category);
+            var values = _jobServices.GetMasterValuesJob();
             return Json(values);
         }
+        
         [HttpPost]
         public IActionResult CreateJob(Job job)
         {
@@ -70,7 +73,7 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var OldObject = _jobServices.GetJobById(job.JobId);
+                var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
                 int TaskId = OldObject.JobId;
                 string Module = "Job";
                 string Action = AuditAction.Modified;
@@ -81,8 +84,14 @@ namespace UI.Areas.Admin.Controllers
                 var response = _jobServices.UpdateJob(job);
 
 
+                OldObject.JobMode = job.JobMode;
+                OldObject.JobType = job.JobType;
+                OldObject.CurrencyType = job.CurrencyType;
+                OldObject.Country = job.Country;
+                OldObject.State = job.State;
+                OldObject.City = job.City;
                 _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
-                return Ok(response); // Redirect to the job listing after editing
+                return Ok(response); 
 
             }
             return Ok(null);

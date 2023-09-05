@@ -22,16 +22,26 @@ namespace DomainModel.Jobs
         public int JobMode { get; set; } /*Call from Master table*/
 
         public int MinExperience { get; set; }
+        public int MinExperienceMonth { get; set; }
 
         public int MaxExperience { get; set; }
+        public int MaxExperienceMonth { get; set; }
         public string? Description { get; set; }
 
         public bool IsActive { get; set; }
 
         public DateTime? PostDate { get; set; }
-        public string? Location { get; set; }
+       
+        public int Country { get; set; }
+
+        public int State { get; set; }
+
+        public int City { get; set; }
         public bool urgentRequirement { get; set; }
 
+        public string? Country_Home { get; set; }
+        public string? State_Home { get; set; }
+        public string? City_Home { get; set; }
 
     }
 }

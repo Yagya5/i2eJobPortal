@@ -1,10 +1,12 @@
 ﻿using DomainModel.EditUserFullDetails;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Services.RegisteredJobSeekers;
 
 namespace UI.Controllers
 {
+    [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
     public class EditUserFullDetailsController : Controller
     {
         private readonly IEditUserFullDetailsServices _EditUserFullDetailServices;
