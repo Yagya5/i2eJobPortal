@@ -17,6 +17,12 @@ let citySelectBoxInstance = null;
 let globalCountry = 0;
 let globalState = 0;
 
+let JobTypeHome = null;
+let JobModeHome = null;
+let JobCurrency = null;
+let JobCountry = null;
+let JobCity = null; 
+let JobState = null;
 
 function showJob(dataSource) {
     window.jsPDF = window.jspdf.jsPDF;
@@ -31,7 +37,7 @@ function showJob(dataSource) {
 
         showBorders: true,
         showRowLines: true,
-        rowAlternationEnabled: true,
+        rowAlternationEnabled: false,
         wordWrapEnabled: true,
 
         paging: {
@@ -150,7 +156,13 @@ function showJob(dataSource) {
                 "MaxExperienceMonth": e.data.MaxExperienceMonth,
                 "City": e.data.City,
                 "Country": e.data.Country,
-                "State": e.data.State,     
+                "State": e.data.State,
+                "JobType_Home": JobTypeHome,
+                "JobMode_Home": JobModeHome,
+                "CurrencyType_Home": JobCurrency,
+                "Country_Home": JobCountry,
+                "State_Home": JobState,
+                "City_Home": JobCity,
             };
 
             
@@ -186,7 +198,6 @@ function showJob(dataSource) {
                 "MaxExperience": e.data.MaxExperience,
                 "Description": e.data.Description,
                 "IsActive": e.data.IsActive,
-               
                 "JobType": e.data.JobType, 
                 "JobMode": e.data.JobMode, 
                 "CurrencyType": e.data.CurrencyType,
@@ -239,7 +250,8 @@ function showJob(dataSource) {
                cellTemplate: function (container, options) {
                     const jobTypeId = options.value; 
                     const jobTypeValue = jobTypeValues1.find(jobType => jobType.Id === jobTypeId);
-                    const jobTypeText = jobTypeValue.Value;
+                   const jobTypeText = jobTypeValue.Value;
+                    JobTypeHome = jobTypeText;
                     $("<div>")
                         .text(jobTypeText)
                         .appendTo(container);
@@ -300,6 +312,7 @@ function showJob(dataSource) {
                 cellTemplate: function (container, options) {
                     const currencyId = options.value; 
                     const currencyValue = currencyValues1.find(currency => currency.Id === currencyId);
+                    JobCurrency = currencyValue.Value;
                     const currencySymbol = currencySymbols[currencyValue.Value] || "";
                     $("<div>")
                         .text(currencySymbol)
@@ -323,6 +336,8 @@ function showJob(dataSource) {
                     const jobModeID = options.value; 
                     const jobModeValues = jobModeValues1.find(JobMode => JobMode.Id === jobModeID);
                     const jobModeValuesText = jobModeValues.Value;
+                    JobModeHome = jobModeValuesText;
+
                     $("<div>")
                         .text(jobModeValuesText)
                         .appendTo(container);
@@ -449,6 +464,7 @@ function showJob(dataSource) {
                     const CountryID = options.value;
                     const CountryValues = CountryList.find(Country => Country.Category_Id === CountryID);
                     const CountryValuesText = CountryValues.Value;
+                    JobCountry = CountryValuesText;
                     $("<div>")
                         .text(CountryValuesText)
                         .appendTo(container);
@@ -485,6 +501,7 @@ function showJob(dataSource) {
                     const StateID = options.value;
                     const StateValues = StateList.find(State => State.Category_Id === StateID);
                     const StateValuesText = StateValues.Value;
+                    JobState = StateValuesText;
                     $("<div>")
                         .text(StateValuesText)
                         .appendTo(container);
@@ -508,6 +525,7 @@ function showJob(dataSource) {
                     const CityID = options.value;
                     const CityValues = CityList.find(City => City.Category_Id === CityID);
                     const CityValuesText = CityValues.Value;
+                    JobCity = CityValuesText;
                     $("<div>")
                         .text(CityValuesText)
                         .appendTo(container);
