@@ -258,6 +258,27 @@ function ShowEvent(_datasource) {
 
 
         columns: [
+            {
+                dataField: "ProfilePicture",
+                caption: "Profile Picture",
+                width: 80,
+                allowFiltering: false,
+                allowSorting: false,
+                cellTemplate(container, options) {
+                    $('<div>')
+                        .append($('<img>', { src: options.data.ProfilePicture }))
+                        .appendTo(container);
+                },
+                allowEditing: false, // Enable editing for this column
+                editCellTemplate: function (container, options) {
+                    // Create an img element for the profile picture
+                    var img = $("<img>").attr("src", options.data.ProfilePicture).width(60).height(60);
+
+                    // Append the img to the editing popup container
+                    container.append(img);
+                }
+            },
+
 
             {
                 caption: "Full Name",
@@ -480,28 +501,28 @@ function ShowEvent(_datasource) {
 
 
 
-            {
-                dataField: "ProfilePicture",
-                caption: "Profile Picture",
+            //{
+            //    dataField: "ProfilePicture",
+            //    caption: "Profile Picture",
 
-                /*validationRules: [{ type: "required" }],*/
-                allowEditing: false,
-                width: 120,
-                allowFiltering: true,
-                allowSorting: true,
-                cellTemplate(container, options) {
-                    $('<div>')
-                        .append($('<img>', { src: options.data.ProfilePicture }))
-                        .appendTo(container);
-                },
-                headerFilter: {
-                    allowSelectAll: true,
-                    search: {
-                        enabled: false,
-                    }
-                }
+            //    /*validationRules: [{ type: "required" }],*/
+            //    allowEditing: false,
+            //    width: 120,
+            //    allowFiltering: true,
+            //    allowSorting: true,
+            //    cellTemplate(container, options) {
+            //        $('<div>')
+            //            .append($('<img>', { src: options.data.ProfilePicture }))
+            //            .appendTo(container);
+            //    },
+            //    headerFilter: {
+            //        allowSelectAll: true,
+            //        search: {
+            //            enabled: false,
+            //        }
+            //    }
                
-            },
+            //},
             
             {
                 dataField: "Status",
@@ -743,7 +764,19 @@ function LoadRecords() {
     $.ajax({
         url: "/JobApplications/GetAppliedJobs", 
         method: 'GET',
+
+
+
         success: function (responseData) {
+
+            // Update the ResponseData values for each record
+            responseData.forEach(function (record) {
+                if (record.ProfilePicture == null || record.ProfilePicture == "") {
+                    record.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png";
+                }
+                
+            });
+         
             ShowEvent(responseData);
             ShowPivotGrid(responseData);
 
