@@ -6,6 +6,7 @@ using Services.AppliedJobs;
 using Services.Jobs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DomainModel.Users;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace UI.Controllers
 {
@@ -89,15 +90,15 @@ namespace UI.Controllers
                 bool result = await _appliedJobsServices.IsUserResumeUploaded(User_Id);
                 if (result)
                 {
-                    var response = _appliedJobsServices.CreateAppliedJob(job_Id, User_Id);
-                    return Ok(response);
+                    var response = _appliedJobsServices.CreateAppliedJob(User_Id, job_Id);
+                    return Ok(new { response = response, status = true, responseof = "Job Applied" });
                 }
                 else
                 {
-                    return Ok("Please Upload Your resume");
+                    return Ok(new { response = result, status = false, responseof = "Resume Required", userid = User_Id });
                 }
             }
-            return BadRequest();
+            return BadRequest(new { status = false, responseof = "" });
         }
         public IActionResult AppliedJobs(int id)
         {
