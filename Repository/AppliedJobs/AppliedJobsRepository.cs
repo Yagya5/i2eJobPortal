@@ -21,6 +21,7 @@ using System.Reflection.Metadata;
 
 
 
+
 namespace Repository.AppliedJobs
 {
     public class AppliedJobsRepository : IAppliedJobsRepository
@@ -50,7 +51,13 @@ namespace Repository.AppliedJobs
 ,JobTitle
 ,DepartmentName
 ,MinExperience
-,Location
+,MaxExperience
+,MinExperienceMonth
+,MaxExperienceMonth
+,JobType
+,Country_Home
+,State_Home
+,City_Home
 ,ProfilePicture 
 ,Status
 ,Round

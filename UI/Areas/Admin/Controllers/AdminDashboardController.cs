@@ -15,7 +15,7 @@ namespace UI.Areas.Admin.Controllers
             _userServices = userServices;
         }
 
-        public IActionResult MyProfile()
+        public IActionResult Index()
         {
             return View();
         }

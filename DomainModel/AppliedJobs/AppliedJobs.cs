@@ -32,9 +32,16 @@ namespace DomainModel.AppliedJobs
         public string? JobTitle { get; set; } /*Call from Jobs table*/
         public string ?DepartmentName{ get; set; }/*Call from Jobs table*/
         public string ?MinExperience{ get; set; }/*Call from Jobs table*/
+        public string ? MaxExperience { get; set; }
+        public string? MaxExperienceMonth { get; set; }
+        public string? MinExperienceMonth { get; set; }
         public string ?LastName{ get; set; } /*Call from Users table*/
         public string ?Gender{ get; set; } /*Call from Users table*/
-        public string? Location { get; set; } /*Call from Jobs table*/
+
+        public string? Country_Home { get; set; }
+        public string? State_Home { get; set; }
+        public string? City_Home { get; set; }
+
         public string ? ProfilePicture { get; set; } /*Call from Users table*/
         public string? Resume { get; set; } /*Call from EducationalDetails table*/
 

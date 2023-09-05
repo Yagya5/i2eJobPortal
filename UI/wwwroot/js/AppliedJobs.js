@@ -9,113 +9,87 @@ $(document).ready(function () {
     fetchDataRound();
 
 
-
-    // PDF Button
-    //$('#pdfButton').on('click', function () {
-    //    // Check if the data is loaded before exporting
-    //    if ($("#dataGrid1").dxDataGrid("instance").getVisibleRows().length > 0) {
-    //        exportToPdf();
-    //    } else {
-    //        alert("No data to export to PDF.");
-    //    }
-    //});
-
-    //// Excel Button
-    //$('#excelButton').on('click', function () {
-    //    // Check if the data is loaded before exporting
-    //    if ($("#dataGrid1").dxDataGrid("instance").getVisibleRows().length > 0) {
-    //        exportToExcel();
-    //    } else {
-    //        alert("No data to export to Excel.");
-    //    }
-    //});
 });
 
-//function GetPivotGrid(_dataSource) {
 
-//    $(() => {
-//        const pivotGridChart = $('#pivotgrid-chart').dxChart({
-//            commonSeriesSettings: {
-//                type: 'bar',
-//            },
-//            tooltip: {
-//                enabled: true,
-//                format: 'currency',
-//                customizeTooltip(args) {
-//                    return {
-//                        html: `${args.seriesName} | Total<div class='currency'>${args.valueText}</div>`,
-//                    };
-//                },
-//            },
-//            size: {
-//                height: 200,
-//            },
-//            adaptiveLayout: {
-//                width: 450,
-//            },
-//        }).dxChart('instance');
+function ShowPivotGrid(_datasource) {
 
-//        const pivotGrid = $('#pivotgrid').dxPivotGrid({
-//            allowSortingBySummary: true,
-//            allowFiltering: true,
-//            showBorders: true,
-//            showColumnGrandTotals: false,
-//            showRowGrandTotals: false,
-//            showRowTotals: false,
-//            showColumnTotals: false,
-//            fieldChooser: {
-//                enabled: true,
-//                height: 400,
-//            },
-//            dataSource: _datasource,
-//            dataSource: {
-//                fields: [{
-//                    caption: 'Region',
-//                    width: 120,
-//                    dataField: 'region',
-//                    area: 'row',
-//                    sortBySummaryField: 'Total',
-//                }, {
-//                    caption: 'City',
-//                    dataField: 'city',
-//                    width: 150,
-//                    area: 'row',
-//                }, {
-//                    dataField: 'date',
-//                    dataType: 'date',
-//                    area: 'column',
-//                }, {
-//                    groupName: 'date',
-//                    groupInterval: 'month',
-//                    visible: false,
-//                }, {
-//                    caption: 'Total',
-//                    dataField: 'amount',
-//                    dataType: 'number',
-//                    summaryType: 'sum',
-//                    format: 'currency',
-//                    area: 'data',
-//                }],
-//                store: sales,
-//            },
-//        }).dxPivotGrid('instance');
+    $(() => {
+        const pivotGridChart = $('#pivotgrid-chart').dxChart({
+            commonSeriesSettings: {
+                type: 'bar',
+            },
+            size: {
+                height: 200,
+            },
+            adaptiveLayout: {
+                width: 450,
+            },
+        }).dxChart('instance');
 
-//        pivotGrid.bindChart(pivotGridChart, {
-//            dataFieldsDisplayMode: 'splitPanes',
-//            alternateDataFields: false,
-//        });
+        const pivotGrid = $('#pivotgrid').dxPivotGrid({
+            allowSortingBySummary: true,
+            allowFiltering: true,
+            showBorders: true,
+            showColumnGrandTotals: false,
+            showRowGrandTotals: false,
+            showRowTotals: false,
+            showColumnTotals: false,
+            fieldChooser: {
+                enabled: true,
+                height: 600,
+            },
+            dataSource: {
+                store: _datasource,
+                fields: [
+                    //{
+                    //    dataField: "JobType",
+                    //    area: "column",
+                    //    caption: "Job Type",
+                    //},
 
-//        function expand() {
-//            const dataSource = pivotGrid.getDataSource();
-//            dataSource.expandHeaderItem('row', ['North America']);
-//            dataSource.expandHeaderItem('column', [2013]);
-//        }
+                    //{
+                    //    groupName: 'Job Type',
+                    //    groupInterval: 'month',
+                    //    visible: true,
+                    //},
+                    {
+                        dataField: "JobTitle",
+                        dataType: "string",
+                        area: "row",
+                        caption: "Job Applied For",
+                    },
+                    {
+                        dataField: "UserId",
+                        dataType: "int",
+                        summaryType: "count",
+                        area: "data",
+                        caption: "No. of Users Applied",
+                    },
+                ],
+            },
+        }).dxPivotGrid('instance');
+        $('#pivotgrid').hide();
+        pivotGrid.bindChart(pivotGridChart, {
+            dataFieldsDisplayMode: 'splitPanes',
+            alternateDataFields: false,
+        });
 
-//        setTimeout(expand, 0);
-//    });
+        function expand() {
+            const dataSource = pivotGrid.getDataSource();
+            dataSource.expandHeaderItem('row', ['Jobs Applied']);
+            /*dataSource.expandHeaderItem('column', ['Job Type']);*/
+        }
+
+        setTimeout(expand, 0);
+    });
+
+                
 
 
-//}
+
+
+}
 
 
 
@@ -263,7 +237,7 @@ function ShowEvent(_datasource) {
                     "JobTitle": e.data.JobTitle,
                     "DepartmentName": e.data.DepartmentName,
                     "MinExperience": e.data.MinExperience,
-                    "Location": e.data.Location,
+                    /*"Location": e.data.Location,*/
                     "ProfilePicture": e.data.ProfilePicture,
                     "StatusValue": e.data.Status,
                     "RoundValue": e.data.Round,
@@ -383,7 +357,7 @@ function ShowEvent(_datasource) {
             },
             {
                 dataField: "MinExperience",
-                caption: "Min Experience(in years)",
+                caption: "Min Experience",
                 allowFiltering: true,
                 allowSorting: true,
                 /*validationRules: [{ type: "required" }],*/
@@ -395,24 +369,62 @@ function ShowEvent(_datasource) {
                         enabled: false,
                     }
                 },
-                cellTemplate: function (container, options) {
-                    $("<div>")
-                        .text(options.value + " years")
-                        .appendTo(container);
-                }
+                calculateCellValue: function (data) {
+                    return data.MinExperience + "" + " Years" + "   " + data.MinExperienceMonth+""+"Months";
+                },
             },
+
             {
-                dataField: "Location",
-                caption: "Location",
+                dataField: "MinExperienceMonth",
+                caption: "MinExperienceMonth",
                 allowFiltering: true,
                 allowSorting: true,
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                width: 120,
+                width: 50,
+                visible: false,
+
+
                 headerFilter: {
-                    allowSelectAll: false,
+                    allowSelectAll: true,
                     search: {
-                        enabled: true,
+                        enabled: false,
+                    }
+                }
+            },
+            {
+                dataField: "MaxExperience",
+                caption: "Max Experience",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 150,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                },
+                calculateCellValue: function (data) {
+                    return data.MaxExperience + "" + " Years" + "   " + data.MaxExperienceMonth + "" + "Months";
+                },
+            },
+            {
+                dataField: "MaxExperienceMonth",
+                caption: "MaxExperienceMonth",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 50,
+                visible: false,
+
+
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
                     }
                 }
             },
@@ -577,23 +589,6 @@ async function fetchDataRound() {
 
 
 
-//function fetchRoundData() {
-//    $.ajax({
-//        url: "/JobApplications/GetMasterValuesByCategoryForAppliedJobs",
-//        method: "GET",
-//        data: { category: "Round" },
-//        success: function (response) {
-//            console.log("hello");
-//            RoundValues1 = response.map(item => ({ value: item.Value }));
-//        },
-//        error: function (err) {
-//            alert("Error fetching Round Types: " + err);
-//        }
-//    });
-//}
-
-
-
 
 
 
@@ -698,6 +693,7 @@ function LoadRecords() {
         method: 'GET',
         success: function (responseData) {
             ShowEvent(responseData);
+            ShowPivotGrid(responseData);
 
 
            /* alert(response);*/
