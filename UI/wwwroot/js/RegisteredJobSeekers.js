@@ -7,10 +7,9 @@
         allowColumnResizing: true,
         filterRow: { visible: true },
         searchPanel: { visible: true },
-        /*groupPanel: { visible: true },*/
+        groupPanel: { visible: true },
         showBorders: true,
         showRowLines: true,
-        rowAlternationEnabled: true,
         wordWrapEnabled: true,
 
         paging: {
@@ -133,7 +132,7 @@
                             icon: 'error',
                             title: 'Failed...',
                             text: 'Something went wrong!',
-                            /*footer: '<a href="">Why do I have this issue?</a>'*/
+                            
                         })
                     }
                     LoadRecords();
@@ -144,10 +143,7 @@
             })
         },
 
-        
-
         columns: [
-
             {
                 dataField: "ProfilePicture",
                 caption: "Profile Picture",
@@ -169,14 +165,13 @@
                 }
             },
 
-
-
             {
                 dataField: "FirstName",
                 caption: "First Name",
                 validationRules: [{ type: "required" }],
                 allowEditing: false
             },
+
             {
                 dataField: "LastName",
                 caption: "Last Name",
@@ -196,7 +191,6 @@
                 dataField: "PhoneNumber",
                 caption: "Phone Number",
                 width: 110,
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
 
             },
@@ -204,57 +198,49 @@
             {
                 dataField: "Country",
                 caption: "Country",
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                /*groupIndex: 0*/
             },
 
             {
                 dataField: "State",
                 caption: "State",
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                /*groupIndex: 0*/
             },
-
-            
-
+           
             {
                 dataField: "City",
                 caption: "City",
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
-                /*groupIndex: 0*/
             },
 
             {
                 dataField: "Address",
                 caption: "Address",
                 width: 150,
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
             },
             {
                 dataField: "Gender",
                 caption: "Gender",
                 width: 75,
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false
             },
 
             {
                 dataField: "BirthDate",
                 caption: "Birth Date",
-                /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 cellTemplate: function (container, options) {
-                    var birthDate = new Date(options.value);
-                    var formattedDate = birthDate.toLocaleDateString(); // Convert to a localized short date string
-                    $("<div>").text(formattedDate).appendTo(container);
+                    if (options.data.BirthDate === "0001-01-01") {
+                        container.text(""); // Display nothing for "0001-01-01"
+                    } else {
+                        var birthDate = new Date(options.data.BirthDate);
+                        var formattedDate = birthDate.toLocaleDateString(); // Convert to a localized short date string
+                        $("<div>").text(formattedDate).appendTo(container);
+                    }
                 }
             },
 
-            
             {
                 dataField: "Is_Active",
                 width: 75,
@@ -275,9 +261,6 @@
     });
 }
 
-
-
-
 $(document).ready(function () {
     LoadRecords();
 })
@@ -287,17 +270,12 @@ function LoadRecords() {
         url: "/RegisteredJobSeekers/GetRegisteredJobSeekers",
         method: "GET",
         success: function (ResponseData) {
-
             // Update the ResponseData values for each record
             ResponseData.forEach(function (record) {
                 if (record.ProfilePicture == null || record.ProfilePicture == "") {
                     record.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png";
                 }
-                record.BirthDate = record.BirthDate.split('T')[0];
-
-                if (record.BirthDate === "0001-01-01") {
-                    record.BirthDate = "";
-                }
+                record.BirthDate = record.BirthDate.split('T')[0]; 
             });
             ShowEvent(ResponseData);
         },
