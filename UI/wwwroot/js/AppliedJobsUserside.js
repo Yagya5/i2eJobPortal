@@ -69,7 +69,7 @@ function ShowEvent(_datasource) {
             },
             {
                 dataField: "JobAppliedDateTime",
-                caption: "AppliedDateTime",
+                caption: "AppliedDate",
                 dataType: 'date',
                 format: 'dd-MMM-yyyy'
             },
