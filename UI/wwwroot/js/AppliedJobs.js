@@ -430,6 +430,56 @@ function ShowEvent(_datasource) {
                     }
                 }
             },
+
+            {
+                dataField: "Country_Home",
+                caption: "Country",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 100,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
+            },
+            {
+                dataField: "State_Home",
+                caption: "State",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 100,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
+            },
+            {
+                dataField: "City_Home",
+                caption: "City",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 100,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
+            },
+
+
+
+
             {
                 dataField: "ProfilePicture",
                 caption: "Profile Picture",
