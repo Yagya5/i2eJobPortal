@@ -37,7 +37,7 @@
             justify-content: space-between;
         }
 
-        .navbar {
+       /*  .navbar {
             width: 85%;
             margin: auto;
         }
@@ -60,7 +60,37 @@
             .navbar .nav-link {
                 color:  #202020;
                 font-weight: 600;
+            } */
+
+
+
+        .menu-contains .logo-section {
+                display: flex;
+                align-self: center;
             }
+
+             .menu-contains .navbar-expand-lg .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                justify-content: flex-end;
+            }
+
+             .menu-contains .nav-item {
+                margin: 0px 10px;
+            }
+
+                 .menu-contains .nav-item .nav-link {
+                    color: #000000;
+                    font-family: "Poppins";
+                    font-weight: 400;
+                }
+
+                 .menu-contains .nav-item .active {
+                    color: #000000;
+                    font-family: "Poppins";
+                    font-weight: 800;
+                    text-decoration: none !important;
+                }
 
             
             
@@ -68,6 +98,7 @@
 </head>
 <body>
     <header>
+        <div class="col-lg menu-contains">
         <nav class="navbar navbar-expand-sm bg-white navbar-light">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -102,6 +133,7 @@
 
             </div>
         </nav>
+        </div>
 
         
     </header>
@@ -133,6 +165,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
+
+
+   @*  <script type="text/javascript">
+        $(function ($) {
+            let url = window.location.href;
+            $('nav ul li a').each(function () {
+                if (this.href === url) {
+                    $(this).attr('class', 'active');
+                }
+            });
+        });
+    </script> *@
 </body>
 </html>
