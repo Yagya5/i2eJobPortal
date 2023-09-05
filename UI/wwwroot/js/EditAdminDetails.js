@@ -12,7 +12,6 @@
                         dataField: 'FirstName',
                         editorOptions: {
                             disabled: false,
-                            /*value: null,*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -43,7 +42,6 @@
                         editorOptions: {
                             items: ['Male', 'Female'],
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -87,14 +85,14 @@
                                     method: 'GET',
                                     data: { country: e.value },
                                     success: function (ResponseData) {
-                                        let temparray = [];
-                                        let temparray2 = [];
+                                        let tempStateList = [];
+                                        let tempCityList = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
-                                            temparray.push(value);
+                                            tempStateList.push(value);
                                         }
-                                        _datasource.StateList = temparray;
-                                        _datasource.CityList = temparray2;
+                                        _datasource.StateList = tempStateList;
+                                        _datasource.CityList = tempCityList;
                                         console.log("Updated StateList", _datasource.StateList);
                                         console.log("Updated CityList", _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
@@ -131,12 +129,12 @@
                                     method: 'GET',
                                     data: { state: e.value },
                                     success: function (ResponseData) {
-                                        let temparray = [];
+                                        let tempCityList = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
-                                            temparray.push(value);
+                                            tempCityList.push(value);
                                         }
-                                        _datasource.CityList = temparray;
+                                        _datasource.CityList = tempCityList;
                                         console.log("Updated StateList", _datasource.CityList);
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
@@ -197,21 +195,7 @@
                         label: {
                             template: labelTemplate('tel'),
                         },
-                    },
-
-                    //{
-                    //    dataField: 'Email',
-                    //    label: {
-                    //        template: labelTemplate('Email'),
-                    //    },
-                    //    editorOptions: {
-                    //        disabled: true,
-                    //    },
-
-                    //},
-
-
-
+                    },                  
                 ],
             }],
         });
@@ -287,7 +271,6 @@
                                 icon: 'error',
                                 title: 'Failed...',
                                 text: 'Something went wrong!',
-                                /*footer: '<a href="">Why do I have this issue?</a>'*/
                             })
                         }
                         
@@ -314,13 +297,13 @@
 
     }
 
-
-
     function labelTemplate(iconName) {
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
 
     var CountryList = [];
+    var StateList = [];
+    var CityList = [];
 
     function LoadCountry() {
         return new Promise(function (resolve, reject) {
@@ -328,12 +311,12 @@
                 url: "/EditAdminFullDetails/GetCountry",
                 method: "GET",
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempCountryList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempCountryList.push(value);
                     }
-                    CountryList = temparray;
+                    CountryList = tempCountryList;
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -342,8 +325,6 @@
             });
         });
     }
-
-    var StateList = [];
 
     function LoadState(Country) {
         return new Promise(function (resolve, reject) {
@@ -352,13 +333,12 @@
                 method: "GET",
                 data: { country: Country },
                 success: function (ResponseData) {
-                    /*StateList = [];*/
-                    let temparray = [];
+                    let tempStateList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempStateList.push(value);
                     }
-                    StateList = temparray;
+                    StateList = tempStateList;
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -368,9 +348,6 @@
         });
     }
 
-
-    var CityList = [];
-
     function LoadCity(State) {
         return new Promise(function (resolve, reject) {
             $.ajax({
@@ -378,12 +355,12 @@
                 method: "GET",
                 data: { state: State },
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempCityList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempCityList.push(value);
                     }
-                    CityList = temparray;
+                    CityList = tempCityList;
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
