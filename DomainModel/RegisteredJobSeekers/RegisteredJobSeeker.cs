@@ -32,6 +32,7 @@ namespace DomainModel.RegisteredJobSeekers
         public string? ProfilePicture { get; set; }
 
         public bool Is_Active { get; set; }
+        public bool Is_Deleted { get; set; }
 
         public string? Response { get; set; }
 

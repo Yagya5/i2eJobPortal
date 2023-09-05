@@ -8,7 +8,7 @@
         allowColumnResizing: true,
         filterRow: { visible: true },
         searchPanel: { visible: true },
-        // groupPanel: { visible: true },
+         groupPanel: { visible: true },
         showBorders: true,
         showRowLines: true,
        // rowAlternationEnabled: true,
@@ -108,7 +108,8 @@
             },
             {
                 dataField: "DateTimeStamp",
-                caption: "Date & Time"
+                caption: "Date & Time",
+                dataType: "datetime"
             },
             {
                 dataField: "Message",

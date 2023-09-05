@@ -59,7 +59,9 @@
                         editorType: 'dxDateBox',
                         editorOptions: {
                             disabled: false,
-                            width: '100%'
+                            width: '100%',
+                            min: new Date(new Date().getFullYear() - 60, new Date().getMonth(), new Date().getDate()), // 60 years ago from today
+                            max: new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate()), // 18 years ago from today
                         },
                         validationRules: [{
                             type: 'required',
@@ -185,7 +187,7 @@
                     {
                         dataField: 'PhoneNumber',
                         editorOptions: {
-                            mask: '+1 (X00) 000-0000',
+                            mask: '(X00) 000-0000',
                             maskRules: { X: /[02-9]/ },
                         },
                         validationRules: [{
@@ -270,7 +272,25 @@
                     },
                     success: function (ResponseData) {
                         // Optionally, you can show a success message or perform other actions on success
-                        console.log('Data updated successfully');
+                        
+                        if (ResponseData.Response == "Update Sucessfully") {
+                            Swal.fire(
+                                'Updated data saved successfully!',
+                                '',
+                                'success'
+                            )
+                            console.log('Updated data saved successfully!');
+                        }
+
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed...',
+                                text: 'Something went wrong!',
+                                /*footer: '<a href="">Why do I have this issue?</a>'*/
+                            })
+                        }
+                        
                         LoadRecords();
                     },
                     error: function (err) {
@@ -388,7 +408,7 @@
                 user.ProfilePictureUrl = user.ProfilePicture;
             }
             else {
-                user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png"
+                user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png";
             }
 
             user.ProfilePicture = '';

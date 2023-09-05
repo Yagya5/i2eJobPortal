@@ -83,10 +83,10 @@
 
                                             
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="MyProfile">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AllJobs">Jobs</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Jobs">Jobs</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AppliedJobs" asp-route-id="@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value">Applied Jobs</a>

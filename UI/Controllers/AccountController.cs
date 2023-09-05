@@ -113,7 +113,7 @@ namespace UI.Controllers
 
                     var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
 
-                    return RedirectToAction("MyProfile", "UserDashboard");
+                    return RedirectToAction("Index", "Home");
                 }
 
             }

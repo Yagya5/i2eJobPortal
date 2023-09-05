@@ -8,7 +8,7 @@
         allowColumnResizing: true,
         filterRow: { visible: true },
         searchPanel: { visible: true },
-        // groupPanel: { visible: true },
+         groupPanel: { visible: true },
         showBorders: true,
         showRowLines: true,
        // rowAlternationEnabled: true,
@@ -105,11 +105,13 @@
             {
                 dataField: "Role",
                 caption: "Role",
-                groupIndex: 0
+               // groupIndex: 0
             },
             {
                 dataField: "LoginTimeStamp",
-                caption: "Login Date & Time"
+                caption: "Login Date & Time",
+                dataType: "datetime",               
+                
             }
 
         ]

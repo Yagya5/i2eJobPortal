@@ -57,9 +57,42 @@
                     <input type="tel" class="form-control" id="Phone" name="Phone"  placeholder="Phone Number" asp-for="Phone">
                 </div>
                 <div class="form-floating col-lg-10">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message" maxlength="1000"></textarea>
                     <label class="messges1 ms-4" for="floatingTextarea2">Message</label>
                 </div>
+
+                <div class="form-floating col-lg-10">
+
+                    <dnt-captcha asp-captcha-generator-max="999999"
+                                 asp-captcha-generator-min="111111"
+                                 asp-captcha-generator-language="English"
+                                 asp-captcha-generator-display-mode="ShowDigits"
+                                 asp-fore-color="#333333"
+                                 asp-back-color="#ccc"
+                                 asp-font-name="Tahoma"
+                                 asp-font-size="60"                                 
+                                 asp-use-relative-urls="true"
+                                 asp-placeholder="Enter Captcha"
+                                 asp-text-box-class="text-box form-control"
+                                 asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                 asp-validation-error-message="Please enter captcha"
+                                 asp-validation-message-class="text-danger"
+                                 asp-use-noise="false"
+                                 asp-refresh-button-class="fas fa-redo btn-sm"
+                                 asp-show-refresh-button=true />
+
+                    </div>
+
+                
+
+                
+
+                    @if (TempData["captchaError"] != null)
+                    {
+                        <span class="text-danger alert alert-danger mt-2">@TempData["captchaError"]</span>
+                    }
+                
+                
 
 
                 <div class="col-md-6 col-sm-6 col-xs-12 text-center">
@@ -100,3 +133,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/js/contactus.js"></script>
+<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>

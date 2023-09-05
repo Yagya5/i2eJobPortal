@@ -33,7 +33,11 @@ form.addEventListener('submit', (e) => {
     if (Password.trim() === "") {
         e.preventDefault()
         errors.push("Please enter your Password. ")
-    }   
+    } else if (Password.length < 6) {
+        e.preventDefault()
+        errors.push("Password must be at least 6 characters long.")
+    }        
+
 
     if (Password != ConfirmPassword) {
         e.preventDefault()
