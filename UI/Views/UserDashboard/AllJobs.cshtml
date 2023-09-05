@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DomainModel.Jobs.Job>
 @{
     ViewData["Title"] = "AllJobs";
     Layout = "~/Views/Shared/_LayoutUserDashboard.cshtml";
@@ -19,7 +19,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="~/css/job.css">
     <title>Job Portal</title>
+
+
+<style>
+    .urgent-text {
+        color: #008BFF;
+        font-size: 14px;
+    }
+
+    .experience-slider {
+        width: 50%;
+        display: flex;
+        margin: 12px 0 35px;
+        font-family: "Poppins";
+        position: relative;
+    }
+
+        .experience-slider .field {
+            height: 50%;
+            width: 50%;
+            display: flex;
+            align-items: center;
+        }
+
+    .field input {
+        height: 100%;
+        width: 50%;
+        border-color: #008BFF;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+</style>
 </head>
+
+
 
 <div class="container-fluid p-0 maincontainer">
 
@@ -28,58 +62,71 @@
             <div class="opening-details mb4">
                 <h1>Current Job Openings</h1>
                 <div class="d-flex mb-5 filter-buttons">
-                    <div class="select-box">
-                        <span><i class="fa-solid fa-angle-down angle-icon"></i></span>
-                        <select class="form-select form-select-lg mb-3 me-4 select-btn"
-                                aria-label=".form-select-lg example">
-                            <option selected>Experience</option>
-                            <option value="1">0-1yrs</option>
-                            <option value="2">1-3yrs</option>
-                            <option value="3">above 5yrs</option>
-                        </select>
 
+                    <div class="experience-slider">
+                        <div class="field">
+                            <span>Min Exp:</span>
+                            <input type="number" class="input-min form-control m-1" />
+                        </div>
+                        <div class="field">
+                            <span>Max Exp:</span>
+                            <input type="number" class="input-max form-control m-1" />
+                        </div>
                     </div>
+
+
                     <div class="select-box1">
                         <span><i class="fa-solid fa-angle-down angle-icon"></i></span>
-                        <select class="form-select form-select-lg mb-3 me-4 select-btn"
-                                aria-label=".form-select-lg example">
-                            <option selected>Job Type</option>
-                            <option value="1">Full-time</option>
-                            <option value="2">Part-time</option>
-                            <option value="3">Intern</option>
-                        </select>
-
+                        @Html.DropDownList("JobType", (SelectList)ViewBag.JobTypes, "Job Type", new { @class = "form-select form-select-lg mb-3 me-4 select-btn", aria_label = ".form-select-lg example" })
                     </div>
+
                     <div class="select-box2">
-                        <span><i class="fa-solid fa-angle-down angle-icon  angle-icon"></i></span>
-                        <select class="form-select form-select-lg mb-3 me-4 select-btn"
-                                aria-label=".form-select-lg example">
-                            <option selected>Job Mode</option>
-                            <option value="1">Remote</option>
-                            <option value="2">Office</option>
-                            <option value="3">Hybrid</option>
-                        </select>
+                        <span><i class="fa-solid fa-angle-down angle-icon angle-icon"></i></span>
+                        @Html.DropDownList("JobMode", (SelectList)ViewBag.JobModes, "Job Mode", new { @class = "form-select form-select-lg mb-3 me-4 select-btn", aria_label = ".form-select-lg example" })
                     </div>
 
-                    <a href="#" class="search-filter">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </a>
+                    <input type="text" placeholder"Search Here..." id="txtSearch" class="form-control m-1" style="width:50%;height:50%; position: relative;border-color:#008BFF" />
+
                 </div>
 
                 <div class="col-lg-9 mb-5 opening-list">
                     <div class="row ms-5 g-4">
+                        <div class="no-data-message text-center" style="display: none;">
+                            No data found.
+                        </div>
 
-
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.OrderByDescending(job => job.urgentRequirement))
                         {
-                            <div class="col-sm-4 cardmain">
+                            <div class="col-sm-4 cardmain job-card">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="col-lg d-flex justify-content-between card-body-main">
+
+
                                             <div class="job-type">
-                                                <div class="job-name">@item.JobTitle</div>
+                                                <div>
+                                                    @if (item.urgentRequirement)
+                                                    {
+                                                        <span class="urgent-text me-2">Urgently Hiring</span>
+                                                    }
+                                                </div>
+                                                <div class="job-name">
+
+                                                    @item.JobTitle
+                                                </div>
                                                 <div class="job-location">
                                                     <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home
+                                                    <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience
+                                                </div>
+                                                <div class="job-experience-range" style="display: none;">
+                                                    <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience
+
+                                                </div>
+                                                <div class="job-type-category" id="JobType" style="display: none;">
+                                                    <span>@item.JobType</span>
+                                                </div>
+                                                <div class="job-mode-category" id="JobMode" style="display: none;">
+                                                    <span>@item.JobMode</span>
                                                 </div>
                                             </div>
                                             <div class="apply-btn d-flex align-items-end flex-column mb-3">
@@ -87,11 +134,11 @@
                                                     View Details
                                                 </button>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         }
 
 
@@ -101,6 +148,10 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 
 <script type="text/javascript">
     function OpenDetails(JobId) {
@@ -108,7 +159,7 @@
         window.location.href = '/Home/Details?id=' + JobId;
     }
 </script>
-
+<script src="/js/SearchJobs.js"></script>
 @*<script src="~/js/jobView.js"></script>*@
 <!-- Optional JavaScript; choose one of the two! -->
 <!-- Option 1: Bootstrap Bundle with Popper -->
