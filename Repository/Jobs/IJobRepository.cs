@@ -20,6 +20,9 @@ namespace Repository.Jobs
         bool UpdateJob(Job job);
         Job GetJobByIdView(int jobId);
         Job GetJobById(int jobId);
+
+        Job GetJobById_ForAuditTrail(int jobId);
+
         IEnumerable<Master> GetMasterValuesJob();
         IEnumerable<CountryStateCityData> GetAllCountryStateCity();
     }

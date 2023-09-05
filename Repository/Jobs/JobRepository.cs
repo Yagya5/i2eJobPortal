@@ -147,5 +147,11 @@ namespace Repository.Jobs
             return result;
         }
 
+        public Job GetJobById_ForAuditTrail(int jobId)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            var sql = "SELECT * FROM v_GetJobDetails_ForOldObject_AuditTrail WHERE JobId = @JobId";
+            return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
+        }
     }
 }

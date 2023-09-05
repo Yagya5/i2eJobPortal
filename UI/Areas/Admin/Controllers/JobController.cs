@@ -73,7 +73,7 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var OldObject = _jobServices.GetJobById(job.JobId);
+                var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
                 int TaskId = OldObject.JobId;
                 string Module = "Job";
                 string Action = AuditAction.Modified;

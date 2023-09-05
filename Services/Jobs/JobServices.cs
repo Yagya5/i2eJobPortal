@@ -78,6 +78,10 @@ namespace Services.Jobs
             return result;
         }
 
-
+        public Job GetJobById_ForAuditTrail(int jobId)
+        {
+            var result = _jobRepository.GetJobById_ForAuditTrail(jobId);
+            return result;
+        }
     }
 }
