@@ -24,21 +24,7 @@
     <style>
 
 
-       /* (Starts) Common CSS for all dataGrids for H1 tag as well as Column Headings */
-
-        .dx-header-row > td[role="columnheader"] > div.dx-datagrid-text-content {
-            font-size: 17px;
-            font-weight: bold;
-            color: black;
-        }
-
-        h1 {
-            color: #008bff;
-        }
-
-        /* (Ends) Common CSS for all dataGrids for H1 tag as well as Column Headings */
-
-
+       
         .footer {
             background-color: #202020;
             color: #FFFFFF;
@@ -112,6 +98,8 @@
                 color: rgba(0,0,0,.55) !important;
                 font-family: "Poppins" !important;
                 font-weight: 400 !important;
+                font-size: 15px;
+                padding: 0px;
             }
 
             .menu-contains .nav-item .active {
@@ -119,6 +107,34 @@
                 font-family: "Poppins" !important;
                 font-weight: 800 !important;
             }
+
+        /* DevExtreme CSS starts from below*/
+        .dx-theme-generic-typography .dx-font-xl, .dx-theme-generic-typography h1 {
+            font-weight: 600;
+            font-size: 48px;
+            font-family: "Poppins";
+            text-align: center;
+        }
+
+        .Mainheading {
+            font-weight: 600;
+            font-size: 48px;
+            font-family: "Poppins";
+            text-align: center;
+        }
+
+        .dx-header-row {
+            font-weight: 700;
+            font-size: 16px;
+            font-family: "Poppins";
+            background-color: #008BFF;
+            color: white;
+        }
+
+
+        .dx-datagrid-table {
+            box-shadow: 0 0 10px #dce9fb;
+        }
 
        
 

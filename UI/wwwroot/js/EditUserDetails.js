@@ -2,7 +2,6 @@
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
-
             items: [{
                 itemType: 'group',
                 caption: 'Manage Profile Details',
@@ -12,7 +11,6 @@
                         dataField: 'FirstName',
                         editorOptions: {
                             disabled: false,
-                            /*value: null,*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -43,7 +41,6 @@
                         editorOptions: {
                             items: ['Male', 'Female'],
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -89,14 +86,14 @@
                                     method: 'GET',
                                     data: { country : e.value },
                                     success: function (ResponseData) {
-                                        let temparray = [];
-                                        let temparray2 = [];
+                                        let tempStateList = [];
+                                        let tempCityList = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
-                                            temparray.push(value);
+                                            tempStateList.push(value);
                                         }
-                                        _datasource.StateList = temparray;
-                                        _datasource.CityList = temparray2;
+                                        _datasource.StateList = tempStateList;
+                                        _datasource.CityList = tempCityList;
                                         console.log("Updated StateList", _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
@@ -131,12 +128,12 @@
                                     method: 'GET',
                                     data: { state: e.value },
                                     success: function (ResponseData) {
-                                        let temparray = [];
+                                        let tempCityList = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
-                                            temparray.push(value);
+                                            tempCityList.push(value);
                                         }
-                                        _datasource.CityList = temparray;
+                                        _datasource.CityList = tempCityList;
                                         console.log("Updated StateList", _datasource.CityList);
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
@@ -209,7 +206,6 @@
                         editorOptions: {
                             items: _datasource.BachelorsList,
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -226,7 +222,6 @@
                         editorOptions: {
                             items: _datasource.MastersList,
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -242,7 +237,6 @@
                         dataField: 'Skills',
                         editorOptions: {
                             disabled: false,
-                            /*value: null,*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -259,7 +253,6 @@
                         editorOptions: {
                             items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14, 15],
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -284,7 +277,6 @@
                         editorOptions: {
                             items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -328,9 +320,7 @@
                             labelText: '',
                             accept: '.pdf', // Limit file selection to PDF files
                             onValueChanged: function (e) {
-                                // Update the formData when a file is selected
-                                /*formData.resume = e.value;*/
-
+                                
                                 if (e.value && e.value.length > 0) {
                                     const formData = new FormData();
                                     formData.append('Resume', e.value[0]);
@@ -357,10 +347,7 @@
                         label: {
                             template: labelTemplate('info'),
                         },
-                        //validationRules: [{
-                        //    type: 'required',
-                        //    message: 'Resume is required',
-                        //}],
+                        
                     },
 
 
@@ -369,14 +356,6 @@
         });
 
         $('#form').dxForm('instance').validate();
-
-        //if (_datasource.ProfilePictureUrl != null) {
-        //    $('#form').prepend(`<div class="row justify-content-center">
-        //    <div class="col-12 text-center">
-        //        <img src="${_datasource.ProfilePictureUrl}" asp-append-version="true" style="width: 150px; height: 150px; border-radius: 85px; border: 2px solid black;">
-        //    </div>
-        //</div>`);
-        //}
 
         $('#form').prepend(`
         <div class="row justify-content-center">
@@ -432,7 +411,6 @@
                         "LastName": updatedData.LastName,
                         "Gender": updatedData.Gender,
                         "BirthDate": updatedData.BirthDate,
-                        /*"hireDate": updatedData.hireDate,*/
                         "CoverLetter": updatedData.CoverLetter,
                         "Address": updatedData.Address,
                         "City": updatedData.City,
@@ -493,13 +471,15 @@
 
     }
 
-
-
     function labelTemplate(iconName) {
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
 
     var BachelorsList = [];
+    var MastersList = [];
+    var CountryList = [];
+    var StateList = [];
+    var CityList = [];
 
     function LoadBachelors() {
         return new Promise(function (resolve, reject) {
@@ -507,12 +487,12 @@
                 url: "/EditUserFullDetails/GetBachelors",
                 method: "GET",
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempBachelorsList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempBachelorsList.push(value);
                     }
-                    BachelorsList = temparray;
+                    BachelorsList = tempBachelorsList;
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -521,9 +501,6 @@
             });
         });
     }
-
-
-    var MastersList = [];
 
     function LoadMasters() {
         return new Promise(function (resolve, reject) {
@@ -531,12 +508,12 @@
                 url: "/EditUserFullDetails/GetMasters",
                 method: "GET",
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempMastersList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempMastersList.push(value);
                     }
-                    MastersList = temparray;
+                    MastersList = tempMastersList;
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -545,8 +522,6 @@
             });
         });
     }
-
-    var CountryList = [];
 
     function LoadCountry() {
         return new Promise(function (resolve, reject) {
@@ -554,12 +529,12 @@
                 url: "/EditUserFullDetails/GetCountry",
                 method: "GET",
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempCountryList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempCountryList.push(value);
                     }
-                    CountryList = temparray
+                    CountryList = tempCountryList
                     resolve(); // Resolve the promise when data is loaded
                 },
                 error: function (err) {
@@ -568,8 +543,6 @@
             });
         });
     }
-
-    var StateList = [];
 
     function LoadState(Country) {
         return new Promise(function (resolve, reject) {
@@ -578,13 +551,12 @@
                 data: { country: Country },
                 method: "GET",
                 success: function (ResponseData) {
-                    /*StateList = [];*/
-                    let temparray = [];
+                    let tempStateList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempStateList.push(value);
                     }
-                    StateList = temparray;
+                    StateList = tempStateList;
                     console.log(StateList);
                     resolve(); // Resolve the promise when data is loaded
                 },
@@ -595,9 +567,6 @@
         });
     }
 
-
-    var CityList = [];
-
     function LoadCity(State) {
         return new Promise(function (resolve, reject) {
             $.ajax({
@@ -605,12 +574,12 @@
                 method: "GET",
                 data: { state: State },
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempCityList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempCityList.push(value);
                     }
-                    CityList = temparray;
+                    CityList = tempCityList;
                     console.log(CityList);
                     resolve(); // Resolve the promise when data is loaded
                 },
@@ -630,10 +599,7 @@
             });
 
             const user = response[0];
-            //if (user.ProfilePicture != null) {
-            //    user.ProfilePictureUrl = user.ProfilePicture;
-            //}
-
+           
             if (user.ProfilePicture != null && user.ProfilePicture.length != 0) {
                 user.ProfilePictureUrl = user.ProfilePicture;
             }
@@ -708,8 +674,6 @@
                 
             </div>`;
 
-
-
     $('#addProfilePictureButton').dxButton({
         text: 'Upload',
         onClick: function () {
@@ -781,17 +745,4 @@
     };
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
