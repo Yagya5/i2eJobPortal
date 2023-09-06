@@ -34,7 +34,7 @@ namespace Repository.AuditTrails
         {
             IEnumerable<AuditTrail> result = new List<AuditTrail>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT * FROM v_AuditTrail";
+            string Query = "SELECT * FROM v_AuditTrail order by DateTimeStamp desc";
             result = connection.Query<AuditTrail>(Query, null, null, true, 0, null);
             return result;
         }
@@ -109,7 +109,7 @@ namespace Repository.AuditTrails
         {
             IEnumerable<ContactQuery> result = new List<ContactQuery>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT * FROM v_ContactQueries";
+            string Query = "SELECT * FROM v_ContactQueries order by DateTimeStamp desc";
             result = connection.Query<ContactQuery>(Query, null, null, true, 0, null);
             return result;
         }

@@ -67,12 +67,16 @@
             }
         },
 
+        scrolling: {
+            mode: 'virtual',
+        },
+
         paging: {
-            pageSize: 20,
+            pageSize: 10,
         },
         pager: {
             visible: true,
-            allowedPageSizes: [20, 30, 'all'],
+            allowedPageSizes: [10, 20, 50, 'all'],
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
