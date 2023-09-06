@@ -2,6 +2,7 @@
 using DomainModel.Users;
 using DomainModel.AppliedJobs;
 using Repository.Connection;
+using DomainModel.Jobs;
 using DomainModel.MasterDetails;
 using DomainModel.Common;
 using System;
@@ -62,7 +63,7 @@ namespace Repository.AppliedJobs
 ,Status
 ,Round
 ,Resume from v_AppliedJobs";
-            result = connection.Query<DM_AppliedJobs>(Query,transaction:transaction);
+            result = connection.Query<DM_AppliedJobs>(Query, transaction: transaction);
             return result;
 
         }
@@ -123,8 +124,8 @@ namespace Repository.AppliedJobs
             //param.Add("MinExperience", appliedJobs_Obj.MinExperience);
             //param.Add("Location", appliedJobs_Obj.Location);
             //param.Add("ProfilePicture", appliedJobs_Obj.ProfilePicture);
-            param.Add("Status",Status);
-            param.Add("Round",Round);
+            param.Add("Status", Status);
+            param.Add("Round", Round);
             //param.Add("Resume", appliedJobs_Obj.Resume);
             //connection.Execute(DomainModel.Common.Constant.UpdateStatusRoundStoredProcedure, param, null, 0, CommandType.StoredProcedure);
             var result = connection.Query<DM_AppliedJobs>("spUpdateStatusAndRound", param, commandType: CommandType.StoredProcedure);
@@ -156,6 +157,25 @@ namespace Repository.AppliedJobs
         //    }
         //}
 
+        public async Task<bool> CreateAppliedJob(int job_Id, int User_Id)
+        {
+            try
+            {
+                using var connection = _dapperConnection.CreateConnection();
+                var param = new DynamicParameters();
+                param.Add("@UserId", job_Id);
+                param.Add("@JobId", User_Id);
+                connection.Execute(DomainModel.Common.Constant.CreateAppliedJob, param, null, 0, CommandType.StoredProcedure);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+
+        }
+
         public async Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId)
         {
             IEnumerable<ViewModel_AppliedJob> result = new List<ViewModel_AppliedJob>();
@@ -165,6 +185,23 @@ namespace Repository.AppliedJobs
             result = await connection.QueryAsync<ViewModel_AppliedJob>("spAllAppliedjobs", param: param, commandType: CommandType.StoredProcedure);
 
             return result;
+        }
+
+        public async Task<bool> IsUserResumeUploaded(int userId)
+        {
+            bool Response = false;
+            using var connection = _dapperConnection.CreateConnection();
+            var param = new DynamicParameters();
+            param.Add("@UserId", userId, DbType.Int32);
+            param.Add("@Response", Response, DbType.Boolean, ParameterDirection.InputOutput);
+            var result = connection.Query<bool>("[dbo].[spGetUserResume]", param, commandType: CommandType.StoredProcedure);
+            Response = param.Get<bool>("Response");
+            if (!Response)
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
     }

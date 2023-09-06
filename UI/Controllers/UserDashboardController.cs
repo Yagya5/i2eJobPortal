@@ -1,9 +1,13 @@
 ﻿using DomainModel.Jobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
 using Services.AppliedJobs;
 using Services.Jobs;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DomainModel.Users;
+using static SkiaSharp.HarfBuzz.SKShaper;
+
 namespace UI.Controllers
 {
     [Authorize(Roles = "Job Seeker, Admin, Super Admin")]
@@ -18,8 +22,8 @@ namespace UI.Controllers
             _jobServices = jobServices;
         }
 
-        
-       
+
+
         public IActionResult MyProfile() /*Used as a home page controller*/
         {
             var jobs = _jobServices.GetJobsForHomePage();
@@ -61,18 +65,37 @@ namespace UI.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateAppliedJob(int job_Id)
+        {
+            if (job_Id != 0)
+            {
+                int User_Id = Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+                bool result = await _appliedJobsServices.IsUserResumeUploaded(User_Id);
+                if (result)
+                {
+                    var response = _appliedJobsServices.CreateAppliedJob(User_Id, job_Id);
+                    return Ok(new { response = response, status = true, responseof = "Job Applied" });
+                }
+                else
+                {
+                    return Ok(new { response = result, status = false, responseof = "Resume Required", userid = User_Id });
+                }
+            }
+            return BadRequest(new { status = false, responseof = "" });
+        }
         public IActionResult AppliedJobs(int id)
         {
             ViewBag.UserId = id;
             return View();
         }
-
         public async Task<IActionResult> GetMyAppliedJobs(int id)
         {
             return Json(await _appliedJobsServices.MyAppliedJobs(id));
         }
 
-       
+
         public IActionResult Logout()
         {
             return View();

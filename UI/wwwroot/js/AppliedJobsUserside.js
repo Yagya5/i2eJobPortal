@@ -17,52 +17,59 @@ function ShowEvent(_datasource) {
         },
         showBorders: true,
         showRowLines: true,
-        rowAlternationEnabled: true,
+       rowAlternationEnabled: true,
         wordWrapEnabled: true,
 
-        //selection: {
-        //    mode: 'multiple',
-        //},
-
-        //paging: {
-        //    pageSize: 10,
-        //},
-        //pager: {
-        //    visible: true,
-        //    allowedPageSizes: [10, 20, 'all'],
-        //    showPageSizeSelector: true,
-        //    showInfo: true,
-        //    showNavigationButtons: true,
-        //},
-
-        summary: {
-            groupItems: [{
-                summaryType: "count"
-            }]
+        selection: {
+            mode: 'multiple',
         },
 
-        columns: [
+        paging: {
+           pageSize: 10,
+       },
+        pager: {
+           visible: true,
+            allowedPageSizes: [10, 20, 'all'],
+           showPageSizeSelector: true,
+           showInfo: true,
+           showNavigationButtons: true,
+        },
 
+        loadPanel: {
+            enabled: true,
+            showPane: true,
+            shading: true,
+            shadingColor: 'rgba(0,0,0,0.4)'
+        },
+        searchPanel: { visible: true },
+       
+
+        
+      
+
+       // summary: {
+        //    groupItems: [{
+      //          summaryType: "count"
+        //    }]
+      //  },
+
+        columns: [
             {
                 dataField: "JobTitle",
                 caption: "Job Title"
             },
-            {
-                dataField: "Location",
-                caption: "Location"
-            },
+            //{
+            //    dataField: "Location",
+            //    caption: "Location"
+            //},
 
             {
-                dataField: "JobModeName",
-                caption: "JobMode"
-            },
-            {
                 dataField: "JobTypeName",
-                caption: "JobType"
+              caption: "JobType"
             },
             {
                 dataField: "JobAppliedDateTime",
-                caption: "AppliedDateTime",
+                caption: "AppliedDate",
                 dataType: 'date',
                 format: 'dd-MMM-yyyy'
             },
@@ -81,8 +88,10 @@ function ShowEvent(_datasource) {
 $(document).ready(function () {
     let currentUserId = $("#currentUserId").val();
     LoadRecords(currentUserId);
+
+ 
 });
-console.log()
+
 function LoadRecords(userid) {
     $.ajax({
         url: "/UserDashboard/GetMyAppliedJobs?id=" + userid,
@@ -95,8 +104,3 @@ function LoadRecords(userid) {
         }
     });
 }
-
-
-
-
-

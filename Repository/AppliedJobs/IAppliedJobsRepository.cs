@@ -14,6 +14,8 @@ namespace Repository.AppliedJobs
 
         DM_AppliedJobs GetAppliedJobsById(int Id);
         Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
+        Task<bool> CreateAppliedJob(int job_Id, int User_Id);
+        Task<bool> IsUserResumeUploaded(int userId);
 
         //IEnumerable<DM_AppliedJobs> UpdateUserStatusandRound();
         IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category);

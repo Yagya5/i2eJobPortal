@@ -42,6 +42,17 @@ namespace Services.AppliedJobs
             return result;
         }
 
+        public async  Task<bool> CreateAppliedJob(int job_Id, int User_Id)
+        {
+            var result = _AppliedJobsRepository.CreateAppliedJob(job_Id,User_Id);
+            return await result;
+        }
+
+        public async Task<bool> IsUserResumeUploaded(int userId)
+        {
+            var result= _AppliedJobsRepository.IsUserResumeUploaded(userId);
+            return await  result;
+        }
 
 
 
