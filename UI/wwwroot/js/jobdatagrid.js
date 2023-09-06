@@ -512,7 +512,7 @@ function showJob(dataSource) {
                     const CountryID = options.value;
                     const CountryValues = CountryList.find(Country => Country.Category_Id === CountryID);
                     const CountryValuesText = CountryValues ? CountryValues.Value : "No data";
-
+                    JobCountry = CountryValuesText;
                    
                     const displayedText = CountryID === 0 ? "-" : CountryValuesText;
 
@@ -569,7 +569,7 @@ function showJob(dataSource) {
                     const StateID = options.value;
                     const StateValues = StateList.find(State => State.Category_Id === StateID);
                     const StateValuesText = StateValues ? StateValues.Value : "No data";
-
+                    JobState = StateValuesText;
                    
                     const displayedText = StateID === 0 ? "-" : StateValuesText;
 
@@ -598,7 +598,7 @@ function showJob(dataSource) {
                     const CityID = options.value;
                     const CityValues = CityList.find(City => City.Category_Id === CityID);
                     const CityValuesText = CityValues ? CityValues.Value : "No data";
-
+                    JobCity = CityValuesText; 
                    
                     const displayedText = CityID === 0 ? "-" : CityValuesText;
 
