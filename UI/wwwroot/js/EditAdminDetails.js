@@ -218,7 +218,10 @@
         $('#form').prepend(`
         <div class="row justify-content-center">
             <div class="col-12 text-center">
-                <img src="${_datasource.ProfilePictureUrl}" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
+                <div class="image-container">
+                    <img src="${_datasource.ProfilePictureUrl}" id="profileImageInform" asp-append-version="true" alt="Profile Picture">
+                    <div class="tooltip">Click to change..</div>
+                </div>
             </div>
         </div>`);
 
