@@ -1,4 +1,8 @@
 ﻿$(() => {
+    var CountryList = [];
+    var StateList = [];
+    var CityList = [];
+
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
@@ -268,15 +272,19 @@
                         },
                         success: function (ResponseData) {
                             // Optionally, you can show a success message or perform other actions on success
-
                             if (ResponseData.Response == "Update Sucessfully") {
-                                Swal.fire(
-                                    'Updated data saved successfully!',
-                                    '',
-                                    'success'
-                                )
-                                console.log('Updated data saved successfully!');
-                                LoadRecords();
+                                Swal.fire({
+                                    title: 'Updated data saved successfully!',
+                                    icon: 'success',
+                                    showCancelButton: false, // Hide the cancel button
+                                    confirmButtonText: 'OK',
+                                }).then(function (result) {
+                                    if (result.isConfirmed) {
+                                        // Reload the entire page after the user clicks "OK"
+                                        location.reload();
+                                    }
+                                });
+                                
                             }
 
                             else {
@@ -306,23 +314,16 @@
         $('#cancelButton').dxButton({
             text: 'Reset',
             onClick: function () {
-                LoadRecords();
+                location.reload();
 
             }
         });
-
-
-
 
     }
 
     function labelTemplate(iconName) {
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
-
-    var CountryList = [];
-    var StateList = [];
-    var CityList = [];
 
     function LoadCountry() {
         return new Promise(function (resolve, reject) {
