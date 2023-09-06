@@ -67,7 +67,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateAppliedJob(int job_Id)
+        public async Task<IActionResult> CreateAppliedJob(int job_Id)  /* Applied job by user function  */
         {
             if (job_Id != 0)
             {
@@ -90,7 +90,7 @@ namespace UI.Controllers
             ViewBag.UserId = id;
             return View();
         }
-        public async Task<IActionResult> GetMyAppliedJobs(int id)
+        public async Task<IActionResult> GetMyAppliedJobs(int id) /* User Applied job */
         {
             return Json(await _appliedJobsServices.MyAppliedJobs(id));
         }
