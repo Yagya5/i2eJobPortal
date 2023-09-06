@@ -20,10 +20,7 @@ function ShowEvent(_datasource) {
        rowAlternationEnabled: true,
         wordWrapEnabled: true,
 
-        selection: {
-            mode: 'multiple',
-        },
-
+       
         paging: {
            pageSize: 10,
        },
@@ -42,27 +39,12 @@ function ShowEvent(_datasource) {
             shadingColor: 'rgba(0,0,0,0.4)'
         },
         searchPanel: { visible: true },
-       
-
-        
-      
-
-       // summary: {
-        //    groupItems: [{
-      //          summaryType: "count"
-        //    }]
-      //  },
 
         columns: [
             {
                 dataField: "JobTitle",
                 caption: "Job Title"
             },
-            //{
-            //    dataField: "Location",
-            //    caption: "Location"
-            //},
-
             {
                 dataField: "JobTypeName",
               caption: "JobType"
