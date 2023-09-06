@@ -241,10 +241,7 @@
                         editorOptions: {
                             disabled: false,
                         },
-                        validationRules: [{
-                            type: 'required',
-                            message: 'Skills is required',
-                        }],
+                        
                         label: {
                             template: labelTemplate('info'),
                         },
@@ -257,10 +254,7 @@
                             items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14, 15],
                             searchEnabled: true,
                         },
-                        validationRules: [{
-                            type: 'required',
-                            message: 'ExperienceInYears is required',
-                        }],
+                        
 
                         label: {
                             template: function (data) {
@@ -281,11 +275,7 @@
                             items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                             searchEnabled: true,
                         },
-                        validationRules: [{
-                            type: 'required',
-                            message: 'ExperienceInMonths is required',
-                        }],
-
+                        
                         label: {
                             template: function (data) {
                                 // Check if the dataField is "ExperienceInYears" and update the label text accordingly
@@ -303,10 +293,7 @@
                     {
                         dataField: 'CoverLetter',
                         editorType: 'dxTextArea',
-                        validationRules: [{
-                            type: 'required',
-                            message: 'CoverLetter is required',
-                        }],
+                        
                         label: {
                             template: labelTemplate('info'),
                         },
