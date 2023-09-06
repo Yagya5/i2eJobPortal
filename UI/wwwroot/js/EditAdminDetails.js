@@ -191,7 +191,7 @@
                             type: 'custom',
                             validationCallback: function (options) {
                                 var phoneNumber = options.value;
-                                if (!phoneNumber || /^[0-9]{10}$/.test(phoneNumber)) {
+                                if (/^[6-9][0-9]{9}$/.test(phoneNumber)) {
                                     return true;
                                 }
                                 return false;
@@ -244,69 +244,9 @@
 
                 updatedData.BirthDate = formattedDate;
 
-                
-
-                if (updatedData.PhoneNumber) {
-                    var formInstance = $('#form').dxForm('instance');
-                    if (formInstance.validate().isValid) {
-                        const updatedData = formInstance.option('formData');
-
-                        $.ajax({
-                            url: "/EditAdminFullDetails/UpdateAdminDetails",
-                            method: 'POST',
-                            data: {
-                                "FirstName": updatedData.FirstName,
-                                "LastName": updatedData.LastName,
-                                "Gender": updatedData.Gender,
-                                "BirthDate": updatedData.BirthDate,
-                                "Address": updatedData.Address,
-                                "Country": updatedData.Country,
-                                "City": updatedData.City,
-                                "State": updatedData.State,
-                                "PhoneNumber": updatedData.PhoneNumber,
-                                "Email": updatedData.Email,
-                                "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
-                                "UserId": updatedData.UserId,
-                                "ProfilePictureUrl": updatedData.ProfilePictureUrl
-
-                            },
-                            success: function (ResponseData) {
-                                // Optionally, you can show a success message or perform other actions on success
-
-                                if (ResponseData.Response == "Update Sucessfully") {
-                                    Swal.fire(
-                                        'Updated data saved successfully!',
-                                        '',
-                                        'success'
-                                    )
-                                    console.log('Updated data saved successfully!');
-                                    LoadRecords();
-                                }
-
-                                else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Failed...',
-                                        text: 'Something went wrong!',
-                                    })
-                                }
-
-                            },
-                            error: function (err) {
-                                // Handle the error if any
-                                console.error(err);
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please correct the validation errors before saving.',
-                        });
-                    }
-                } else {
+                var formInstance = $('#form').dxForm('instance');
+                if (formInstance.validate().isValid) {
                     const updatedData = formInstance.option('formData');
-
                     $.ajax({
                         url: "/EditAdminFullDetails/UpdateAdminDetails",
                         method: 'POST',
@@ -353,11 +293,13 @@
                             console.error(err);
                         }
                     });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Please correct the validation errors before saving.',
+                    });
                 }
-
-
-
-                
             }
         });
 
