@@ -187,10 +187,17 @@
                     {
                         dataField: 'PhoneNumber',
                         editorOptions: {
-                            mask: '(X00) 000-0000',
-                            maskRules: { X: /[02-9]/ },
+                            mask: '0000000000',
                         },
                         validationRules: [{
+                            type: 'custom',
+                            validationCallback: function (options) {
+                                var phoneNumber = options.value;
+                                var phoneRegex = /^[0-9]{10}$/;
+                                return phoneRegex.test(phoneNumber);
+                            },
+                            message: 'Invalid phone number.'
+                        }, {
                             type: 'required',
                             message: 'PhoneNumber is required',
                         }],
@@ -223,11 +230,7 @@
                             items: _datasource.MastersList,
                             searchEnabled: true,
                         },
-                        validationRules: [{
-                            type: 'required',
-                            message: 'Masters is required',
-                        }],
-
+                        
                         label: {
                             template: labelTemplate('info'),
                         },
@@ -402,60 +405,133 @@
 
                 updatedData.BirthDate = formattedDate;
 
-                // Send the updated data to the server
-                $.ajax({
-                    url: "/EditUserFullDetails/UpdateUserDetails",
-                    method: 'POST',
-                    data: {
-                        "FirstName": updatedData.FirstName,
-                        "LastName": updatedData.LastName,
-                        "Gender": updatedData.Gender,
-                        "BirthDate": updatedData.BirthDate,
-                        "CoverLetter": updatedData.CoverLetter,
-                        "Address": updatedData.Address,
-                        "City": updatedData.City,
-                        "State": updatedData.State,
-                        "Country": updatedData.Country,
-                        "PhoneNumber": updatedData.PhoneNumber,
-                        "Email": updatedData.Email,
-                        "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
-                        "Bachelors": updatedData.Bachelors,
-                        "Masters": updatedData.Masters,
-                        "ExperienceInYears": updatedData.ExperienceInYears,
-                        "ExperienceInMonths": updatedData.ExperienceInMonths,
-                        "Skills": updatedData.Skills,
-                        "Resume": (updatedData.Resume == '') ? updatedData.Resume : updatedData.Resume[0].name,
-                        "UserId": updatedData.UserId,
-                        "ResumeUrl": updatedData.ResumeUrl,
-                        "ProfilePictureUrl": updatedData.ProfilePictureUrl
+                if (updatedData.PhoneNumber) {
+                    var formInstance = $('#form').dxForm('instance');
+                    if (formInstance.validate().isValid) {
+                        const updatedData = formInstance.option('formData');
 
-                    },
-                    success: function (ResponseData) {
-                        // Optionally, you can show a success message or perform other actions on success
-                        if (ResponseData.Response == "Update Sucessfully") {
-                            Swal.fire(
-                                'Updated data saved successfully!',
-                                '',
-                                'success'
-                            )
-                            console.log('Updated data saved successfully!');
-                        }
+                        $.ajax({
+                            url: "/EditUserFullDetails/UpdateUserDetails",
+                            method: 'POST',
+                            data: {
+                                "FirstName": updatedData.FirstName,
+                                "LastName": updatedData.LastName,
+                                "Gender": updatedData.Gender,
+                                "BirthDate": updatedData.BirthDate,
+                                "CoverLetter": updatedData.CoverLetter,
+                                "Address": updatedData.Address,
+                                "City": updatedData.City,
+                                "State": updatedData.State,
+                                "Country": updatedData.Country,
+                                "PhoneNumber": updatedData.PhoneNumber,
+                                "Email": updatedData.Email,
+                                "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
+                                "Bachelors": updatedData.Bachelors,
+                                "Masters": updatedData.Masters,
+                                "ExperienceInYears": updatedData.ExperienceInYears,
+                                "ExperienceInMonths": updatedData.ExperienceInMonths,
+                                "Skills": updatedData.Skills,
+                                "Resume": (updatedData.Resume == '') ? updatedData.Resume : updatedData.Resume[0].name,
+                                "UserId": updatedData.UserId,
+                                "ResumeUrl": updatedData.ResumeUrl,
+                                "ProfilePictureUrl": updatedData.ProfilePictureUrl
 
-                        else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Failed...',
-                                text: 'Something went wrong!',
-                                /*footer: '<a href="">Why do I have this issue?</a>'*/
-                            })
-                        }
-                        LoadRecords();
-                    },
-                    error: function (err) {
-                        // Handle the error if any
-                        console.error(err);
+                            },
+                            success: function (ResponseData) {
+                                // Optionally, you can show a success message or perform other actions on success
+                                if (ResponseData.Response == "Update Sucessfully") {
+                                    Swal.fire(
+                                        'Updated data saved successfully!',
+                                        '',
+                                        'success'
+                                    )
+                                    console.log('Updated data saved successfully!');
+                                    LoadRecords();
+                                }
+
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed...',
+                                        text: 'Something went wrong!',
+
+                                    })
+                                }
+
+                            },
+                            error: function (err) {
+                                // Handle the error if any
+                                console.error(err);
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please correct the validation errors before saving.',
+                        });
                     }
-                });
+                } else {
+                    const updatedData = formInstance.option('formData');
+
+                    $.ajax({
+                        url: "/EditUserFullDetails/UpdateUserDetails",
+                        method: 'POST',
+                        data: {
+                            "FirstName": updatedData.FirstName,
+                            "LastName": updatedData.LastName,
+                            "Gender": updatedData.Gender,
+                            "BirthDate": updatedData.BirthDate,
+                            "CoverLetter": updatedData.CoverLetter,
+                            "Address": updatedData.Address,
+                            "City": updatedData.City,
+                            "State": updatedData.State,
+                            "Country": updatedData.Country,
+                            "PhoneNumber": updatedData.PhoneNumber,
+                            "Email": updatedData.Email,
+                            "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
+                            "Bachelors": updatedData.Bachelors,
+                            "Masters": updatedData.Masters,
+                            "ExperienceInYears": updatedData.ExperienceInYears,
+                            "ExperienceInMonths": updatedData.ExperienceInMonths,
+                            "Skills": updatedData.Skills,
+                            "Resume": (updatedData.Resume == '') ? updatedData.Resume : updatedData.Resume[0].name,
+                            "UserId": updatedData.UserId,
+                            "ResumeUrl": updatedData.ResumeUrl,
+                            "ProfilePictureUrl": updatedData.ProfilePictureUrl
+
+                        },
+                        success: function (ResponseData) {
+                            // Optionally, you can show a success message or perform other actions on success
+                            if (ResponseData.Response == "Update Sucessfully") {
+                                Swal.fire(
+                                    'Updated data saved successfully!',
+                                    '',
+                                    'success'
+                                )
+                                console.log('Updated data saved successfully!');
+                                LoadRecords();
+                            }
+
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed...',
+                                    text: 'Something went wrong!',
+
+                                })
+                            }
+
+                        },
+                        error: function (err) {
+                            // Handle the error if any
+                            console.error(err);
+                        }
+                    });
+                }
+
+                // Send the updated data to the server
+                
             }
         });
 
