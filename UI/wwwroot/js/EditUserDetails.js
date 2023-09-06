@@ -230,11 +230,7 @@
                             items: _datasource.MastersList,
                             searchEnabled: true,
                         },
-                        validationRules: [{
-                            type: 'required',
-                            message: 'Masters is required',
-                        }],
-
+                        
                         label: {
                             template: labelTemplate('info'),
                         },
