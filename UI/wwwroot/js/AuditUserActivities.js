@@ -85,11 +85,18 @@
         },
 
         columns: [
+            //{
+            //    dataField: "UserId",
+            //    caption: "User Id",
+            //    alignment: "left",  
+            //},
+
             {
-                dataField: "UserId",
-                caption: "User Id",
-                alignment: "left",  
+                dataField: "FullName",
+                caption: "User Name",
+                alignment: "left",
             },
+
             {
                 dataField: "TaskId",
                 alignment: "left",              
@@ -121,7 +128,7 @@
             {
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
-                width: "200",
+                width: "130",
                 dataType: "datetime"
             }
         ]

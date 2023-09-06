@@ -79,7 +79,6 @@ namespace Repository.AppliedJobs
 ,JobTitle
 ,DepartmentName
 ,MinExperience
-,Location
 ,ProfilePicture 
 ,Status
 ,Round
