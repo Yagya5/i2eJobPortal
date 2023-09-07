@@ -64,10 +64,5 @@ namespace Services.RegisteredJobSeekers
             
         }
 
-        //public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker)
-        //{
-        //    var result = _JobSeekersRepository.UpdateJobSeekerAccountStatus(jobSeeker);
-        //    return result;
-        //}
     }
 }

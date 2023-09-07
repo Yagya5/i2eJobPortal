@@ -24,24 +24,23 @@
     }
 
     .image-container {
-        text-align: center; /* Center the image horizontally */
+        text-align: center; 
     }
 
-    /* Image */
     #profileImageInform {
         max-width: 100%;
         max-height: 100%;
-        border-radius: 50%; /* Change border-radius to half of the container size */
+        border-radius: 50%; 
         border: 2px solid black;
         cursor: pointer;
-        transition: transform 0.2s; /* Smooth scaling transition */
+        transition: transform 0.2s; 
     }
 
     /* Tooltip */
     .tooltip {
         position: absolute;
         top: 18%;
-        left: 47.3%; /* Adjust the horizontal distance as needed */
+        left: 47.3%; 
         transform: translateY(-50%);
         background-color: rgba(0, 0, 0, 0.7);
         color: white;
@@ -54,13 +53,11 @@
         transition: opacity 0.2s, visibility 0.2s;
     }
 
-    /* Show tooltip on hover */
     #profileImageInform:hover + .tooltip {
         opacity: 1;
         visibility: visible;
     }
     
-    /* Style for the modal */
     .modal {
         display: none;
         position: fixed;
@@ -92,21 +89,18 @@
         font-weight: bold;
     }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    .close:hover, .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 
 <body class="dx-viewport">
     <div class="demo-container">
-
         <div id="form">
         </div>
     </div>
 </body>
-
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
