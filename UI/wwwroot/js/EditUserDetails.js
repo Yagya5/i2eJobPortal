@@ -1,4 +1,10 @@
 ﻿$(() => {
+    var BachelorsList = [];
+    var MastersList = [];
+    var CountryList = [];
+    var StateList = [];
+    var CityList = [];
+
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
@@ -350,16 +356,16 @@
         $('#form').dxForm('instance').validate();
 
         $('#form').prepend(`
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
+        <div class="row row-centered">
+            <div class="col-12">
                 <div class="image-container">
-                    <img src="${_datasource.ProfilePictureUrl}" id="profileImageInform" asp-append-version="true" alt="Profile Picture">
-                    <div class="tooltip">Click to change..</div>
+                    <img src="${_datasource.ProfilePictureUrl}" class="profileImage" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
+                    <div class="tooltip">Click to edit</div>
                 </div>
             </div>
         </div>`);
 
-        $('#profileImageInform').click(() => {
+        $('#profileImageInform, .tooltip').click(() => {
             modal.style.display = 'flex';
             modalImage.src = _datasource.ProfilePictureUrl;
         });
@@ -485,12 +491,6 @@
     function labelTemplate(iconName) {
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
-
-    var BachelorsList = [];
-    var MastersList = [];
-    var CountryList = [];
-    var StateList = [];
-    var CityList = [];
 
     function LoadBachelors() {
         return new Promise(function (resolve, reject) {
@@ -677,7 +677,7 @@
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <div style="float:right;">
                     <div id="addProfilePictureButton"></div>
-                    &nbsp; &nbsp;
+                    &nbsp; 
                     <div id="removeProfilePictureButton"></div>
                     </div>
                 </div>
