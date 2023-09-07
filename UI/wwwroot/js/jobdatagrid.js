@@ -5,20 +5,23 @@
     INR: "₹",
 };
 
-// Define your data variables
 let jobTypeValues1 = [];
 let jobModeValues1 = [];
 let currencyValues1 = [];
+
 let CountryList = [];
 let StateList = [];
 let CityList = [];
+
 let filteredState = [];
 let globalCountry;
 let globalState;
 let filteredCity = [];
+
 let stateSelectBoxInstance = null;
 let citySelectBoxInstance = null;
-let countrySelectBoxInstance = null;
+
+
 let JobTypeHome = null;
 let JobModeHome = null;
 let JobCurrency = null;
@@ -47,10 +50,11 @@ function showJob(dataSource) {
         },
         pager: {
             visible: true,
-            allowedPageSizes: [10, 20, 'all'],
+            allowedPageSizes: [10, 20, 50],
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
+            
         },
 
         columnChooser: {
@@ -68,7 +72,12 @@ function showJob(dataSource) {
 
             },
         },
-
+        grouping: {
+            autoExpandAll: true,
+        },
+        groupPanel: {
+            visible: true,
+        },
         loadPanel: {
             enabled: true,
             showPane: true,
@@ -111,8 +120,8 @@ function showJob(dataSource) {
             mode: "popup",
             allowUpdating: true,
             allowDeleting: true,
-            allowAdding: true
-
+            allowAdding: true,
+           
         },
 
         onContentReady: function () {
@@ -141,6 +150,14 @@ function showJob(dataSource) {
         onRowUpdated: function (e) {
             var jobId = e.key.JobId;
 
+            filteredState = StateList.filter(State => State.Ref_ID === e.data.Country);
+            if (stateSelectBoxInstance) {
+                stateSelectBoxInstance.option("dataSource", filteredState);
+                if (e.data) {
+                    stateSelectBoxInstance.option("value", e.data.State);
+                }
+            }
+
             var dataToSend = {
                 "JobId": e.data.JobId,
                 "JobTitle": e.data.JobTitle,
@@ -159,15 +176,8 @@ function showJob(dataSource) {
                 "City": e.data.City,
                 "Country": e.data.Country,
                 "State": e.data.State,
-                "JobType_Home": JobTypeHome,
-                "JobMode_Home": JobModeHome,
-                "CurrencyType_Home": JobCurrency,
-                "Country_Home": JobCountry,
-                "State_Home": JobState,
-                "City_Home": JobCity,
             };
-
-
+         
             if (globalCountry !== 0) {
                 dataToSend.Country = globalCountry;
                 globalCountry = 0;
@@ -176,7 +186,7 @@ function showJob(dataSource) {
                 dataToSend.State = globalState;
                 globalState = 0;
             }
-
+            
             $.ajax({
                 url: "/Job/EditJob/",
                 method: "POST",
@@ -191,8 +201,7 @@ function showJob(dataSource) {
         },
 
         onRowInserted: function (e) {
-
-
+         
             var dataToSend = {
                 "JobId": e.data.JobId,
                 "JobTitle": e.data.JobTitle,
@@ -234,16 +243,23 @@ function showJob(dataSource) {
             enabled: true,
         },
 
-
-
         columns: [
 
-            { dataField: "JobTitle", fixed: true, caption: "Job Title", validationRules: [{ type: "required" }], },
+            {
+                dataField: "JobTitle",
+                allowFiltering: true,
+                allowSorting: true,
+                fixed: true,
+                caption: "Job Title",
+                validationRules: [{ type: "required" }],
+            },
 
 
             {
                 dataField: "JobType",
                 caption: "Job Type",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [{ type: "required" }],
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -262,10 +278,11 @@ function showJob(dataSource) {
                         .appendTo(container);
                 }
             },
-
             {
                 dataField: "DepartmentName",
                 caption: "Department Name",
+                allowFiltering: true,
+                allowSorting: true,
                 cellTemplate: function (container, options) {
                     const departmentName = options.value;
 
@@ -283,6 +300,8 @@ function showJob(dataSource) {
             {
                 dataField: "Salary",
                 caption: "Salary",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [
                     {
                         type: "required",
@@ -322,6 +341,8 @@ function showJob(dataSource) {
             {
                 dataField: "CurrencyType",
                 caption: "Currency",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [{ type: "required" }],
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -344,6 +365,8 @@ function showJob(dataSource) {
             {
                 dataField: "JobMode",
                 caption: "Job Mode",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [{ type: "required" }],
 
                 editorType: "dxSelectBox",
@@ -367,6 +390,8 @@ function showJob(dataSource) {
             {
                 dataField: "MinExperience",
                 caption: "Min Experience",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [
                     {
                         type: "required",
@@ -391,6 +416,8 @@ function showJob(dataSource) {
             {
                 dataField: "MinExperienceMonth",
                 caption: "Min Months",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [{ type: "required" }],
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -404,6 +431,8 @@ function showJob(dataSource) {
             {
                 dataField: "MaxExperience",
                 caption: "Max Experience",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [
                     {
                         type: "required",
@@ -416,12 +445,9 @@ function showJob(dataSource) {
                             const minMonths = options.data.MinExperienceMonth;
                             const maxExperience = options.data.MaxExperience;
                             const maxMonths = options.data.MaxExperienceMonth;
-
-
                             if (minExperience !== undefined && minMonths !== undefined && maxExperience !== undefined && maxMonths !== undefined) {
                                 return ((minExperience * 12) + minMonths) <= ((maxExperience * 12) + maxMonths);
                             }
-
 
                             return true;
                         },
@@ -442,11 +468,11 @@ function showJob(dataSource) {
                         .appendTo(container);
                 }
             },
-
-
             {
                 dataField: "MaxExperienceMonth",
                 caption: "Max Months",
+                allowFiltering: true,
+                allowSorting: true,
                 validationRules: [{ type: "required" }],
                 editorType: "dxSelectBox",
                 editorOptions: {
@@ -457,51 +483,63 @@ function showJob(dataSource) {
                 visible: false
             },
 
-            { dataField: "Description", caption: "Description", validationRules: [{ type: "required" }], editorType: "dxTextArea", },
-            { dataField: "IsActive", caption: "Post Active Status" },
-            { dataField: "urgentRequirement", caption: "Urgent Requirement" },
+            {
+                dataField: "Description",
+                allowFiltering: true,
+                allowSorting: true,
+                caption: "Description",
+                validationRules: [{ type: "required" }],
+                editorType: "dxTextArea",
+            },
+            {
+                dataField: "IsActive",
+                caption: "Post Active Status",
+                allowFiltering: true,
+                allowSorting: true,
+                cellTemplate: function (container, options) {
+                    const isActive = options.value;
+                    const statusText = isActive ? "Post Active" : "Post Inactive";
+
+                    $("<div>")
+                        .text(statusText)
+                        .appendTo(container);
+                }
+            },
+            {
+                dataField: "urgentRequirement",
+                caption: "Urgent Requirement",
+                allowFiltering: true,
+                allowSorting: true,
+                cellTemplate: function (container, options) {
+                    const isUrgentRequirement = options.value;
+                    const statusText = isUrgentRequirement ? "Urgent Hiring Active" : "Urgent Hiring Inactive";
+
+                    $("<div>")
+                        .text(statusText)
+                        .appendTo(container);
+                }
+            },
+           
             {
                 dataField: "Country",
                 caption: "Country",
+                allowFiltering: true,
+                allowSorting: true,
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: CountryList,
                     valueExpr: "Category_Id",
                     displayExpr: "Value",
                     placeholder: "Select Country",
-                    onInitialized: function (e) {
-                        stateSelectBoxInstance = e.component;
-                        console.log("Country initialized");
-
-                      
-                        const selectedCountryId = e.data ? e.data.Country : null;
-
-                        // Filter states based on the selected country
-                        filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
-                        console.log("Filtered States:", filteredState);
-
-        
-                        if (stateSelectBoxInstance) {
-                            stateSelectBoxInstance.option("dataSource", filteredState);
-
-                            // Set the selected state value when editing a row
-                            if (e.data) {
-                                stateSelectBoxInstance.option("value", e.data.State);
-                            }
-                        }
-                    },
                     onValueChanged: function (e) {
                         console.log("Country selection changed:", e.value);
                         const selectedCountryId = e.value;
+                        globalCountry = 0;
                         globalCountry = e.value;
                         dataSource.Country = globalCountry;
-
-                      
                         filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
                         if (stateSelectBoxInstance) {
                             stateSelectBoxInstance.option("dataSource", filteredState);
-
-                            // Set the selected state value when editing a row
                             if (e.data) {
                                 stateSelectBoxInstance.option("value", e.data.State);
                             }
@@ -513,7 +551,6 @@ function showJob(dataSource) {
                     const CountryValues = CountryList.find(Country => Country.Category_Id === CountryID);
                     const CountryValuesText = CountryValues ? CountryValues.Value : "No data";
                     JobCountry = CountryValuesText;
-                   
                     const displayedText = CountryID === 0 ? "-" : CountryValuesText;
 
                     $("<div>")
@@ -524,6 +561,8 @@ function showJob(dataSource) {
             {
                 dataField: "State",
                 caption: "State",
+                allowFiltering: true,
+                allowSorting: true,
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: StateList,
@@ -532,29 +571,11 @@ function showJob(dataSource) {
                     placeholder: "Select State",
                     onInitialized: function (e) {
                         stateSelectBoxInstance = e.component;
-                        console.log("State initialized");
-
-                      
-                        const selectedStateId = e.data ? e.data.State : null;
-
-                      
-                        filteredCity = CityList.filter(City => City.Ref_ID === selectedStateId);
-                        console.log("Filtered Cities:", filteredCity);
-
-                       
-                        if (citySelectBoxInstance) {
-                            citySelectBoxInstance.option("dataSource", filteredCity);
-
-                            // Set the selected city value when editing a row
-                            if (e.data) {
-                                citySelectBoxInstance.option("value", e.data.City);
-                            }
-                        }
-
-                    },
+                     },
                     onValueChanged: function (e) {
                         console.log("State selection changed:", e.value);
                         const selectedStateId = e.value;
+                        globalState=0;
                         globalState = selectedStateId;
 
                         filteredCity = CityList.filter(City => City.Ref_ID === selectedStateId);
@@ -581,6 +602,8 @@ function showJob(dataSource) {
             {
                 dataField: "City",
                 caption: "City",
+                allowFiltering: true,
+                allowSorting: true,
                 editorType: "dxSelectBox",
                 editorOptions: {
                     dataSource: CityList,
@@ -589,10 +612,7 @@ function showJob(dataSource) {
                     placeholder: "Select City",
                     onInitialized: function (e) {
                         citySelectBoxInstance = e.component;
-                        console.log("City initialized");
-                        if (e.data) {
-                            citySelectBoxInstance.option("value", e.data.City);
-                        }
+                       
                     },
                 }, cellTemplate: function (container, options) {
                     const CityID = options.value;
