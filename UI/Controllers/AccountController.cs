@@ -13,35 +13,29 @@ namespace UI.Controllers
     public class AccountController : Controller
     {
         private readonly IUserServices _UserServices;
-
-        public AccountController(IUserServices UserServices)
+        public AccountController(IUserServices UserServices) // Class constructor & Dependency Injection
         {
             _UserServices = UserServices;
         }
 
-
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login()  // It will return Login Page
         {
             return View();
-        }
-
-        
-       
+        }   
 
         [HttpPost]
-        public IActionResult Login(Login Obj)
+        public IActionResult Login(Login Obj)  // It will handle Login Page POST Request
         {
             if(string.IsNullOrEmpty(Obj.Email) || string.IsNullOrEmpty(Obj.Password))
             {                
                 return RedirectToAction("Login");
             }
 
-            var result =  _UserServices.AuthenticateUser(Obj.Email, Obj.Password);
+            var result =  _UserServices.AuthenticateUser(Obj.Email, Obj.Password); // It will check authentication
 
-            if(result != null)
+            if (result != null)
             {
-
                 AuditLogin newLogin = new AuditLogin() 
                 {
                     FirstName = result.FirstName,
@@ -51,94 +45,48 @@ namespace UI.Controllers
                     RoleId = result.RoleId,   
                 };
                 
-                _UserServices.AuditUserLogin(newLogin);
+                _UserServices.AuditUserLogin(newLogin);  // It will insert entry into Table_AuditLogins of User who does Log-in
 
-                if(result.RoleName == "Super Admin")
-                {
-                    var Identity = new ClaimsIdentity(new[]{
+
+                var Identity = new ClaimsIdentity(new[]{                 // Setting-up Claims which will be stored in Cookie
                        new Claim(ClaimTypes.Name, result.FirstName),
                        new Claim(ClaimTypes.Email, result.Email),
                        new Claim(ClaimTypes.Role, result.RoleName),
                        new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString())
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var Principal = new ClaimsPrincipal(Identity);
+                var Principal = new ClaimsPrincipal(Identity);
 
-                    var authProperties = new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.Now.AddDays(3),
-                        IsPersistent = Obj.RememberMe
-                    };
-
-                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
-
-                    return RedirectToAction("Index", "RegisteredJobSeekers", new { area = "Admin" });
-                }
-
-                if (result.RoleName == "Admin")
+                var authProperties = new AuthenticationProperties
                 {
-                    var Identity = new ClaimsIdentity(new[]{
-                       new Claim(ClaimTypes.Name, result.FirstName),
-                       new Claim(ClaimTypes.Email, result.Email),
-                       new Claim(ClaimTypes.Role, result.RoleName),
-                       new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString())
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+                    ExpiresUtc = DateTime.Now.AddDays(3), // Setting-up Cookie Life-Span
+                    IsPersistent = Obj.RememberMe  // Setting-up whether the Cookie should be persistent or not
+                };
 
-                    var Principal = new ClaimsPrincipal(Identity);
+                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
 
-                    var authProperties = new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.Now.AddDays(3),
-                        IsPersistent = Obj.RememberMe
-                    };
-
-                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
-
-                    return RedirectToAction("Index", "RegisteredJobSeekers", new {area = "Admin"});
-                }
-
-                if (result.RoleName == "Job Seeker")
-                {
-                    var Identity = new ClaimsIdentity(new[]{
-                       new Claim(ClaimTypes.Name, result.FirstName),
-                       new Claim(ClaimTypes.Email, result.Email),
-                       new Claim(ClaimTypes.Role, result.RoleName),
-                       new Claim(ClaimTypes.NameIdentifier, result.UserId.ToString())
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    var Principal = new ClaimsPrincipal(Identity);
-
-                    var authProperties = new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.Now.AddDays(3),
-                        IsPersistent = Obj.RememberMe
-                    };
-
-                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal, authProperties);
-
-                    return RedirectToAction("Index", "Home");
-                }
-
+                if (result.RoleName == "Super Admin" || result.RoleName == "Admin")
+                    return RedirectToAction("Index", "AdminDashboard", new { area = "Admin" });  // Redirection for Super-Admin & Admin
+                else
+                    return RedirectToAction("MyProfile", "UserDashboard");  // Redirection for JobSeeker
             }
-
             ViewBag.Message = "Incorrect Email or Password !!!";
             return View();
         }
 
-
         [HttpGet]
-        public IActionResult SignUp()
+        public IActionResult SignUp()  // It will return SignUp Page
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult SignUp(string FirstName, string LastName, string Email, string Password)
+        public IActionResult SignUp(string FirstName, string LastName, string Email, string Password) // It will handle Sign-Up Page POST Request
         {            
             var result = _UserServices.JobSeekerSignUp(FirstName, LastName, Email, Password);
             if(result == true)
             {
-                int UserId = _UserServices.GetRecentSignedUp_UserId(Email);
+                int UserId = _UserServices.GetRecentSignedUp_UserId(Email); // Getting UserId of User right after his Sign-Up Process, this UserId might be required for Dashboard related Operations.
 
                 var Identity = new ClaimsIdentity(new[]{
                        new Claim(ClaimTypes.Name, FirstName),
@@ -150,21 +98,17 @@ namespace UI.Controllers
                 var Principal = new ClaimsPrincipal(Identity);                
 
                 var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, Principal);
-
-                return RedirectToAction("MyProfile", "UserDashboard");
-
+                return RedirectToAction("MyProfile", "UserDashboard");  // Redirection for JobSeeker
             }
             ViewBag.DuplicateEmailEntry = "Sign Up Failed. This Email is already registered !!!";
             return View();
         }
 
-
         [HttpGet]
-        public IActionResult Logout()
+        public IActionResult Logout()  // Destroying Cookie and Log Out
         {
-            var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var logout = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login","Account");
         }
-
     }
 }
