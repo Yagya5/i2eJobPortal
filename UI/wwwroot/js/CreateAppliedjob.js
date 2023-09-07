@@ -26,15 +26,16 @@ function CreateAppliedJob(JobId) {
                    /* alert("Succesfully Applied job ");*/
                 } else {
                     if (response.responseof == "Resume Required") {
-                        Swal.fire(
-                            'Error',
-                            'Please upload your Resume in Profile Section!',
-                            
-                           
-                        )
-                       /* alert("Please upload your Resume on Profile Section.");*/
-                        window.location.href = '/EditUserFullDetails/Index?id=' + response.userid;
-                    }
+                       
+                         alert("Please upload your Resume in Profile Section.");
+                           window.location.href = '/EditUserFullDetails/Index?id=' + response.userid;
+
+                       }
+                      
+                  
+                        
+                        
+                   
                 }
                
             },
