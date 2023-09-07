@@ -252,7 +252,7 @@
                 updatedData.BirthDate = formattedDate;
 
                 var formInstance = $('#form').dxForm('instance');
-                if (formInstance.validate().isValid) {
+                if (formInstance.validate().isValid && _datasource.Country != '' && _datasource.State != '' && _datasource.City != '') {
                     const updatedData = formInstance.option('formData');
                     $.ajax({
                         url: "/EditAdminFullDetails/UpdateAdminDetails",
@@ -304,7 +304,8 @@
                             console.error(err);
                         }
                     });
-                } else {
+                }
+                else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Validation Error',
