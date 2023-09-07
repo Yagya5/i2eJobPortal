@@ -1,4 +1,8 @@
 ﻿$(() => {
+    var CountryList = [];
+    var StateList = [];
+    var CityList = [];
+
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
@@ -191,7 +195,7 @@
                             type: 'custom',
                             validationCallback: function (options) {
                                 var phoneNumber = options.value;
-                                if (!phoneNumber || /^[0-9]{10}$/.test(phoneNumber)) {
+                                if (/^[6-9][0-9]{9}$/.test(phoneNumber)) {
                                     return true;
                                 }
                                 return false;
@@ -212,13 +216,16 @@
         $('#form').dxForm('instance').validate();
 
         $('#form').prepend(`
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <img src="${_datasource.ProfilePictureUrl}" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
+        <div class="row row-centered">
+            <div class="col-12">
+                <div class="image-container">
+                    <img src="${_datasource.ProfilePictureUrl}" class="profileImage" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
+                    <div class="tooltip">Click to edit</div>
+                </div>
             </div>
         </div>`);
 
-        $('#profileImageInform').click(() => {
+        $('#profileImageInform, .tooltip').click(() => {
             modal.style.display = 'flex';
             modalImage.src = _datasource.ProfilePictureUrl;
         });
@@ -244,69 +251,9 @@
 
                 updatedData.BirthDate = formattedDate;
 
-                
-
-                if (updatedData.PhoneNumber) {
-                    var formInstance = $('#form').dxForm('instance');
-                    if (formInstance.validate().isValid) {
-                        const updatedData = formInstance.option('formData');
-
-                        $.ajax({
-                            url: "/EditAdminFullDetails/UpdateAdminDetails",
-                            method: 'POST',
-                            data: {
-                                "FirstName": updatedData.FirstName,
-                                "LastName": updatedData.LastName,
-                                "Gender": updatedData.Gender,
-                                "BirthDate": updatedData.BirthDate,
-                                "Address": updatedData.Address,
-                                "Country": updatedData.Country,
-                                "City": updatedData.City,
-                                "State": updatedData.State,
-                                "PhoneNumber": updatedData.PhoneNumber,
-                                "Email": updatedData.Email,
-                                "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
-                                "UserId": updatedData.UserId,
-                                "ProfilePictureUrl": updatedData.ProfilePictureUrl
-
-                            },
-                            success: function (ResponseData) {
-                                // Optionally, you can show a success message or perform other actions on success
-
-                                if (ResponseData.Response == "Update Sucessfully") {
-                                    Swal.fire(
-                                        'Updated data saved successfully!',
-                                        '',
-                                        'success'
-                                    )
-                                    console.log('Updated data saved successfully!');
-                                    LoadRecords();
-                                }
-
-                                else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Failed...',
-                                        text: 'Something went wrong!',
-                                    })
-                                }
-
-                            },
-                            error: function (err) {
-                                // Handle the error if any
-                                console.error(err);
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            text: 'Please correct the validation errors before saving.',
-                        });
-                    }
-                } else {
+                var formInstance = $('#form').dxForm('instance');
+                if (formInstance.validate().isValid) {
                     const updatedData = formInstance.option('formData');
-
                     $.ajax({
                         url: "/EditAdminFullDetails/UpdateAdminDetails",
                         method: 'POST',
@@ -328,15 +275,19 @@
                         },
                         success: function (ResponseData) {
                             // Optionally, you can show a success message or perform other actions on success
-
                             if (ResponseData.Response == "Update Sucessfully") {
-                                Swal.fire(
-                                    'Updated data saved successfully!',
-                                    '',
-                                    'success'
-                                )
-                                console.log('Updated data saved successfully!');
-                                LoadRecords();
+                                Swal.fire({
+                                    title: 'Updated data saved successfully!',
+                                    icon: 'success',
+                                    showCancelButton: false, // Hide the cancel button
+                                    confirmButtonText: 'OK',
+                                }).then(function (result) {
+                                    if (result.isConfirmed) {
+                                        // Reload the entire page after the user clicks "OK"
+                                        location.reload();
+                                    }
+                                });
+                                
                             }
 
                             else {
@@ -353,34 +304,29 @@
                             console.error(err);
                         }
                     });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Please correct the validation errors before saving.',
+                    });
                 }
-
-
-
-                
             }
         });
 
         $('#cancelButton').dxButton({
             text: 'Reset',
             onClick: function () {
-                LoadRecords();
+                location.reload();
 
             }
         });
-
-
-
 
     }
 
     function labelTemplate(iconName) {
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
-
-    var CountryList = [];
-    var StateList = [];
-    var CityList = [];
 
     function LoadCountry() {
         return new Promise(function (resolve, reject) {
@@ -513,7 +459,7 @@
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <div style="float:right;">
                     <div id="addProfilePictureButton"></div>
-                    &nbsp; &nbsp;
+                    &nbsp; 
                     <div id="removeProfilePictureButton"></div>
                     </div>
                 </div>
