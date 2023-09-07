@@ -80,24 +80,24 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
-                int TaskId = OldObject.JobId;
-                string Module = "Job";
-                string Action = AuditAction.Modified;
+                //var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
+                //int TaskId = OldObject.JobId;
+                //string Module = "Job";
+                //string Action = AuditAction.Modified;
 
-                OldObject.PostDate = null;
-                job.PostDate = null;
+                //OldObject.PostDate = null;
+                //job.PostDate = null;
 
                 var response = _jobServices.UpdateJob(job);
 
 
-                OldObject.JobMode = job.JobMode;
-                OldObject.JobType = job.JobType;
-                OldObject.CurrencyType = job.CurrencyType;
-                OldObject.Country = job.Country;
-                OldObject.State = job.State;
-                OldObject.City = job.City;
-                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
+                //OldObject.JobMode = job.JobMode;
+                //OldObject.JobType = job.JobType;
+                //OldObject.CurrencyType = job.CurrencyType;
+                //OldObject.Country = job.Country;
+                //OldObject.State = job.State;
+                //OldObject.City = job.City;
+                //_ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
                 return Ok(response); 
 
             }
