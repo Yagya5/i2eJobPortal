@@ -2,16 +2,7 @@
 
 @{
     ViewData["Title"] = "Jobs";
-  //  Layout = "~/Views/Shared/_Layout.cshtml";
-
-    if (User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value != null)
-    {
-        Layout = "~/Views/Shared/_LayoutUserDashboard.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
 
 <head>
