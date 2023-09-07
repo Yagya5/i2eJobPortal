@@ -33,10 +33,8 @@ namespace Repository.RegisteredJobSeekers
         {
             RegisteredJobSeeker result = new RegisteredJobSeeker();
             using var connection = _dapperConnection.CreateConnection();
-
             var param = new DynamicParameters();
             param.Add(nameof(RegisteredJobSeeker.UserId), id);
-            
             result = connection.Query<RegisteredJobSeeker>("spGetJobSeekerById",param,null,true,0,CommandType.StoredProcedure).Single();
             return result;
         }
@@ -54,7 +52,6 @@ namespace Repository.RegisteredJobSeekers
             using var connection = _dapperConnection.CreateConnection();
             var para = new { Is_Active = jobSeeker.Is_Active, Is_Deleted = jobSeeker.Is_Deleted, UserId = jobSeeker.UserId };
             var result = connection.Query<RegisteredJobSeeker>("spUpdateJobSeekerAccountStatus", para,commandType: CommandType.StoredProcedure);
-            
             if (result != null && result.FirstOrDefault().Response == "Update Sucessfully")
             {
                 return true;

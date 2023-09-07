@@ -105,7 +105,6 @@
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
                                     error: function (err) {
-                                        // Handle the error if any
                                         console.error(err);
                                     }
                                 });
@@ -129,6 +128,7 @@
                             onValueChanged: function (e) {
                                 console.log(_datasource.CityList);
                                 console.log(e.value)
+                                _datasource.City = "";
                                 $.ajax({
                                     url: "/EditUserFullDetails/GetCity",
                                     method: 'GET',
@@ -144,7 +144,6 @@
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
                                     error: function (err) {
-                                        // Handle the error if any
                                         console.error(err);
                                     }
                                 });
@@ -204,10 +203,10 @@
                                 }
                                 return false;
                             },
-                            message: 'Invalid phone number.'
-                        }, {
-                            type: 'required',
-                            message: 'PhoneNumber is required',
+                            message: 'Valid phone number is required'
+                        },
+                        {
+                            type: 'required'
                         }],
                         label: {
                             template: labelTemplate('tel'),
@@ -262,11 +261,8 @@
                             items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 , 12, 13, 14, 15],
                             searchEnabled: true,
                         },
-                        
-
                         label: {
                             template: function (data) {
-                                // Check if the dataField is "ExperienceInYears" and update the label text accordingly
                                 if (data.dataField === 'ExperienceInYears') {
                                     return $('<div><i class="dx-icon dx-icon-info"></i>Experience(Years)</div>');
                                 } else {
@@ -283,10 +279,8 @@
                             items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                             searchEnabled: true,
                         },
-                        
                         label: {
                             template: function (data) {
-                                // Check if the dataField is "ExperienceInYears" and update the label text accordingly
                                 if (data.dataField === 'ExperienceInMonths') {
                                     return $('<div><i class="dx-icon dx-icon-info"></i>Experience(Months)</div>');
                                 } else {
@@ -295,9 +289,6 @@
                             }
                         },
                     },
-
-                    
-
                     {
                         dataField: 'CoverLetter',
                         editorType: 'dxTextArea',
@@ -316,7 +307,7 @@
                         editorOptions: {
                             selectButtonText: 'Select File',
                             labelText: '',
-                            accept: '.pdf', // Limit file selection to PDF files
+                            accept: '.pdf', 
                             onValueChanged: function (e) {
                                 
                                 if (e.value && e.value.length > 0) {
@@ -330,12 +321,10 @@
                                         processData: false,
                                         contentType: false,
                                         success: function (response) {
-                                            // On success, update the form data with the new image URL
                                             const newFormData = $.extend({}, $('#form').dxForm('option', 'formData'), { Resume: response.url });
                                             updateFormData(newFormData);
                                         },
                                         error: function (err) {
-                                            // Handle the error if any
                                             console.error(err);
                                         }
                                     });
@@ -385,13 +374,9 @@
         $('#updateButton').dxButton({
             text: 'Save',
             onClick: function () {
-                // Get the updated form data
                 const updatedData = $('#form').dxForm('instance').option('formData');
-
                 var parsedDate = new Date(String(updatedData.BirthDate));
-
                 var parsedDate = new Date(String(updatedData.BirthDate));
-
                 var year = parsedDate.getFullYear();
                 var month = String(parsedDate.getMonth() + 1).padStart(2, '0');
                 var day = String(parsedDate.getDate()).padStart(2, '0');
@@ -435,16 +420,14 @@
 
                         },
                         success: function (ResponseData) {
-                            // Optionally, you can show a success message or perform other actions on success
                             if (ResponseData.Response == "Update Sucessfully") {
                                 Swal.fire({
                                     title: 'Updated data saved successfully!',
                                     icon: 'success',
-                                    showCancelButton: false, // Hide the cancel button
+                                    showCancelButton: false, 
                                     confirmButtonText: 'OK',
                                 }).then(function (result) {
                                     if (result.isConfirmed) {
-                                        // Reload the entire page after the user clicks "OK"
                                         location.reload();
                                     }
                                 });
@@ -461,7 +444,6 @@
 
                         },
                         error: function (err) {
-                            // Handle the error if any
                             console.error(err);
                         }
                     });
@@ -502,10 +484,10 @@
                         tempBachelorsList.push(value);
                     }
                     BachelorsList = tempBachelorsList;
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -523,10 +505,10 @@
                         tempMastersList.push(value);
                     }
                     MastersList = tempMastersList;
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -544,10 +526,10 @@
                         tempCountryList.push(value);
                     }
                     CountryList = tempCountryList
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -567,10 +549,10 @@
                     }
                     StateList = tempStateList;
                     console.log(StateList);
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -590,10 +572,10 @@
                     }
                     CityList = tempCityList;
                     console.log(CityList);
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -606,16 +588,13 @@
                 method: "GET",
                 data: { "id": userId }
             });
-
             const user = response[0];
-           
             if (user.ProfilePicture != null && user.ProfilePicture.length != 0) {
                 user.ProfilePictureUrl = user.ProfilePicture;
             }
             else {
                 user.ProfilePictureUrl = "/UserProfile/DefaultProfileJobSeeker.png";
             }
-
             if (user.Resume != null) {
                 user.ResumeUrl = user.Resume;
             }
@@ -623,19 +602,19 @@
             user.ProfilePicture = '';
             user.Resume = '';
 
-            await LoadCountry(); // Wait for LoadCountry to complete
+            await LoadCountry(); 
             user.CountryList = CountryList;
 
-            await LoadState(user.Country); // Wait for LoadState to complete
+            await LoadState(user.Country); 
             user.StateList = StateList;
 
-            await LoadCity(user.State); // Wait for LoadCity to complete
+            await LoadCity(user.State); 
             user.CityList = CityList;
 
-            await LoadBachelors(); // Wait for LoadCountry to complete
+            await LoadBachelors(); 
             user.BachelorsList = BachelorsList;
 
-            await LoadMasters(); // Wait for LoadCountry to complete
+            await LoadMasters(); 
             user.MastersList = MastersList;
 
             ShowUserProfileDetails(user);
@@ -645,9 +624,8 @@
             } else {
                 $('#removeProfilePictureButton').dxButton('instance').option('disabled', false);
             }
-
-
-        } catch (err) {
+        }
+        catch (err) {
             alert(err);
         }
     }
@@ -703,12 +681,10 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    // Update the image source with the uploaded image URL
                     $('#profileImageInform').attr('src', response.url);
                     $('#modalProfileImage').attr('src', response.url);
                 },
                 error: function (err) {
-                    // Handle the error if any
                     console.error(err);
                 }
             });
@@ -722,7 +698,6 @@
     $('#fileInput').change((event) => {
         const file = event.target.files[0];
         if (file) {
-            // Perform your upload logic here
             const formData = new FormData();
             formData.append('ProfilePicture', file);
             $.ajax({
@@ -736,7 +711,6 @@
                     $('#modalProfileImage').attr('src', response.url);
                 },
                 error: function (err) {
-                    // Handle the error if any
                     console.error(err);
                 }
             });

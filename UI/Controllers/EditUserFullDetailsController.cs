@@ -45,7 +45,6 @@ namespace UI.Controllers
             return Ok(result);
         }
 
-
         [HttpGet]
         public IActionResult GetCountry()
         {
@@ -102,31 +101,20 @@ namespace UI.Controllers
             {
                 try
                 {
-                    // Generate a unique file name for the uploaded image
                     var fileName = "UserProfile/" + $"{Guid.NewGuid().ToString()}{Path.GetExtension(profilePicture.FileName)}";
-
-                    // Combine the wwwroot path with the generated file name
                     var filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileName);
-
-                    // Save the image to the file path
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await profilePicture.CopyToAsync(fileStream);
                     }
-
                     TempData["ImagePath"] = fileName;
-
-                    // Return the URL of the uploaded image
                     return Json(new { success = true, url = $"/{fileName}" });
                 }
                 catch (Exception ex)
                 {
-                    // Handle the error if any
                     return Json(new { success = false, error = ex.Message });
                 }
             }
-
-            // Return an error response if no image was uploaded
             return Json(new { success = false, error = "No image was uploaded." });
         }
 
@@ -137,19 +125,14 @@ namespace UI.Controllers
                 try
                 {
                     var fileName = profilePicture;
-
                     TempData["ImagePath"] = fileName;
-
-                    // Return the URL of the default image
                     return Json(new { success = true, url = $"/{fileName}" });
                 }
                 catch (Exception ex)
                 {
-                    // Handle the error if any
                     return Json(new { success = false, error = ex.Message });
                 }
             }
-
             return Json(new { success = false, error = "Failed" });
         }
 
@@ -160,32 +143,21 @@ namespace UI.Controllers
             {
                 try
                 {
-                    // Generate a unique file name for the uploaded image
                     var fileName = "UserResume/" + $"{Guid.NewGuid().ToString()}{Path.GetExtension(resume.FileName)}";
-
-                    // Combine the wwwroot path with the generated file name
                     var filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileName);
-
-                    // Save the image to the file path
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await resume.CopyToAsync(fileStream);
                     }
-
                     TempData["ResumePath"] = fileName;
-
-                    // Return the URL of the uploaded image
                     return Json(new { success = true, url = $"/{fileName}" });
                 }
                 catch (Exception ex)
                 {
-                    // Handle the error if any
                     return Json(new { success = false, error = ex.Message });
                 }
             }
-            // Return an error response if no image was uploaded
             return Json(new { success = false, error = "No image was uploaded." });
-
         }
     }
 }

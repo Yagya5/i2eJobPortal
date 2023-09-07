@@ -41,7 +41,6 @@ namespace UI.Areas.Admin.Controllers
             int TaskId = OldObject.UserId;
             string Module = "JobSeeker";
             string Action = null;
-
             if (jobSeeker.Is_Deleted == true)
             {                
               Action = AuditAction.Deleted;
@@ -65,9 +64,7 @@ namespace UI.Areas.Admin.Controllers
                 jobSeeker.Response = "Failed";
                 OldObject.Response = jobSeeker.Response;
             }
-
             _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, jobSeeker);
-
             return Ok(jobSeeker);
         }
 

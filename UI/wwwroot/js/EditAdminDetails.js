@@ -6,7 +6,6 @@
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
-
             items: [{
                 itemType: 'group',
                 caption: 'Manage Profile Details',
@@ -200,15 +199,15 @@
                                 }
                                 return false;
                             },
-                            message: 'Invalid phone number.'
-                        }, {
-                            type: 'required',
-                            message: 'PhoneNumber is required',
+                            message: 'Valid phone number is required'
+                        },
+                        {
+                            type: 'required'
                         }],
                         label: {
                             template: labelTemplate('tel'),
                         },
-                    },                  
+                    }                
                 ],
             }],
         });
@@ -237,18 +236,14 @@
             onClick: function () {
                 // Get the updated form data
                 const updatedData = $('#form').dxForm('instance').option('formData');
-
                 var parsedDate = new Date(String(updatedData.BirthDate));
-
                 var year = parsedDate.getFullYear();
                 var month = String(parsedDate.getMonth() + 1).padStart(2, '0');
                 var day = String(parsedDate.getDate()).padStart(2, '0');
                 var hours = String(parsedDate.getHours()).padStart(2, '0');
                 var minutes = String(parsedDate.getMinutes()).padStart(2, '0');
                 var seconds = String(parsedDate.getSeconds()).padStart(2, '0');
-
                 var formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
                 updatedData.BirthDate = formattedDate;
 
                 var formInstance = $('#form').dxForm('instance');
@@ -341,10 +336,10 @@
                         tempCountryList.push(value);
                     }
                     CountryList = tempCountryList;
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -363,10 +358,10 @@
                         tempStateList.push(value);
                     }
                     StateList = tempStateList;
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -385,10 +380,10 @@
                         tempCityList.push(value);
                     }
                     CityList = tempCityList;
-                    resolve(); // Resolve the promise when data is loaded
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -402,25 +397,22 @@
                 method: "GET",
                 data: { "id": userId }
             });
-
             const user = ResponseData[0];
-
             if (user.ProfilePicture != null && user.ProfilePicture.length != 0) {
                 user.ProfilePictureUrl = user.ProfilePicture;
             }
             else {
                 user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png";
             }
-
             user.ProfilePicture = '';
 
-            await LoadCountry(); // Wait for LoadCountry to complete
+            await LoadCountry(); 
             user.CountryList = CountryList;
 
-            await LoadState(user.Country); // Wait for LoadState to complete
+            await LoadState(user.Country); 
             user.StateList = StateList;
 
-            await LoadCity(user.State); // Wait for LoadCity to complete
+            await LoadCity(user.State); 
             user.CityList = CityList;
 
             ShowUserProfileDetails(user);
@@ -431,8 +423,8 @@
                 $('#removeProfilePictureButton').dxButton('instance').option('disabled', false);
             }
 
-
-        } catch (err) {
+        }
+        catch (err) {
             alert(err);
         }
     }
@@ -443,7 +435,6 @@
     modal.id = 'profilePictureModal';
     modal.classList.add('modal');
     document.body.appendChild(modal);
-
     modal.innerHTML = `
             <div class="modal-content" style="max-width: 719px; max-height: 500px;
                 margin: 0 auto;">
@@ -467,8 +458,6 @@
                 <br/>
                 
             </div>`;
-
-
 
     $('#addProfilePictureButton').dxButton({
         text: 'Upload',

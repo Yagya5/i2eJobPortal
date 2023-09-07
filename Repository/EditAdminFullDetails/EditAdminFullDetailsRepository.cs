@@ -1,7 +1,6 @@
 ﻿using Repository.Connection;
 using System.Data;
 using Dapper;
-
 using DomainModel.EditAdminFullDetails;
 
 namespace Repository.EditAdminFullDetails
@@ -10,7 +9,6 @@ namespace Repository.EditAdminFullDetails
     {
         private readonly IDapperConnection _dapperConnection;
         private readonly string _schemaName;
-
         public EditAdminFullDetailsRepository(IDapperConnection dapperConnection)
         {
             _dapperConnection = dapperConnection;
