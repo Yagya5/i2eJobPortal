@@ -18,10 +18,21 @@ function CreateAppliedJob(JobId) {
             success: function (response) {
                 console.log(response);
                 if (response.status) {
-                    alert("Succesfully Applied job ");
+                    Swal.fire(
+                        'Succesfully Applied job!',
+                        '',
+                        'success'
+                    )
+                   /* alert("Succesfully Applied job ");*/
                 } else {
                     if (response.responseof == "Resume Required") {
-                        alert("Please upload your Resume on Profile Section.");
+                        Swal.fire(
+                            'Error',
+                            'Please upload your Resume in Profile Section!',
+                            
+                           
+                        )
+                       /* alert("Please upload your Resume on Profile Section.");*/
                         window.location.href = '/EditUserFullDetails/Index?id=' + response.userid;
                     }
                 }
