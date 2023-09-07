@@ -18,9 +18,5 @@ namespace Repository.RegisteredJobSeekers
         IEnumerable<EditUserFullDetails> GetStateList(string country);
         IEnumerable<EditUserFullDetails> GetUserFullDetails(int id);
         string UpdateProfileDetails(EditUserFullDetails userDetails);
-
-        //public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker);
     }
-
-    
 }

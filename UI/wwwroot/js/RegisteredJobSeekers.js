@@ -17,7 +17,7 @@
         },
         pager: {
             visible: true,
-            allowedPageSizes: [10, 20, 'all'],
+            allowedPageSizes: [10, 20, 50, 'all'],
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
@@ -84,7 +84,6 @@
                             icon: 'error',
                             title: 'Failed...',
                             text: 'Something went wrong!',
-                            /*footer: '<a href="">Why do I have this issue?</a>'*/
                         })
                     }
                     LoadRecords();
@@ -155,12 +154,9 @@
                         .append($('<img>', { src: options.data.ProfilePicture }))
                         .appendTo(container);
                 },
-                allowEditing: false, // Enable editing for this column
+                allowEditing: false, 
                 editCellTemplate: function (container, options) {
-                    // Create an img element for the profile picture
                     var img = $("<img>").attr("src", options.data.ProfilePicture).width(60).height(60);
-
-                    // Append the img to the editing popup container
                     container.append(img);
                 }
             },
@@ -232,10 +228,10 @@
                 allowEditing: false,
                 cellTemplate: function (container, options) {
                     if (options.data.BirthDate === "0001-01-01") {
-                        container.text(""); // Display nothing for "0001-01-01"
+                        container.text(""); 
                     } else {
                         var birthDate = new Date(options.data.BirthDate);
-                        var formattedDate = birthDate.toLocaleDateString(); // Convert to a localized short date string
+                        var formattedDate = birthDate.toLocaleDateString(); 
                         $("<div>").text(formattedDate).appendTo(container);
                     }
                 }
@@ -245,11 +241,11 @@
                 dataField: "Is_Active",
                 width: 75,
                 caption: "Status",
-                filterType: "lookup", // Specify the filter type as lookup
+                filterType: "lookup", 
                 lookup: {
                     dataSource: [
-                        { value: true, text: "Active" }, // Define custom text for true value
-                        { value: false, text: "Block" } // Define custom text for false value
+                        { value: true, text: "Active" }, 
+                        { value: false, text: "Block" } 
                     ],
                     valueExpr: "value",
                     displayExpr: "text"
@@ -270,7 +266,6 @@ function LoadRecords() {
         url: "/RegisteredJobSeekers/GetRegisteredJobSeekers",
         method: "GET",
         success: function (ResponseData) {
-            // Update the ResponseData values for each record
             ResponseData.forEach(function (record) {
                 if (record.ProfilePicture == null || record.ProfilePicture == "") {
                     record.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png";

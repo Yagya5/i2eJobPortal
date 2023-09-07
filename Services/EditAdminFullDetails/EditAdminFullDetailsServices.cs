@@ -12,6 +12,7 @@ namespace Services.EditAdminFullDetails
             _AdminFullDetailsRepository = AdminRepository;
             
         }
+
         public IEnumerable<DomainModel.EditAdminFullDetails.EditAdminFullDetails> GetAdminFullDetails(int id)
         {
             var result = _AdminFullDetailsRepository.GetAdminFullDetails(id);
@@ -43,6 +44,5 @@ namespace Services.EditAdminFullDetails
             
         }
 
-        
     }
 }

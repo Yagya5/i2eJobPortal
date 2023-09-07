@@ -20,6 +20,7 @@
 
     <style>
 
+
         .footer {
             background-color: #202020;
             color: #FFFFFF;
@@ -150,7 +151,7 @@
 
                                             
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="MyProfile">Home</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AllJobs">Jobs</a>
@@ -256,9 +257,22 @@
 
 
         });
-
-
-
     </script>
+
+
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script type="text/javascript">
+        $(function ($) {
+            let url = window.location.href;
+            $('nav ul li a').each(function () {
+                if (this.href === url) {
+                    $(this).attr('class', 'active');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>

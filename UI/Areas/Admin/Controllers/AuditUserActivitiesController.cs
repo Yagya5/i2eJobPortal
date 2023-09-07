@@ -9,23 +9,20 @@ namespace UI.Areas.Admin.Controllers
     {
         private readonly IAuditTrailServices _auditTrailServices;
 
-        public AuditUserActivitiesController(IAuditTrailServices auditTrailServices)
+        public AuditUserActivitiesController(IAuditTrailServices auditTrailServices) // Class constructor & Dependency Injection
         {
             _auditTrailServices = auditTrailServices;
         }
 
-
-        public IActionResult Index()
+        public IActionResult Index()  // It will return Index Page where dxDataGrid will be shown
         {
             return View();
         }
 
-        public IActionResult GetAuditTrail()
+        public IActionResult GetAuditTrail() // Fetch the User Activities which has been audited
         {
             var result = _auditTrailServices.GetAuditTrail();
             return Ok(result);
         }
-
-
     }
 }
