@@ -149,15 +149,6 @@ function showJob(dataSource) {
 
         onRowUpdated: function (e) {
             var jobId = e.key.JobId;
-
-            filteredState = StateList.filter(State => State.Ref_ID === e.data.Country);
-            if (stateSelectBoxInstance) {
-                stateSelectBoxInstance.option("dataSource", filteredState);
-                if (e.data) {
-                    stateSelectBoxInstance.option("value", e.data.State);
-                }
-            }
-
             var dataToSend = {
                 "JobId": e.data.JobId,
                 "JobTitle": e.data.JobTitle,
@@ -531,11 +522,29 @@ function showJob(dataSource) {
                     valueExpr: "Category_Id",
                     displayExpr: "Value",
                     placeholder: "Select Country",
+                    onInitialized: function (e) {
+                        stateSelectBoxInstance = e.component;
+                        console.log("Country initialized");
+
+                        const selectedCountryId = e.data ? e.data.Country : null;
+                        console.log(selectedCountryId);
+
+                        filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
+                        console.log("Filtered States:", filteredState);
+
+                        if (stateSelectBoxInstance) {
+                            stateSelectBoxInstance.option("dataSource", filteredState);
+
+                            if (e.data) {
+                                stateSelectBoxInstance.option("value", e.data.State);
+                            }
+                        }
+                    },
                     onValueChanged: function (e) {
                         console.log("Country selection changed:", e.value);
                         const selectedCountryId = e.value;
-                        globalCountry = 0;
-                        globalCountry = e.value;
+                        
+                        globalCountry = selectedCountryId;
                         dataSource.Country = globalCountry;
                         filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
                         if (stateSelectBoxInstance) {
@@ -571,11 +580,21 @@ function showJob(dataSource) {
                     placeholder: "Select State",
                     onInitialized: function (e) {
                         stateSelectBoxInstance = e.component;
-                     },
+                        console.log("State initialized");
+                        const selectedStateId = e.data ? e.data.State : null;
+                        filteredCity = CityList.filter(City => City.Ref_ID === selectedStateId);
+                        console.log("Filtered Cities:", filteredCity);
+                        if (citySelectBoxInstance) {
+                            citySelectBoxInstance.option("dataSource", filteredCity);
+                            if (e.data) {
+                                citySelectBoxInstance.option("value", e.data.City);
+                            }
+                        }
+                    },
                     onValueChanged: function (e) {
                         console.log("State selection changed:", e.value);
                         const selectedStateId = e.value;
-                        globalState=0;
+                       
                         globalState = selectedStateId;
 
                         filteredCity = CityList.filter(City => City.Ref_ID === selectedStateId);
@@ -612,7 +631,10 @@ function showJob(dataSource) {
                     placeholder: "Select City",
                     onInitialized: function (e) {
                         citySelectBoxInstance = e.component;
-                       
+                        console.log("City initialized");
+                        if (e.data) {
+                            citySelectBoxInstance.option("value", e.data.City);
+                        } 
                     },
                 }, cellTemplate: function (container, options) {
                     const CityID = options.value;
