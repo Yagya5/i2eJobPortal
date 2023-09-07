@@ -128,6 +128,7 @@
                             onValueChanged: function (e) {
                                 console.log(_datasource.CityList);
                                 console.log(e.value)
+                                _datasource.City = "";
                                 $.ajax({
                                     url: "/EditUserFullDetails/GetCity",
                                     method: 'GET',
