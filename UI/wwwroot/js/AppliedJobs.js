@@ -298,36 +298,6 @@ function ShowEvent(_datasource) {
             },
 
            
-            //{
-            //    dataField: "FirstName",
-            //    caption: "First Name",
-            //    /* validationRules: [{ type: "required" }],*/
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    allowEditing: true,
-            //    width: 80,
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-            //},
-            //{
-            //    dataField: "LastName",
-            //    caption: "Last Name",
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    /*validationRules: [{ type: "required" }],*/
-            //    allowEditing: true,
-            //    width: 80,
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-            //},
 
             {
                 dataField: "Gender",
@@ -501,28 +471,6 @@ function ShowEvent(_datasource) {
 
 
 
-            //{
-            //    dataField: "ProfilePicture",
-            //    caption: "Profile Picture",
-
-            //    /*validationRules: [{ type: "required" }],*/
-            //    allowEditing: false,
-            //    width: 120,
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    cellTemplate(container, options) {
-            //        $('<div>')
-            //            .append($('<img>', { src: options.data.ProfilePicture }))
-            //            .appendTo(container);
-            //    },
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-               
-            //},
             
             {
                 dataField: "Status",
@@ -580,14 +528,6 @@ function ShowEvent(_datasource) {
 }
 
 
-
-
-//$(function () {
-//    $("#EditButton").dxButton({
-//        icon: "edit",
-//        text: "Edit"
-//    }
-//    }
 
 
 let StatusValues1 = [];

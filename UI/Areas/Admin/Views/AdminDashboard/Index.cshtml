@@ -6,9 +6,333 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
-    </head>
-    <body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Admin Dashboard</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/23.1.4/css/dx.light.css" />
+    <script src="https://cdn3.devexpress.com/jslib/23.1.4/js/dx.all.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    
+    <script src="~/js/admindash.js"></script>
+
+<style>
+        .demo-container {
+            display: flex;
+        }
+
+
+
+        .calendar-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+        #calendar {
+            width: 49%;
+            background-color: green;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+
+
+        .dx-button-mode-outlined {
+            border: none;
+        }
+
+
+
+
+
+
+
+            .dx-button-mode-outlined .dx-icon, .dx-button-mode-outlined .dx-icon, .dx-button-text, .dx-calendar-cell {
+                color: #fff;
+            }
+
+
+
+        .dx-calendar-body thead th {
+            font-weight: 500;
+            font-size: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #fff;
+        }
+
+
+
+        .dx-calendar-cell:not(.dx-calendar-other-month) .weekend,
+        .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
+            text-shadow: none;
+            font-weight: bold;
+        }
+
+
+
+        .dx-calendar-cell:not(.dx-calendar-other-month) .weekend {
+            color: #3030ff;
+        }
+
+
+
+        .dx-state-disabled.dx-calendar .dx-calendar-cell:not(.dx-calendar-other-month) .weekend {
+            color: #8080ff;
+        }
+
+
+
+        .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
+            color: #ff3030;
+        }
+
+
+
+        .dx-state-disabled.dx-calendar .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
+            color: #ff8080;
+        }
+
+
+
+        .dx-calendar-week-number-cell .week-number {
+            font-style: italic;
+        }
+
+
+
+        .caption {
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+
+
+        .options {
+            padding: 20px;
+            background-color: rgba(191, 191, 191, 0.15);
+        }
+
+
+
+        .option {
+            margin-top: 10px;
+        }
+</style>
+   
+
+</head>
+
+
+
+<body class="dx-viewport1">
+
+
+   
+        <div class="container-fluid">
+
+            <div class="row">
+            <div class="col-lg-3 col-6">
+
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3 id="registered_candidates"></h3>
+                        <p>Registered Candidates</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3 id="jobs_applied"></h3>
+                        <p>Jobs Applied</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            
+
+            <div class="col-lg-3 col-6">
+
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3 id="selected_candidates"></h3>
+                        <p>Selected Candidates</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+           
+            <div class="col-lg-3 col-6">
+
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3 id="rejected_candidates"></h3>
+                        <p>Rejected Candidates</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    *@
+
+    
+    <section class="col-lg-12 connectedSortable">
+        <div class="row">
+            <div class="col-lg-6">
+                @*<div class="card bg-gradient-success">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Job Details
+                        </h3>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#jobdetailsareachart" data-toggle="tab">Area</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#jobdetails-donutchart" data-toggle="tab">Donut</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <div class="chart tab-pane active" id="jobdetailsareachart" style="position: relative; height: 300px;">
+                                <canvas id="job-details-area" height="300" style="height: 300px;"></canvas>
+                            </div>
+                            <div class="chart tab-pane" id="jobdetails-donutchart" style="position: relative; height: 300px;">
+                                <canvas id="jobdetails-donut-chart" height="300" style="height: 300px;"></canvas>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Chart Options
+                        </h3>
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="areaChartTab" data-toggle="tab" href="#areaChart">Area Chart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="donutChartTab" data-toggle="tab" href="#donut">Donut Chart</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="areaChart">
+                                <!-- Place your area chart here -->
+                            </div>
+                            <div class="tab-pane fade" id="donut">
+                                <!-- Place your donut chart here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+@*
+
+                
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Donut Chart
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content p-0">
+                                <div id="donut"></div>
+                            </div>
+                        </div>
+                    </div>*@
+                
+
+
+                </div>
+
+
+
+
+            
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Funnel Chart
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <div id="funnel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+      <section>
+        <div class="demo-container">
+            <div class="calendar-container">
+                <div id="calendar"></div>
+            </div>
+            
+        </div>
+      </section>
+        
+            
+                
     </body>
     </html>
+
+
+
+
+
+
+

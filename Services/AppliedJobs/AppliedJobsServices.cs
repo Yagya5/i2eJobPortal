@@ -10,6 +10,7 @@ using DomainModel.MasterDetails;
 using DomainModel.RegisteredJobSeekers;
 using DomainModel.Users;
 using Repository.AppliedJobs;
+using System.Data;
 
 
 namespace Services.AppliedJobs
