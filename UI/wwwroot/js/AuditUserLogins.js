@@ -37,6 +37,11 @@
             shadingColor: 'rgba(0,0,0,0.4)'            
         },
 
+        columnAutoWidth: true,
+        columnFixing: {
+            enabled: true,
+        },
+
         export: {
             enabled: true,
             formats: ['xlsx', 'pdf']
