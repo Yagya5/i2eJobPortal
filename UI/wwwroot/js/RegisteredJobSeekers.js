@@ -17,7 +17,7 @@
         },
         pager: {
             visible: true,
-            allowedPageSizes: [10, 20, 'all'],
+            allowedPageSizes: [10, 20, 50, 'all'],
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
