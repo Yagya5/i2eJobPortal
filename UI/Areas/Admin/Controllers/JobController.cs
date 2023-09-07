@@ -60,8 +60,15 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int JobId)
         {
+            var OldObject = _jobServices.GetJobById_ForAuditTrail(JobId);    // Audit Trail Code
 
             var response = _jobServices.DeleteJob(JobId);
+
+            var NewObject = _jobServices.GetJobById_ForAuditTrail(JobId);    // Audit Trail Code       
+            int TaskId = OldObject.JobId;   // Audit Trail Code
+            string Module = "Job";   // Audit Trail Code
+            string Action = AuditAction.Deleted;  // Audit Trail Code
+            _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, NewObject);  // Audit Trail Code
 
             return Ok(response);
 

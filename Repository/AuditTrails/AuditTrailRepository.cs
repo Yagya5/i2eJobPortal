@@ -24,29 +24,25 @@ namespace Repository.AuditTrails
         private readonly IDapperConnection _dapperConnection;
         private readonly string _schemaName;
 
-        public AuditTrailRepository(IDapperConnection dapperConnection)
+        public AuditTrailRepository(IDapperConnection dapperConnection)  // Class constructor & Dependency Injection
         {
             _dapperConnection = dapperConnection;
             _schemaName = _dapperConnection.GetDatabaseSchemaName();
         }
 
-        public IEnumerable<AuditTrail> GetAuditTrail()
+        public IEnumerable<AuditTrail> GetAuditTrail()  // Fetch the User Activities which has been audited
         {
             IEnumerable<AuditTrail> result = new List<AuditTrail>();
             using var connection = _dapperConnection.CreateConnection();
             string Query = "SELECT * FROM v_AuditTrail order by DateTimeStamp desc";
             result = connection.Query<AuditTrail>(Query, null, null, true, 0, null);
             return result;
-        }
+        }       
 
-       
-
-        public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject)
+        public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject) // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
         {   
-            int UserId = int.Parse(context.User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-            //string ActionMethodName = context.Request.RouteValues.Values.ElementAt(1).ToString();            
+            int UserId = int.Parse(context.User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);                        
             string Url = context.Request.Path.Value;
-
             CompareLogic compObjects = new CompareLogic();
             compObjects.Config.MaxDifferences = 99;
             ComparisonResult compResult = compObjects.Compare(OldObject, NewObject);
@@ -58,7 +54,6 @@ namespace Repository.AuditTrails
                     string DataField = compResult.Differences[Index].PropertyName;
                     string OldValue = compResult.Differences[Index].Object1Value;
                     string NewValue = compResult.Differences[Index].Object2Value;
-
                     using var connection = _dapperConnection.CreateConnection();
                     var param = new DynamicParameters();
                     param.Add(nameof(AuditTrail.UserId), UserId);
@@ -70,20 +65,16 @@ namespace Repository.AuditTrails
                     param.Add(nameof(AuditTrail.Url), Url);
                     param.Add(nameof(AuditTrail.Action), Action);
                     connection.Execute(Constant.InsertAuditTrailStoredProcedure, param, null, 0, CommandType.StoredProcedure);
-
-                }
-                
+                }                
                 return true;
-
             }
             else
             {
                 return false;
-            }
-            
+            }            
         }
 
-        public bool InsertContactQuery(ContactQuery query, HttpContext context)
+        public bool InsertContactQuery(ContactQuery query, HttpContext context) // It will insert contact-form data into Table_ContactQueries
         {
             int result = 0;
             using var connection = _dapperConnection.CreateConnection();
@@ -94,8 +85,6 @@ namespace Repository.AuditTrails
             param.Add(nameof(ContactQuery.Phone), query.Phone);
             param.Add(nameof(ContactQuery.Message), query.Message);
             param.Add(nameof(ContactQuery.IPAddress), context.Connection.LocalIpAddress.ToString());
-
-
             result = connection.Execute("spInsertContactQuery", param, null, 0, CommandType.StoredProcedure);
             if (result != 0)
             {
@@ -105,7 +94,7 @@ namespace Repository.AuditTrails
                 return false;
         }
 
-        public IEnumerable<ContactQuery> GetContactQueries()
+        public IEnumerable<ContactQuery> GetContactQueries() // It will fetch Table_ContactQueries records
         {
             IEnumerable<ContactQuery> result = new List<ContactQuery>();
             using var connection = _dapperConnection.CreateConnection();
