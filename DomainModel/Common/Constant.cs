@@ -14,7 +14,7 @@ namespace DomainModel.Common
         GetAllUsersViewName = "v_Users",   //To get details of All Users include their Role Name also.
         GetAllUserLoginsViewName = "v_AuditedLogins", //To get details of Users who login in past.
         GetAllUsersAppliedJobViewName="v_AppliedJobs",//To get the details of Users who applied for the Jobs.
-
+        GetJobData="v_GetJobData",
         #endregion
 
 
@@ -26,6 +26,7 @@ namespace DomainModel.Common
         DeleteAJob = "spDeleteJob",
         UpdateAJob = "spUpdateJob",
         UpdateStatusRoundStoredProcedure= "spUpdateStatusAndRound",//Updating the Status and Round Of Users which Applied for the Jobs.
+            CreateAppliedJob = "spAppliedJobdata",
         #endregion
 
 

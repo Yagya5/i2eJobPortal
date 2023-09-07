@@ -5,15 +5,7 @@
 
 <style>
 
-    .dx-header-row > td[role="columnheader"] > div.dx-datagrid-text-content {
-        font-size: 17px;
-        font-weight: bold;
-        color: black;
-    }
-
-    h1 {
-        color: #008bff;
-    }
+    
 
 </style>
    
@@ -40,7 +32,7 @@
     <h1>Jobs Management</h1>
   
     <div id="JobDataGrid"></div>
-
+<body class="dx-viewport">
     <script>
         $(document).ready(function () {
             var dataSource = @Html.Raw(Json.Serialize(Model));
@@ -48,3 +40,4 @@
         });
     </script>
 
+</body>

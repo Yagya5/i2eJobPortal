@@ -8,10 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kodchasan:ital,wght@0,400;0,600;0,700;1,500;1,700&family=Montserrat:wght@500&family=Poppins:wght@300;400;600;700;800&family=Roboto&display=swap"
+          rel="stylesheet">
+
     <style>
+
 
         .footer {
             background-color: #202020;
@@ -40,7 +48,7 @@
             justify-content: space-between;
         }
 
-        .navbar {
+       /*  .navbar {
             width: 85%;
             margin: auto;
         }
@@ -63,13 +71,73 @@
             .navbar .nav-link {
                 color: #202020;
                 font-weight: 600;
+            } */
+
+        .menu-contains .logo-section {
+            display: flex;
+            align-self: center;
+        }
+
+        .menu-contains .navbar-expand-lg .navbar-collapse {
+            display: flex !important;
+            flex-basis: auto !important;
+            justify-content: flex-end !important;
+        }
+
+        .menu-contains .nav-item {
+            margin: 0px 10px !important;
+        }
+
+            .menu-contains .nav-item .nav-link {
+                /* color: #000000; */
+                color: rgba(0,0,0,.55) !important;
+                font-family: "Poppins" !important;
+                font-weight: 400 !important;
+                font-size: 16px;
             }
+
+            .menu-contains .nav-item .active {
+                color: #000000;
+                font-family: "Poppins" !important;
+                font-weight: 800 !important;
+            }
+
+
+            /* DevExtreme CSS starts from below*/
+        .dx-theme-generic-typography .dx-font-xl, .dx-theme-generic-typography h1 {
+            font-weight: 600;
+            font-size: 48px;
+            font-family: "Poppins";
+            text-align: center;
+        }
+
+        .Mainheading {
+            font-weight: 600;
+            font-size: 48px;
+            font-family: "Poppins";
+            text-align: center;
+        }
+
+        .dx-header-row {
+            font-weight: 700;
+            font-size: 16px;
+            font-family: "Poppins";
+            background-color: #008BFF;
+            color: white;
+        }
+
+
+        .dx-datagrid-table {
+            box-shadow: 0 0 10px #dce9fb;
+        }
+
+
     </style>
 </head>
 <body>
     <header>
 
-
+        <div class="col-lg menu-contains">
         <nav class="navbar navbar-expand-sm bg-white navbar-light">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -83,10 +151,10 @@
 
                                             
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="MyProfile">Home</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Jobs">Jobs</a>
+                            <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AllJobs">Jobs</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="" asp-controller="UserDashboard" asp-action="AppliedJobs" asp-route-id="@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.NameIdentifier)?.Value">Applied Jobs</a>
@@ -123,6 +191,7 @@
 
             </div>
         </nav>
+        </div>
 
         
     </header>
@@ -188,9 +257,22 @@
 
 
         });
-
-
-
     </script>
+
+
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script type="text/javascript">
+        $(function ($) {
+            let url = window.location.href;
+            $('nav ul li a').each(function () {
+                if (this.href === url) {
+                    $(this).attr('class', 'active');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>

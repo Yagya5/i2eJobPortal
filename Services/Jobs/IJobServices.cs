@@ -23,5 +23,7 @@ namespace Services.Jobs
         IEnumerable<Master> GetMasterValuesJob();
         Job GetJobById(int jobId);
         IEnumerable<CountryStateCityData> GetAllCountryStateCity();
+
+        Job GetJobById_ForAuditTrail(int jobId);
     }
 }

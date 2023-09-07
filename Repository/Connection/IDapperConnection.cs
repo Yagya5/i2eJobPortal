@@ -9,7 +9,7 @@ namespace Repository.Connection
 {
     public interface IDapperConnection 
     {
-        IDbConnection CreateConnection();
-        string GetDatabaseSchemaName();
+        IDbConnection CreateConnection();  // It will create connection with Database using Connection String
+        string GetDatabaseSchemaName();  // It will get Database schema
     }
 }

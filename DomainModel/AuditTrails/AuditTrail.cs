@@ -12,6 +12,8 @@ namespace DomainModel.AuditTrails
 
         public int? UserId { get; set; }
 
+        public string? FullName { get; set; }
+
         public int? TaskId { get; set; }
 
         public string? OldValue { get; set; }

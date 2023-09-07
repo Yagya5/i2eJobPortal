@@ -15,10 +15,47 @@
 </script>
 <script src="~/js/EditUserDetails.js"></script>
 
-
 <style>
 
-    /* Style for the modal */
+    .row-centered {
+        display: flex;
+        justify-content: center;
+    }
+
+    .image-container {
+        text-align: center; 
+    }
+
+    #profileImageInform {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 50%; 
+        border: 2px solid black;
+        cursor: pointer;
+        transition: transform 0.2s; 
+    }
+
+    .tooltip {
+        position: absolute;
+        top: 18%;
+        left: 47.3%; 
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+    }
+
+    #profileImageInform:hover + .tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+
     .modal {
         display: none;
         position: fixed;
@@ -50,24 +87,23 @@
         font-weight: bold;
     }
 
-        .close:hover,
-        .close:focus {
+    .close:hover, .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
-        }
+    }
 </style>
 
-
-
-<body class="dx-viewport">
-    <div class="demo-container">
+<div class="container">
+    <body class="dx-viewport">
+        <div class="demo-container">
      
-        <div id="form">
+            <div id="form">
             
+            </div>
         </div>
-    </div>
-</body>
+    </body>     
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

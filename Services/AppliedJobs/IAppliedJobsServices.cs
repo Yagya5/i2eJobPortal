@@ -13,9 +13,12 @@ namespace Services.AppliedJobs
     public interface IAppliedJobsServices
     {
 
+
         IEnumerable<DM_AppliedJobs> GetAppliedJobs();
         Task<IEnumerable<ViewModel_AppliedJob>> MyAppliedJobs(int userId);
         IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category);
+         Task<bool> CreateAppliedJob( int job_Id, int User_Id);
+        Task<bool> IsUserResumeUploaded(int userId);
 
         bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj);
 

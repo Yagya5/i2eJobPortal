@@ -36,7 +36,10 @@ form.addEventListener('submit', (e) => {
     } else if (Password.length < 6) {
         e.preventDefault()
         errors.push("Password must be at least 6 characters long.")
-    }        
+    } else if (!isValidPassword(Password)) {
+        e.preventDefault()
+        errors.push("Password must have at least a number, and at least a special character.")
+    }       
 
 
     if (Password != ConfirmPassword) {
@@ -48,6 +51,11 @@ form.addEventListener('submit', (e) => {
     function isValidEmail(Email) {
         const EmailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return EmailRegEx.test(Email);
+    }
+
+    function isValidPassword(Password) {
+        const PasswordRegEx = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+        return PasswordRegEx.test(Password);
     }
 
     if (errors.length > 0) {

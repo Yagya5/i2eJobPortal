@@ -67,12 +67,16 @@
             }
         },
 
+        scrolling: {
+            mode: 'virtual',
+        },
+
         paging: {
-            pageSize: 20,
+            pageSize: 10,
         },
         pager: {
             visible: true,
-            allowedPageSizes: [20, 30, 'all'],
+            allowedPageSizes: [10, 20, 50, 'all'],
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
@@ -85,11 +89,18 @@
         },
 
         columns: [
+            //{
+            //    dataField: "UserId",
+            //    caption: "User Id",
+            //    alignment: "left",  
+            //},
+
             {
-                dataField: "UserId",
-                caption: "User Id",
-                alignment: "left",  
+                dataField: "FullName",
+                caption: "User Name",
+                alignment: "left",
             },
+
             {
                 dataField: "TaskId",
                 alignment: "left",              
@@ -104,7 +115,8 @@
             },
             {
                 dataField: "DataField",
-                caption: "Data Field"
+                caption: "Data Field",
+                width: 150
             },
             {
                 dataField: "Module",    
@@ -120,7 +132,7 @@
             {
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
-                width: "200",
+                width: "130",
                 dataType: "datetime"
             }
         ]

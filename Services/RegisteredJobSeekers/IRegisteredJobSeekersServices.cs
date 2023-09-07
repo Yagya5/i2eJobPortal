@@ -11,9 +11,7 @@ namespace Services.RegisteredJobSeekers
     public interface IRegisteredJobSeekersServices
     {
         IEnumerable<RegisteredJobSeeker> GetRegisteredJobSeekers();
-
         public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker);
-
         RegisteredJobSeeker GetJobSeekerById(int id);
     }
 }

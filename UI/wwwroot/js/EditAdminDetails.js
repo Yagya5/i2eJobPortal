@@ -1,8 +1,11 @@
 ﻿$(() => {
+    var CountryList = [];
+    var StateList = [];
+    var CityList = [];
+
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
-
             items: [{
                 itemType: 'group',
                 caption: 'Manage Profile Details',
@@ -12,7 +15,6 @@
                         dataField: 'FirstName',
                         editorOptions: {
                             disabled: false,
-                            /*value: null,*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -43,7 +45,6 @@
                         editorOptions: {
                             items: ['Male', 'Female'],
                             searchEnabled: true,
-                            /*value: '',*/
                         },
                         validationRules: [{
                             type: 'required',
@@ -87,14 +88,14 @@
                                     method: 'GET',
                                     data: { country: e.value },
                                     success: function (ResponseData) {
-                                        let temparray = [];
-                                        let temparray2 = [];
+                                        let tempStateList = [];
+                                        let tempCityList = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
-                                            temparray.push(value);
+                                            tempStateList.push(value);
                                         }
-                                        _datasource.StateList = temparray;
-                                        _datasource.CityList = temparray2;
+                                        _datasource.StateList = tempStateList;
+                                        _datasource.CityList = tempCityList;
                                         console.log("Updated StateList", _datasource.StateList);
                                         console.log("Updated CityList", _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
@@ -131,12 +132,12 @@
                                     method: 'GET',
                                     data: { state: e.value },
                                     success: function (ResponseData) {
-                                        let temparray = [];
+                                        let tempCityList = [];
                                         for (var i = 0; i < ResponseData.length; i++) {
                                             var value = ResponseData[i].Value;
-                                            temparray.push(value);
+                                            tempCityList.push(value);
                                         }
-                                        _datasource.CityList = temparray;
+                                        _datasource.CityList = tempCityList;
                                         console.log("Updated StateList", _datasource.CityList);
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
                                     },
@@ -187,31 +188,26 @@
                     {
                         dataField: 'PhoneNumber',
                         editorOptions: {
-                            mask: '(X00) 000-0000',
-                            maskRules: { X: /[02-9]/ },
+                            mask: '0000000000',
                         },
                         validationRules: [{
-                            type: 'required',
-                            message: 'PhoneNumber is required',
+                            type: 'custom',
+                            validationCallback: function (options) {
+                                var phoneNumber = options.value;
+                                if (/^[6-9][0-9]{9}$/.test(phoneNumber)) {
+                                    return true;
+                                }
+                                return false;
+                            },
+                            message: 'Valid phone number is required'
+                        },
+                        {
+                            type: 'required'
                         }],
                         label: {
                             template: labelTemplate('tel'),
                         },
-                    },
-
-                    //{
-                    //    dataField: 'Email',
-                    //    label: {
-                    //        template: labelTemplate('Email'),
-                    //    },
-                    //    editorOptions: {
-                    //        disabled: true,
-                    //    },
-
-                    //},
-
-
-
+                    }                
                 ],
             }],
         });
@@ -219,13 +215,16 @@
         $('#form').dxForm('instance').validate();
 
         $('#form').prepend(`
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-                <img src="${_datasource.ProfilePictureUrl}" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
+        <div class="row row-centered">
+            <div class="col-12">
+                <div class="image-container">
+                    <img src="${_datasource.ProfilePictureUrl}" class="profileImage" id="profileImageInform" asp-append-version="true" style="width: 100px; height: 100px; border-radius: 85px; border: 2px solid black; cursor: pointer; ">
+                    <div class="tooltip">Click to edit</div>
+                </div>
             </div>
         </div>`);
 
-        $('#profileImageInform').click(() => {
+        $('#profileImageInform, .tooltip').click(() => {
             modal.style.display = 'flex';
             modalImage.src = _datasource.ProfilePictureUrl;
         });
@@ -237,90 +236,93 @@
             onClick: function () {
                 // Get the updated form data
                 const updatedData = $('#form').dxForm('instance').option('formData');
-
                 var parsedDate = new Date(String(updatedData.BirthDate));
-
                 var year = parsedDate.getFullYear();
                 var month = String(parsedDate.getMonth() + 1).padStart(2, '0');
                 var day = String(parsedDate.getDate()).padStart(2, '0');
                 var hours = String(parsedDate.getHours()).padStart(2, '0');
                 var minutes = String(parsedDate.getMinutes()).padStart(2, '0');
                 var seconds = String(parsedDate.getSeconds()).padStart(2, '0');
-
                 var formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
                 updatedData.BirthDate = formattedDate;
 
-                $.ajax({
-                    url: "/EditAdminFullDetails/UpdateAdminDetails",
-                    method: 'POST',
-                    data: {
-                        "FirstName": updatedData.FirstName,
-                        "LastName": updatedData.LastName,
-                        "Gender": updatedData.Gender,
-                        "BirthDate": updatedData.BirthDate,
-                        "Address": updatedData.Address,
-                        "Country": updatedData.Country,
-                        "City": updatedData.City,
-                        "State": updatedData.State,
-                        "PhoneNumber": updatedData.PhoneNumber,
-                        "Email": updatedData.Email,
-                        "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
-                        "UserId": updatedData.UserId,
-                        "ProfilePictureUrl": updatedData.ProfilePictureUrl
+                var formInstance = $('#form').dxForm('instance');
+                if (formInstance.validate().isValid && _datasource.Country != '' && _datasource.State != '' && _datasource.City != '') {
+                    const updatedData = formInstance.option('formData');
+                    $.ajax({
+                        url: "/EditAdminFullDetails/UpdateAdminDetails",
+                        method: 'POST',
+                        data: {
+                            "FirstName": updatedData.FirstName,
+                            "LastName": updatedData.LastName,
+                            "Gender": updatedData.Gender,
+                            "BirthDate": updatedData.BirthDate,
+                            "Address": updatedData.Address,
+                            "Country": updatedData.Country,
+                            "City": updatedData.City,
+                            "State": updatedData.State,
+                            "PhoneNumber": updatedData.PhoneNumber,
+                            "Email": updatedData.Email,
+                            "ProfilePicture": (updatedData.ProfilePicture == '') ? updatedData.ProfilePicture : updatedData.ProfilePicture[0].name,
+                            "UserId": updatedData.UserId,
+                            "ProfilePictureUrl": updatedData.ProfilePictureUrl
 
-                    },
-                    success: function (ResponseData) {
-                        // Optionally, you can show a success message or perform other actions on success
-                        
-                        if (ResponseData.Response == "Update Sucessfully") {
-                            Swal.fire(
-                                'Updated data saved successfully!',
-                                '',
-                                'success'
-                            )
-                            console.log('Updated data saved successfully!');
-                        }
+                        },
+                        success: function (ResponseData) {
+                            // Optionally, you can show a success message or perform other actions on success
+                            if (ResponseData.Response == "Update Sucessfully") {
+                                Swal.fire({
+                                    title: 'Updated data saved successfully!',
+                                    icon: 'success',
+                                    showCancelButton: false, // Hide the cancel button
+                                    confirmButtonText: 'OK',
+                                }).then(function (result) {
+                                    if (result.isConfirmed) {
+                                        // Reload the entire page after the user clicks "OK"
+                                        location.reload();
+                                    }
+                                });
+                                
+                            }
 
-                        else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Failed...',
-                                text: 'Something went wrong!',
-                                /*footer: '<a href="">Why do I have this issue?</a>'*/
-                            })
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed...',
+                                    text: 'Something went wrong!',
+                                })
+                            }
+
+                        },
+                        error: function (err) {
+                            // Handle the error if any
+                            console.error(err);
                         }
-                        
-                        LoadRecords();
-                    },
-                    error: function (err) {
-                        // Handle the error if any
-                        console.error(err);
-                    }
-                });
+                    });
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Please correct the validation errors before saving.',
+                    });
+                }
             }
         });
 
         $('#cancelButton').dxButton({
             text: 'Reset',
             onClick: function () {
-                LoadRecords();
+                location.reload();
 
             }
         });
 
-
-
-
     }
-
-
 
     function labelTemplate(iconName) {
         return (data) => $(`<div><i class='dx-icon dx-icon-${iconName}'></i>${data.text}</div>`);
     }
-
-    var CountryList = [];
 
     function LoadCountry() {
         return new Promise(function (resolve, reject) {
@@ -328,22 +330,20 @@
                 url: "/EditAdminFullDetails/GetCountry",
                 method: "GET",
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempCountryList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempCountryList.push(value);
                     }
-                    CountryList = temparray;
-                    resolve(); // Resolve the promise when data is loaded
+                    CountryList = tempCountryList;
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
     }
-
-    var StateList = [];
 
     function LoadState(Country) {
         return new Promise(function (resolve, reject) {
@@ -352,24 +352,20 @@
                 method: "GET",
                 data: { country: Country },
                 success: function (ResponseData) {
-                    /*StateList = [];*/
-                    let temparray = [];
+                    let tempStateList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempStateList.push(value);
                     }
-                    StateList = temparray;
-                    resolve(); // Resolve the promise when data is loaded
+                    StateList = tempStateList;
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
     }
-
-
-    var CityList = [];
 
     function LoadCity(State) {
         return new Promise(function (resolve, reject) {
@@ -378,16 +374,16 @@
                 method: "GET",
                 data: { state: State },
                 success: function (ResponseData) {
-                    let temparray = [];
+                    let tempCityList = [];
                     for (var i = 0; i < ResponseData.length; i++) {
                         var value = ResponseData[i].Value;
-                        temparray.push(value);
+                        tempCityList.push(value);
                     }
-                    CityList = temparray;
-                    resolve(); // Resolve the promise when data is loaded
+                    CityList = tempCityList;
+                    resolve(); 
                 },
                 error: function (err) {
-                    reject(err); // Reject the promise in case of an error
+                    reject(err); 
                 }
             });
         });
@@ -401,25 +397,22 @@
                 method: "GET",
                 data: { "id": userId }
             });
-
             const user = ResponseData[0];
-
             if (user.ProfilePicture != null && user.ProfilePicture.length != 0) {
                 user.ProfilePictureUrl = user.ProfilePicture;
             }
             else {
                 user.ProfilePictureUrl = "/AdminProfile/DefaultProfileAdmin.png";
             }
-
             user.ProfilePicture = '';
 
-            await LoadCountry(); // Wait for LoadCountry to complete
+            await LoadCountry(); 
             user.CountryList = CountryList;
 
-            await LoadState(user.Country); // Wait for LoadState to complete
+            await LoadState(user.Country); 
             user.StateList = StateList;
 
-            await LoadCity(user.State); // Wait for LoadCity to complete
+            await LoadCity(user.State); 
             user.CityList = CityList;
 
             ShowUserProfileDetails(user);
@@ -430,8 +423,8 @@
                 $('#removeProfilePictureButton').dxButton('instance').option('disabled', false);
             }
 
-
-        } catch (err) {
+        }
+        catch (err) {
             alert(err);
         }
     }
@@ -442,7 +435,6 @@
     modal.id = 'profilePictureModal';
     modal.classList.add('modal');
     document.body.appendChild(modal);
-
     modal.innerHTML = `
             <div class="modal-content" style="max-width: 719px; max-height: 500px;
                 margin: 0 auto;">
@@ -459,15 +451,13 @@
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <div style="float:right;">
                     <div id="addProfilePictureButton"></div>
-                    &nbsp; &nbsp;
+                    &nbsp; 
                     <div id="removeProfilePictureButton"></div>
                     </div>
                 </div>
                 <br/>
                 
             </div>`;
-
-
 
     $('#addProfilePictureButton').dxButton({
         text: 'Upload',

@@ -60,8 +60,15 @@ namespace UI.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int JobId)
         {
+            var OldObject = _jobServices.GetJobById_ForAuditTrail(JobId);    // Audit Trail Code
 
             var response = _jobServices.DeleteJob(JobId);
+
+            var NewObject = _jobServices.GetJobById_ForAuditTrail(JobId);    // Audit Trail Code       
+            int TaskId = OldObject.JobId;   // Audit Trail Code
+            string Module = "Job";   // Audit Trail Code
+            string Action = AuditAction.Deleted;  // Audit Trail Code
+            _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, NewObject);  // Audit Trail Code
 
             return Ok(response);
 
@@ -73,7 +80,7 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var OldObject = _jobServices.GetJobById(job.JobId);
+                var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
                 int TaskId = OldObject.JobId;
                 string Module = "Job";
                 string Action = AuditAction.Modified;
@@ -84,6 +91,12 @@ namespace UI.Areas.Admin.Controllers
                 var response = _jobServices.UpdateJob(job);
 
 
+                OldObject.JobMode = job.JobMode;
+                OldObject.JobType = job.JobType;
+                OldObject.CurrencyType = job.CurrencyType;
+                OldObject.Country = job.Country;
+                OldObject.State = job.State;
+                OldObject.City = job.City;
                 _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
                 return Ok(response); 
 

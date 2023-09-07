@@ -11,11 +11,7 @@ namespace Repository.RegisteredJobSeekers
     public interface IRegisteredJobSeekersRepository
     {
         IEnumerable<RegisteredJobSeeker> GetRegisteredJobSeekers();
-
         RegisteredJobSeeker GetJobSeekerById(int id);
-
         public bool UpdateJobSeekerAccountStatus(RegisteredJobSeeker jobSeeker);
-    }
-
-    
+    } 
 }

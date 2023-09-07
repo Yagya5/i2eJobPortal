@@ -17,6 +17,4 @@ namespace Repository.EditAdminFullDetails
         string UpdateProfileDetails(DomainModel.EditAdminFullDetails.EditAdminFullDetails userDetails);
 
     }
-
-    
 }
