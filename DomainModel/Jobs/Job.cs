@@ -43,5 +43,7 @@ namespace DomainModel.Jobs
         public string? State_Home { get; set; }
         public string? City_Home { get; set; }
 
+        public bool is_Delete { get; set; }
+
     }
 }
