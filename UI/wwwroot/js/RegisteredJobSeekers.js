@@ -12,6 +12,11 @@
         showRowLines: true,
         wordWrapEnabled: true,
 
+        scrolling: {
+            mode: "virtual", 
+            rowRenderingMode: "virtual" 
+        },
+
         paging: {
             pageSize: 10,
         },
@@ -22,6 +27,8 @@
             showInfo: true,
             showNavigationButtons: true,
         },
+
+        
 
         summary: {
             groupItems: [{
@@ -195,18 +202,36 @@
                 dataField: "Country",
                 caption: "Country",
                 allowEditing: false,
+                filterType: "list", 
+                lookup: {
+                    dataSource: [
+                        "India","Usa"
+                    ],
+                },
             },
 
             {
                 dataField: "State",
                 caption: "State",
                 allowEditing: false,
+                filterType: "list", 
+                lookup: {
+                    dataSource: [
+                        "Maharashtra", "Rajasthan", "California", "New York"
+                    ],
+                },
             },
            
             {
                 dataField: "City",
                 caption: "City",
                 allowEditing: false,
+                filterType: "list",
+                lookup: {
+                    dataSource: [
+                        "Mumbai", "Pune", "Udaipur", "Jaipur", "Los Angeles", "San Francisco", "New York City", "Buffalo"
+                    ],
+                },
             },
 
             {
@@ -219,19 +244,30 @@
                 dataField: "Gender",
                 caption: "Gender",
                 width: 75,
-                allowEditing: false
+                allowEditing: false,
+                filterType: "list", 
+                lookup: {
+                    dataSource: [
+                        "Male", "Female"
+                    ],
+                },
+
             },
 
             {
                 dataField: "BirthDate",
                 caption: "Birth Date",
-                allowEditing: false,
+                dataType: "date",
+                editorOptions: {
+                    min: new Date(new Date().getFullYear() - 60, 0, 1), // 60 years ago from today
+                    max: new Date(new Date().getFullYear() - 18, 11, 31) // 18 years ago from today
+                },
                 cellTemplate: function (container, options) {
                     if (options.data.BirthDate === "0001-01-01") {
-                        container.text(""); 
+                        container.text("");
                     } else {
                         var birthDate = new Date(options.data.BirthDate);
-                        var formattedDate = birthDate.toLocaleDateString(); 
+                        var formattedDate = birthDate.toLocaleDateString();
                         $("<div>").text(formattedDate).appendTo(container);
                     }
                 }
@@ -252,7 +288,12 @@
                 }
             },
 
-        ]
+        ],
+        onOptionChanged: function (e) {
+            if (e.name === "filterValue" && e.fullName === "columns[7].filterValue") {
+                $("#dataGrid").dxDataGrid("instance").filter(["BirthDate", "=", e.value[0]]);
+            }
+        },
 
     });
 }
