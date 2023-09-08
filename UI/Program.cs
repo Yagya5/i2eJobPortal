@@ -14,6 +14,8 @@ using Services.Jobs;
 using Services.RegisteredJobSeekers;
 using Services.Users;
 using DNTCaptcha.Core;
+using Repository.AdminDashboard;
+using Services.AdminDashboard;
 
 namespace i2eJobPortal
 {
@@ -74,6 +76,8 @@ namespace i2eJobPortal
 
             builder.Services.AddTransient<IJobRepository, JobRepository>();
             builder.Services.AddTransient<IJobServices, JobServices>();
+            builder.Services.AddTransient<IAdminDashBoardRepository,AdminDashboardRepository>();
+            builder.Services.AddTransient<IAdminDashboardServices, AdminDashboardServices>();
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
