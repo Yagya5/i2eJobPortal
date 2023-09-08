@@ -136,7 +136,8 @@
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
                 width: "150",
-                dataType: "datetime"
+                dataType: "datetime",
+                format: "dd/MM/yyyy, hh:mm a"
             }
         ]
 

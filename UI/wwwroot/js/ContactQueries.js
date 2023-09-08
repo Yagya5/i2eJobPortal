@@ -118,7 +118,8 @@
             {
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
-                dataType: "datetime"
+                dataType: "datetime",
+                format: "dd/MM/yyyy, hh:mm a"
             },
             {
                 dataField: "Message",
