@@ -39,7 +39,7 @@ namespace Repository.AuditTrails
             return result;
         }       
 
-        public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject) // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
+        public bool InsertAuditTrail(int TaskId, string Module, string TableName, string Action, HttpContext context, Object OldObject, Object NewObject) // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
         {   
             int UserId = int.Parse(context.User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);                        
             string Url = context.Request.Path.Value;
@@ -61,6 +61,7 @@ namespace Repository.AuditTrails
                     param.Add(nameof(AuditTrail.OldValue), OldValue);
                     param.Add(nameof(AuditTrail.NewValue), NewValue);
                     param.Add(nameof(AuditTrail.DataField), DataField);
+                    param.Add(nameof(AuditTrail.TableName), TableName);
                     param.Add(nameof(AuditTrail.Module), Module);
                     param.Add(nameof(AuditTrail.Url), Url);
                     param.Add(nameof(AuditTrail.Action), Action);

@@ -28,9 +28,9 @@ namespace Services.AuditTrails
             return result;
         }        
 
-        public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject)
+        public bool InsertAuditTrail(int TaskId, string Module, string TableName, string Action, HttpContext context, Object OldObject, Object NewObject)
         {                        
-            var result = _auditTrailRepository.InsertAuditTrail(TaskId, Module, Action, context, OldObject, NewObject);
+            var result = _auditTrailRepository.InsertAuditTrail(TaskId, Module, TableName, Action, context, OldObject, NewObject);
             return result;
         }
 

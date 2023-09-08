@@ -7,6 +7,8 @@ using DomainModel.RegisteredJobSeekers;
 using DomainModel.Jobs;
 using Services.AuditTrails;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata;
+using DomainModel.Common;
 
 namespace UI.Areas.Admin.Controllers
 {
@@ -59,6 +61,7 @@ namespace UI.Areas.Admin.Controllers
                 int TaskId = OldObject.AppliedJobId; //Audit Trail Code
                 string Module = "AppliedJobs"; //Audit Trail Code
                 string Action = AuditAction.Modified; //Audit Trail Code
+                string TableName = DomainModel.Common.Constant.AppliedJobsTableName;
 
 
                 _AppliedJobsServices.UpdateAppliedJob(appliedJobs_Obj);
@@ -66,7 +69,7 @@ namespace UI.Areas.Admin.Controllers
 
                 appliedJobs_Obj.StatusValue = null; //Audit Trail Code
                 appliedJobs_Obj.RoundValue = null; //Audit Trail Code
-                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, appliedJobs_Obj); //Audit Trail Code
+                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, TableName, Action, this.HttpContext, OldObject, appliedJobs_Obj); //Audit Trail Code
             }
             return View (appliedJobs_Obj);
         }

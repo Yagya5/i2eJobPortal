@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Jobs;
 using Services.AuditTrails;
 using Microsoft.AspNetCore.Authorization;
+using DomainModel.Common;
 
 namespace UI.Areas.Admin.Controllers
 {
@@ -68,7 +69,8 @@ namespace UI.Areas.Admin.Controllers
             int TaskId = OldObject.JobId;   // Audit Trail Code
             string Module = "Job";   // Audit Trail Code
             string Action = AuditAction.Deleted;  // Audit Trail Code
-            _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, NewObject);  // Audit Trail Code
+            string TableName = Constant.JobsTableName;
+            _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, TableName, Action, this.HttpContext, OldObject, NewObject);  // Audit Trail Code
 
             return Ok(response);
 
