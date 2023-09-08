@@ -20,9 +20,9 @@
 <!----------------------- Main Container -------------------------->
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <!----------------------- Login Container -------------------------->
-    <div class="row border rounded-5 p-3 bg-white shadow box-area">
+    <div class="row border rounded-5 p-3 bg-white bx-shdow box-area">
         <!--------------------------- Left Box ----------------------------->
-        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #103cbe;">
+            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #008BFF;">
             <div class="featured-image mb-3">
                 <img src="~/Images/Login_Page_Image.png" class="img-fluid" style="width: 400px;">
             </div>
@@ -57,11 +57,11 @@
                     </div>
                     
                     <div class="input-group mb-3">
-                        <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">Login</button>
+                        <button class="btn btn-lg btn-primary  w-100 fs-6" type="submit">Login</button>
                     </div>
                     <h6 style="color: red; font-weight: bold; display:none" id="errorSpan">@ViewBag.Message</h6>
                     
-                    <div class="row" style="margin-bottom:35px;">
+                    <div class="row" @* style="margin-bottom:35px;" *@>
                         <h6>Don't have account? <a asp-controller="Account" asp-action="Signup">Sign Up Here</a></h6>
                     </div>
                 </form>

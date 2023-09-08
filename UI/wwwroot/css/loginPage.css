@@ -4,15 +4,54 @@
 .box-area {
     width: 930px;
 }
-
+.bx-shdow {
+    box-shadow: 0 4px 10px 0 rgba(0,117,194,0.20);
+}
 /*------------ Right box ------------*/
-
 .right-box {
-    padding: 40px 30px 40px 40px;
+    padding: 5px 20px 0px 20px;
 }
 
-/*------------ Custom Placeholder ------------*/
+.header-text h2 {
+    color: #000000;
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 36px;
+}
+.header-text p {
+    color: #000000;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 16px;
+}
 
+.form-check-label {
+    color: #000000;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.right-box .btn {
+    font-family: "Poppins";
+    font-weight: 400;
+    background-color: #008BFF;
+    border:none;
+}
+    .right-box .btn:hover {
+        font-family: "Poppins";
+        font-weight: 600;
+        background-color: #008BFF;
+        border: none;
+    }
+
+.right-box h6 {
+  
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 15px;
+}
+/*------------ Custom Placeholder ------------*/
 ::placeholder {
     font-size: 16px;
 }

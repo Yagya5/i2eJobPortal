@@ -37,6 +37,11 @@
             shadingColor: 'rgba(0,0,0,0.4)'
         },
 
+        columnAutoWidth: true,
+        columnFixing: {
+            enabled: true,
+        },
+
         export: {
             enabled: true,
             formats: ['xlsx', 'pdf']
@@ -88,22 +93,16 @@
             }]
         },
 
-        columns: [
-            //{
-            //    dataField: "UserId",
-            //    caption: "User Id",
-            //    alignment: "left",  
-            //},
-
+        columns: [   
             {
                 dataField: "FullName",
                 caption: "User Name",
-                alignment: "left",
+                width: "130"              
             },
-
             {
                 dataField: "TaskId",
-                alignment: "left",              
+                alignment: "left",  
+                width: "80"
             },
             {
                 dataField: "OldValue",
@@ -116,11 +115,10 @@
             {
                 dataField: "DataField",
                 caption: "Data Field",
-                width: 150
+                width: "150"
             },
             {
-                dataField: "Module",    
-                
+                dataField: "Module"  
             },
             {
                 dataField: "Url",  
@@ -132,7 +130,7 @@
             {
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
-                width: "130",
+                width: "150",
                 dataType: "datetime"
             }
         ]
@@ -157,7 +155,6 @@ function LoadRecords() {
         error: function (err) {
             alert(err);
         }
-
     })
 }
 

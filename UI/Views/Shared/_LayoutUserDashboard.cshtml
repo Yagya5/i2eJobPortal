@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kodchasan:ital,wght@0,400;0,600;0,700;1,500;1,700&family=Montserrat:wght@500&family=Poppins:wght@300;400;600;700;800&family=Roboto&display=swap"
           rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
     <style>
 
@@ -24,7 +25,7 @@
         .footer {
             background-color: #202020;
             color: #FFFFFF;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         .footerLogoSection {
@@ -33,7 +34,7 @@
         }
 
             .footerLogoSection img {
-                width: 92px;
+                width: 60px;
                 float: left;
             }
 
@@ -100,7 +101,15 @@
                 color: #000000;
                 font-family: "Poppins" !important;
                 font-weight: 800 !important;
+                text-decoration: none !important;
+                position: relative;
+                top: 8px;
             }
+
+        .nav-drop{
+            position: relative;
+            top: -11px;
+        }
 
 
             /* DevExtreme CSS starts from below*/
@@ -170,7 +179,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                         </li>
 
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown nav-drop">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                 <img id="profileImage" src="#" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #202020;" />
                                 <span class="badge rounded-pill" style="background-color: white; color: #202020;">
