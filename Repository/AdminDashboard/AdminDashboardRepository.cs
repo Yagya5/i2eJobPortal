@@ -127,18 +127,26 @@ namespace Repository.AdminDashboard
 ,JobTypeCount 
 from v_JobInformation";
 
-
-
             jobsresult = connection.Query<JobDetails>(Query, transaction: transaction);
             return jobsresult;
 
         }
 
 
+        public IEnumerable<AuditDetails>GetAuditDetails()
+        {
+            IEnumerable<AuditDetails> auditresult = new List<AuditDetails>();
+            using var connection = _dapperConnection.CreateConnection();
+            IDbTransaction transaction = connection.BeginTransaction();
+
+            string Query = @"SELECT TOP 8 * FROM v_AuditedLogins 
+                            WHERE Role IN ('admin', 'super admin')";
+
+            auditresult=connection.Query<AuditDetails>(Query,transaction: transaction);
+            return auditresult;
 
 
-
-
+        }
 
     }
 }

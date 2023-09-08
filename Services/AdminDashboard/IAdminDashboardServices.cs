@@ -13,5 +13,7 @@ namespace Services.AdminDashboard
         //public DataSet GetAdminDashData();
         IEnumerable<Counts> GetCounts();
         IEnumerable<JobDetails> GetJobDetails();
+
+        IEnumerable<AuditDetails> GetAuditDetails();
     }
 }

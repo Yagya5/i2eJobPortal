@@ -6,6 +6,8 @@ $(document).ready(function () {
     Calendar();
     JobTypeDonut();
     JobTypeArea();
+    TopAuditLogins();
+    WorldMap();
 
     $('.nav-tabs a').click(function () {
         console.log('Tab clicked:', this.href); // Add this line for debugging
@@ -14,6 +16,17 @@ $(document).ready(function () {
 
 
 });
+
+
+// Call TopAuditLogins when the page is ready
+$(document).ready(function () {
+    TopAuditLogins();
+    WorldMap();
+});
+
+
+
+
 
 function CountRecords() {
     $.ajax({
@@ -200,7 +213,7 @@ function JobTypeArea() {
             var transformedData = responseData.map(function (item) {
                 return {
                     jobTitle: item.JobTitle,
-                    departmentName: item.DepartmentName,
+                   /* departmentName: item.DepartmentName,*/
                     fullTime: item.JobType === 'Full Time' ? item.JobTypeCount : 0,
                     partTime: item.JobType === 'Part Time' ? item.JobTypeCount : 0,
                     internship: item.JobType === 'Internship' ? item.JobTypeCount : 0
@@ -214,15 +227,14 @@ function JobTypeArea() {
         }
     });
 }
-
 function ShowAreaChart(dataSource) {
     $(() => {
         const chart = $('#areaChart').dxChart({
             palette: 'Harmony Light',
             dataSource: dataSource,
             commonSeriesSettings: {
-                argumentField: 'departmentName',
-                type: 'stackedBar', // Use stacked bar chart to represent job counts
+                argumentField: 'jobTitle',
+                type: 'area', // Use stacked bar chart to represent job counts
             },
             series: [
                 { valueField: 'fullTime', name: 'Full Time' },
@@ -232,12 +244,14 @@ function ShowAreaChart(dataSource) {
             margin: {
                 bottom: 20,
             },
-            title: 'Job Counts by Department',
+            title: 'Job Distribution by Title',
             argumentAxis: {
                 label: {
-                    overlappingBehavior: 'rotate'
+                    /*overlappingBehavior: 'rotate',*/
+                    rotationAngle: 360,
                 },
                 valueMarginsEnabled: false,
+               
             },
             export: {
                 enabled: true,
@@ -246,7 +260,69 @@ function ShowAreaChart(dataSource) {
                 verticalAlignment: 'bottom',
                 horizontalAlignment: 'center',
             },
-           
         }).dxChart('instance');
     });
+}
+
+
+function TopAuditLogins() {
+    $.ajax({
+        url: "/AdminDashboard/GetAuditDetails",
+        method: 'GET',
+        success: function (responseData) {
+            ShowAudit(responseData);
+        },
+        error: function (err) {
+            alert(err);
+        }
+    });
+}
+
+function ShowAudit(_datasource) {
+    const card = $("#lastLoginsCard"); // Select the <ul> element inside the card body
+
+    // Clear any existing list items
+    card.empty();
+
+    // Limit the displayed records to the last 8
+    const last8Records = _datasource.slice(-8);
+
+    last8Records.forEach(function (record) {
+        // Format the date to display only the date portion (assuming LoginTimeStamp is a valid date)
+        const loginDate = new Date(record.LoginTimeStamp);
+        const formattedDate = loginDate.toLocaleDateString();
+
+        const userItem = $("<li>").html(
+            '<img src="' + record.ProfilePicture + '" alt="User Image"><br>' +
+            '<a class="users-list-name" href="#">' + record.FirstName + '</a><br>' +
+            '<span class="users-list-date">' + formattedDate + '</span>'
+        );
+
+        card.append(userItem);
+    });
+}
+
+
+function WorldMap()
+{
+
+    $.ajax({
+        url: "/AdminDashboard/GetAuditDetails",
+        method: 'GET',
+        success: function (responseData) {
+            ShowMap(responseData);
+        },
+        error: function (err) {
+            alert(err);
+        }
+    });
+
+
+
+}
+
+
+
+function ShowMap() {
+
 }

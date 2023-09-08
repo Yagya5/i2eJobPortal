@@ -10,10 +10,12 @@ namespace Repository.AdminDashboard
 {
     public interface IAdminDashBoardRepository
     {
-        //public DataSet GetAdminDashData();
+       
 
         IEnumerable<Counts> GetCounts();
         IEnumerable<JobDetails> GetJobDetails();
+
+        IEnumerable<AuditDetails> GetAuditDetails();
 
     }
 }

@@ -42,17 +42,7 @@ function ShowPivotGrid(_datasource) {
             dataSource: {
                 store: _datasource,
                 fields: [
-                    //{
-                    //    dataField: "JobType",
-                    //    area: "column",
-                    //    caption: "Job Type",
-                    //},
-
-                    //{
-                    //    groupName: 'Job Type',
-                    //    groupInterval: 'month',
-                    //    visible: true,
-                    //},
+                    
                     {
                         dataField: "JobTitle",
                         dataType: "string",
@@ -69,6 +59,8 @@ function ShowPivotGrid(_datasource) {
                 ],
             },
         }).dxPivotGrid('instance');
+
+
         $('#pivotgrid').hide();
         pivotGrid.bindChart(pivotGridChart, {
             dataFieldsDisplayMode: 'splitPanes',

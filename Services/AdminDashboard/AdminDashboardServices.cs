@@ -43,6 +43,13 @@ namespace Services.AdminDashboard
             var result = _AdminDashboardRepository.GetJobDetails();
             return result;
         }
+
+
+        public IEnumerable<AuditDetails> GetAuditDetails()
+        {
+            var result  =_AdminDashboardRepository.GetAuditDetails();
+            return result;
+        }
     }
 }
 
