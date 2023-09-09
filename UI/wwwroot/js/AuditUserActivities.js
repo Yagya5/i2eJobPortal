@@ -112,11 +112,16 @@
                 dataField: "NewValue",
                 caption: "New Value"
             },
-            {
-                dataField: "DataField",
+            {               
                 caption: "Data Field",
-                width: "150"
-            },
+                width: "150",  
+                allowFiltering: true,
+                allowSorting: true,
+                allowGrouping: true,
+                calculateCellValue: function (rowData) {
+                    return `${rowData.DataField} (${rowData.TableName})`;  
+                }        
+            },            
             {
                 dataField: "Module"  
             },
@@ -131,7 +136,8 @@
                 dataField: "DateTimeStamp",
                 caption: "Date & Time",
                 width: "150",
-                dataType: "datetime"
+                dataType: "datetime",
+                format: "dd/MM/yyyy, hh:mm a"
             }
         ]
 

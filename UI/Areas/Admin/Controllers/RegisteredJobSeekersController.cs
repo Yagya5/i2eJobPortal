@@ -1,4 +1,5 @@
 ﻿using DomainModel.AuditTrails;
+using DomainModel.Common;
 using DomainModel.RegisteredJobSeekers;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,7 @@ namespace UI.Areas.Admin.Controllers
             var OldObject = _RegisteredJobSeekerServices.GetJobSeekerById(jobSeeker.UserId);            
             int TaskId = OldObject.UserId;
             string Module = "JobSeeker";
+            string TableName = Constant.UsersTableName;
             string Action = null;
             if (jobSeeker.Is_Deleted == true)
             {                
@@ -64,7 +66,7 @@ namespace UI.Areas.Admin.Controllers
                 jobSeeker.Response = "Failed";
                 OldObject.Response = jobSeeker.Response;
             }
-            _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, jobSeeker);
+            _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, TableName, Action, this.HttpContext, OldObject, jobSeeker);
             return Ok(jobSeeker);
         }
 

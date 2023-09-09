@@ -22,6 +22,8 @@ namespace DomainModel.AuditTrails
 
         public string? DataField { get; set; }
 
+        public string? TableName { get; set; }
+
         public string? Module { get; set; }
 
         public string? Url { get; set; }

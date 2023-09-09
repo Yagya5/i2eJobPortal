@@ -119,8 +119,8 @@
             {
                 dataField: "LoginTimeStamp",
                 caption: "Login Date & Time",
-                dataType: "datetime",               
-                
+                dataType: "datetime",  
+                format: "dd/MM/yyyy, hh:mm a"                
             }
 
         ]
