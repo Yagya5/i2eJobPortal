@@ -1,4 +1,9 @@
-﻿function ShowEvent(_datasource) {
+﻿const CountryList = [];
+const StateList = [];
+const CityList = [];
+
+function ShowEvent(_datasource) {
+    window.jsPDF = window.jspdf.jsPDF;
     $("#dataGrid").dxDataGrid({
         dataSource: _datasource,
         keyExpr: "UserId",
@@ -11,6 +16,62 @@
         showBorders: true,
         showRowLines: true,
         wordWrapEnabled: true,
+        columnAutoWidth: true,
+        columnFixing: {
+            enabled: true,
+        },
+
+        columnFixing: { enabled: true },
+        columnChooser: {
+            enabled: true,
+            mode: "select",
+
+            search: {
+                enabled: true,
+                editorOptions: { placeholder: 'Search column' },
+            },
+            selection: {
+                recursive: true,
+                selectByClick: true,
+                allowSelectAll: true,
+
+            },
+        },
+
+        export: {
+            enabled: true,
+            formats: ['xlsx', 'pdf']
+        },
+
+        onExporting(e) {
+            if (e.format === 'xlsx') {
+                const workbook = new ExcelJS.Workbook();
+                const worksheet = workbook.addWorksheet("Main sheet");
+                DevExpress.excelExporter.exportDataGrid({
+                    worksheet: worksheet,
+                    component: e.component,
+                }).then(function () {
+                    workbook.xlsx.writeBuffer().then(function (buffer) {
+                        saveAs(new Blob([buffer], { type: "application/octet-stream" }), "JobSeeker Management.xlsx");
+                    });
+                });
+            }
+            else if (e.format === 'pdf') {
+                const doc = new jsPDF();
+
+                DevExpress.pdfExporter.exportDataGrid({
+                    jsPDFDocument: doc,
+                    component: e.component,
+                }).then(() => {
+                    doc.save('JobSeeker Management.pdf');
+                });
+            }
+        },
+
+        scrolling: {
+            mode: "virtual", 
+            rowRenderingMode: "virtual" 
+        },
 
         paging: {
             pageSize: 10,
@@ -146,7 +207,6 @@
             {
                 dataField: "ProfilePicture",
                 caption: "Profile Picture",
-                width: 80,
                 allowFiltering: false,
                 allowSorting: false,
                 cellTemplate(container, options) {
@@ -178,7 +238,6 @@
             {
                 dataField: "Email",
                 caption: "Email",
-                width: 150,
                 validationRules: [{ type: "required" }],
                 allowEditing: false
             },
@@ -186,7 +245,6 @@
             {
                 dataField: "PhoneNumber",
                 caption: "Phone Number",
-                width: 110,
                 allowEditing: false
 
             },
@@ -195,18 +253,30 @@
                 dataField: "Country",
                 caption: "Country",
                 allowEditing: false,
+                filterType: "list", 
+                lookup: {
+                    dataSource: CountryList,
+                },
             },
 
             {
                 dataField: "State",
                 caption: "State",
                 allowEditing: false,
+                filterType: "list", 
+                lookup: {
+                    dataSource: StateList,
+                },
             },
            
             {
                 dataField: "City",
                 caption: "City",
                 allowEditing: false,
+                filterType: "list",
+                lookup: {
+                    dataSource: CityList,
+                },
             },
 
             {
@@ -219,19 +289,31 @@
                 dataField: "Gender",
                 caption: "Gender",
                 width: 75,
-                allowEditing: false
+                allowEditing: false,
+                filterType: "list", 
+                lookup: {
+                    dataSource: [
+                        "Male", "Female"
+                    ],
+                },
+
             },
 
             {
                 dataField: "BirthDate",
                 caption: "Birth Date",
+                dataType: "date",
                 allowEditing: false,
+                editorOptions: {
+                    min: new Date(new Date().getFullYear() - 60, 0, 1), // 60 years ago from today
+                    max: new Date(new Date().getFullYear() - 18, 11, 31) // 18 years ago from today
+                },
                 cellTemplate: function (container, options) {
                     if (options.data.BirthDate === "0001-01-01") {
-                        container.text(""); 
+                        container.text("");
                     } else {
                         var birthDate = new Date(options.data.BirthDate);
-                        var formattedDate = birthDate.toLocaleDateString(); 
+                        var formattedDate = birthDate.toLocaleDateString();
                         $("<div>").text(formattedDate).appendTo(container);
                     }
                 }
@@ -239,7 +321,6 @@
 
             {
                 dataField: "Is_Active",
-                width: 75,
                 caption: "Status",
                 filterType: "lookup", 
                 lookup: {
@@ -252,7 +333,12 @@
                 }
             },
 
-        ]
+        ],
+        onOptionChanged: function (e) {
+            if (e.name === "filterValue" && e.fullName === "columns[7].filterValue") {
+                $("#dataGrid").dxDataGrid("instance").filter(["BirthDate", "=", e.value[0]]);
+            }
+        },
 
     });
 }
@@ -271,6 +357,18 @@ function LoadRecords() {
                     record.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png";
                 }
                 record.BirthDate = record.BirthDate.split('T')[0]; 
+
+                for (const data of ResponseData) {
+                    if (data.Country !== null && !CountryList.includes(data.Country)) {
+                        CountryList.push(data.Country); 
+                    }
+                    if (data.State !== null && !StateList.includes(data.State)) {
+                        StateList.push(data.State);
+                    }
+                    if (data.City !== null && !CityList.includes(data.City)) {
+                        CityList.push(data.City);
+                    }
+                }
             });
             ShowEvent(ResponseData);
         },
