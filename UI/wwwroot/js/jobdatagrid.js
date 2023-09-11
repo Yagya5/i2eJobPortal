@@ -45,16 +45,25 @@ function showJob(dataSource) {
         rowAlternationEnabled: false,
         wordWrapEnabled: true,
 
+        scrolling: {
+            mode: "virtual",
+            rowRenderingMode: "virtual"
+        },
         paging: {
             pageSize: 10,
         },
         pager: {
-            visible: true,
-            allowedPageSizes: [10, 20, 50],
+            visible:true,
             showPageSizeSelector: true,
+            allowedPageSizes: [10, 20, 50, 'all'],
             showInfo: true,
-            showNavigationButtons: true,
-            
+            showNavigationButtons: true
+        },
+
+        summary: {
+            groupItems: [{
+                summaryType: "count"
+            }]
         },
 
         columnChooser: {
@@ -84,37 +93,6 @@ function showJob(dataSource) {
             shading: true,
             shadingColor: 'rgba(0,0,0,0.4)'
         },
-
-        export: {
-            enabled: true,
-            formats: ['xlsx', 'pdf']
-        },
-
-        onExporting(e) {
-            if (e.format === 'xlsx') {
-                const workbook = new ExcelJS.Workbook();
-                const worksheet = workbook.addWorksheet("Main sheet");
-                DevExpress.excelExporter.exportDataGrid({
-                    worksheet: worksheet,
-                    component: e.component,
-                }).then(function () {
-                    workbook.xlsx.writeBuffer().then(function (buffer) {
-                        saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Jobs Posting.xlsx");
-                    });
-                });
-            }
-            else if (e.format === 'pdf') {
-                const doc = new jsPDF();
-
-                DevExpress.pdfExporter.exportDataGrid({
-                    jsPDFDocument: doc,
-                    component: e.component,
-                }).then(() => {
-                    doc.save('Jobs Posting.pdf');
-                });
-            }
-        },
-
 
         editing: {
             mode: "popup",
@@ -543,7 +521,6 @@ function showJob(dataSource) {
                     onValueChanged: function (e) {
                         console.log("Country selection changed:", e.value);
                         const selectedCountryId = e.value;
-                        
                         globalCountry = selectedCountryId;
                         dataSource.Country = globalCountry;
                         filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
@@ -654,12 +631,7 @@ function showJob(dataSource) {
         showBorders: true,
         filterRow: { visible: true },
         searchPanel: { visible: true },
-        paging: { pageSize: 10 },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: [5, 10, 20],
-            showInfo: true
-        }
+       
     });
 }
 

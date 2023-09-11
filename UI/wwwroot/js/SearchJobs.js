@@ -39,6 +39,7 @@
         }
         maxExperienceInput.attr('min', minExperience);
     });
+
     function applyFilters() {
         var minExperienceInput = $('.input-min');
         var maxExperienceInput = $('.input-max');
@@ -82,6 +83,23 @@
                 $(this).fadeOut();
             }
         });
+        $('#selected-filters').empty();
+        var filters = [];
+        if (minExperience > 0) {
+            filters.push('Min Exp: ' + minExperience);
+        }
+        if (maxExperience < Number.MAX_SAFE_INTEGER) {
+            filters.push('Max Exp: ' + maxExperience);
+        }
+        if (selectedJobType !== 'All' && selectedJobType !== '') {
+            filters.push('Job Type: ' + selectedJobType);
+        }
+        if (selectedJobMode !== 'All' && selectedJobMode !== '') {
+            filters.push('Job Mode: ' + selectedJobMode);
+        }
+
+        var breadcrumbText = filters.join('  ');
+        $('#selected-filters').append('<span class="breadcrumb-item">' + breadcrumbText + '</span>');
 
         toggleNoDataMessage(found);
     }
@@ -90,6 +108,9 @@
     $('#searchButton').click(function () {
         performSearch();
     });
+
+  
+
 
 });
 
@@ -101,3 +122,5 @@ function toggleNoDataMessage(found) {
         noDataMessage.show();
     }
 }
+
+
