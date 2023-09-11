@@ -37,6 +37,11 @@
             shadingColor: 'rgba(0,0,0,0.4)'            
         },
 
+        columnAutoWidth: true,
+        columnFixing: {
+            enabled: true,
+        },
+
         export: {
             enabled: true,
             formats: ['xlsx', 'pdf']
@@ -114,8 +119,8 @@
             {
                 dataField: "LoginTimeStamp",
                 caption: "Login Date & Time",
-                dataType: "datetime",               
-                
+                dataType: "datetime",  
+                format: "dd/MM/yyyy, hh:mm a"                
             }
 
         ]

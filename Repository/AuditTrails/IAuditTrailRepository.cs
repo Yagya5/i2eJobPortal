@@ -11,7 +11,7 @@ namespace Repository.AuditTrails
 {
     public interface IAuditTrailRepository
     {
-        bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject); // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
+        bool InsertAuditTrail(int TaskId, string Module, string TableName, string Action, HttpContext context, Object OldObject, Object NewObject); // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
 
         IEnumerable<AuditTrail> GetAuditTrail(); // Fetch the User Activities which has been audited
 

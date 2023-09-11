@@ -110,5 +110,10 @@ namespace UI.Controllers
             var logout = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login","Account");
         }
+
+        public IActionResult AccessDenied()  // It will return Access Denied page for unauthorized access
+        {
+            return View();       
+        }
     }
 }

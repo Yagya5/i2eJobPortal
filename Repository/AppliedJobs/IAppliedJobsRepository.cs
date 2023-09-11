@@ -17,7 +17,7 @@ namespace Repository.AppliedJobs
         Task<bool> CreateAppliedJob(int job_Id, int User_Id);
         Task<bool> IsUserResumeUploaded(int userId);
 
-        //IEnumerable<DM_AppliedJobs> UpdateUserStatusandRound();
+        
         IEnumerable<Master> GetMasterValuesByCategoryForAppliedJobs(string category);
         bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj);
 
