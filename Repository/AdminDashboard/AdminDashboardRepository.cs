@@ -19,6 +19,7 @@ using System.Data.Common;
 using NuGet.Protocol.Plugins;
 using System.Reflection.Metadata;
 using DomainModel.AdminDashboard;
+using DomainModel.Jobs;
 
 
 
@@ -146,6 +147,39 @@ from v_JobInformation";
             return auditresult;
 
 
+        }
+
+
+        public IEnumerable<JobDetails>GetJobModeDetails()
+        {
+            IEnumerable<JobDetails>countresult= new List<JobDetails>();
+            using var connnection = _dapperConnection.CreateConnection();
+            IDbTransaction transaction = connnection.BeginTransaction();
+            string Query = @"
+SELECT JobMode, COUNT(*) AS JobModeCount
+FROM v_JobInformation
+GROUP BY JobMode
+ORDER BY JobModeCount DESC";
+
+            countresult = connnection.Query<JobDetails>(Query, transaction: transaction);
+            return countresult;
+
+        }
+
+
+
+        public IEnumerable<Job> GetStatewise_JobCount()
+        {
+            IEnumerable<Job> jobscount= new List<Job>();
+            using var connection = _dapperConnection.CreateConnection();
+            IDbTransaction transaction = connection.BeginTransaction();
+            string Query = @"SELECT Country_Home, COUNT(JobId) AS CountrywiseJob_count
+FROM v_GetJobData
+GROUP BY Country_Home";
+
+
+            jobscount = connection.Query<Job>(Query,transaction: transaction);
+            return jobscount;
         }
 
     }
