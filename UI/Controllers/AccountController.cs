@@ -111,7 +111,7 @@ namespace UI.Controllers
             return RedirectToAction("Login","Account");
         }
 
-        public IActionResult AccessDenied()  // 
+        public IActionResult AccessDenied()  // It will return Access Denied page for unauthorized access
         {
             return View();       
         }
