@@ -47,6 +47,8 @@ namespace DomainModel.AppliedJobs
 
         public string? StatusValue { get; set; }
         public string? RoundValue { get; set; }
+
+       
     }
 
     public class AppliedJob 

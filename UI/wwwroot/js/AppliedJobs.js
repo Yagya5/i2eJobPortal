@@ -12,80 +12,79 @@ $(document).ready(function () {
 });
 
 
-function ShowPivotGrid(_datasource) {
+//function ShowPivotGrid(_datasource) {
+//    $(() => {
+//        const jobTitles = _datasource.map(item => item.JobTitle);
 
-    $(() => {
-        const pivotGridChart = $('#pivotgrid-chart').dxChart({
-            commonSeriesSettings: {
-                type: 'bar',
-            },
-            size: {
-                height: 200,
-            },
-            adaptiveLayout: {
-                width: 450,
-            },
-        }).dxChart('instance');
+//        const pivotGridChart = $('#pivotgrid-chart').dxChart({
+//            commonSeriesSettings: {
+//                type: 'bar',
+//            },
+//            size: {
+//                height: 200,
+//            },
+//            adaptiveLayout: {
+//                width: 450,
+//            },
+//            argumentAxis: {
+//                categories: jobTitles, // Use job titles as categories
+//                label: {
+//                    overlappingBehavior: 'rotate', // Rotate labels if necessary
+//                    rotationAngle: -45, // Adjust the rotation angle as needed
+//                },
+//                tick: {
+//                    visible: false, // Hide ticks
+//                },
+//            },
+//        }).dxChart('instance');
 
-        const pivotGrid = $('#pivotgrid').dxPivotGrid({
-            allowSortingBySummary: true,
-            allowFiltering: true,
-            showBorders: true,
-            showColumnGrandTotals: false,
-            showRowGrandTotals: false,
-            showRowTotals: false,
-            showColumnTotals: false,
-            fieldChooser: {
-                enabled: true,
-                height: 600,
-            },
-            dataSource: {
-                store: _datasource,
-                fields: [
-                    
-                    {
-                        dataField: "JobTitle",
-                        dataType: "string",
-                        area: "row",
-                        caption: "Job Applied For",
-                    },
-                    {
-                        dataField: "UserId",
-                        dataType: "int",
-                        summaryType: "count",
-                        area: "data",
-                        caption: "No. of Users Applied",
-                    },
-                ],
-            },
-        }).dxPivotGrid('instance');
+//        const pivotGrid = $('#pivotgrid').dxPivotGrid({
+//            allowSortingBySummary: true,
+//            allowFiltering: true,
+//            showBorders: true,
+//            showColumnGrandTotals: false,
+//            showRowGrandTotals: false,
+//            showRowTotals: false,
+//            showColumnTotals: false,
+//            fieldChooser: {
+//                enabled: true,
+//                height: 600,
+//            },
+//            dataSource: {
+//                store: _datasource,
+//                fields: [
+//                    {
+//                        dataField: "JobTitle",
+//                        dataType: "string",
+//                        area: "row",
+//                        caption: "Job Applied For",
+//                    },
+//                    {
+//                        dataField: "UserId",
+//                        dataType: "int",
+//                        summaryType: "count",
+//                        area: "data",
+//                        caption: "No. of Users Applied",
+//                    },
+//                ],
+//            },
+//        }).dxPivotGrid('instance');
 
+//        $('#pivotgrid').hide();
+//        pivotGrid.bindChart(pivotGridChart, {
+//            dataFieldsDisplayMode: 'splitPanes',
+//            alternateDataFields: false,
+//        });
 
-        $('#pivotgrid').hide();
-        pivotGrid.bindChart(pivotGridChart, {
-            dataFieldsDisplayMode: 'splitPanes',
-            alternateDataFields: false,
-        });
+//        function expand() {
+//            const dataSource = pivotGrid.getDataSource();
+//            dataSource.expandHeaderItem('row', ['Jobs Applied']);
+//            /*dataSource.expandHeaderItem('column', ['Job Type']);*/
+//        }
 
-        function expand() {
-            const dataSource = pivotGrid.getDataSource();
-            dataSource.expandHeaderItem('row', ['Jobs Applied']);
-            /*dataSource.expandHeaderItem('column', ['Job Type']);*/
-        }
-
-        setTimeout(expand, 0);
-    });
-
-                
-
-
-
-
-}
-
-
-
-
+//        setTimeout(expand, 0);
+//    });
+//}
 
 
 
@@ -710,7 +709,7 @@ function LoadRecords() {
             });
          
             ShowEvent(responseData);
-            ShowPivotGrid(responseData);
+            ShowChart(responseData);
 
 
            /* alert(response);*/
@@ -724,4 +723,42 @@ function LoadRecords() {
 }
 
 
+function ShowChart(_datasource) {
+    // Group and count the data by 'JobTitle'
+    const dataByJobTitle = _datasource.reduce((acc, item) => {
+        const jobTitle = item.JobTitle;
 
+        if (!acc[jobTitle]) {
+            acc[jobTitle] = {
+                JobTitle: jobTitle,
+                Count: 0,
+            };
+        }
+
+        acc[jobTitle].Count++;
+        return acc;
+    }, {});
+
+    // Convert the grouped data into an array
+    const chartData = Object.values(dataByJobTitle);
+
+    $(() => {
+        $('#chart').dxChart({
+            dataSource: chartData,
+            series: {
+                argumentField: 'JobTitle', // X-axis: Job titles
+                valueField: 'Count',      // Y-axis: Count of user IDs
+                name: 'My orange',
+                type: 'bar',
+                color: '#E75480',
+            },
+            valueAxis: {
+                title:'Users Count',
+            },
+            //argumentAxis: {
+            //    title:'Job titles',
+            //}
+        });
+    });
+
+}
