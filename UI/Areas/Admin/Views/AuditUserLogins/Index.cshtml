@@ -9,10 +9,10 @@
     #dataGrid {
         height: 600px;
     }
-    /* .dx-collection{
-        border: 1px solid #008BFF;
+    
+    .breadcrumb-item {
         color: #008BFF;
-    } */
+    }
     
 </style>
 
@@ -38,8 +38,15 @@
 
 
 
-<h1>Audit User Logins</h1>
+<h1 style="visibility:hidden">Audit User Logins</h1>
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</li>
+        <li class="breadcrumb-item active" aria-current="page">Audit User Logins</li>
+        
+    </ol>
+</nav>
 <body class="dx-viewport" id="LoadPanelShading">
 
     <div id="dataGrid">
