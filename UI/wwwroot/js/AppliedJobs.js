@@ -42,17 +42,7 @@ function ShowPivotGrid(_datasource) {
             dataSource: {
                 store: _datasource,
                 fields: [
-                    //{
-                    //    dataField: "JobType",
-                    //    area: "column",
-                    //    caption: "Job Type",
-                    //},
-
-                    //{
-                    //    groupName: 'Job Type',
-                    //    groupInterval: 'month',
-                    //    visible: true,
-                    //},
+                    
                     {
                         dataField: "JobTitle",
                         dataType: "string",
@@ -69,6 +59,8 @@ function ShowPivotGrid(_datasource) {
                 ],
             },
         }).dxPivotGrid('instance');
+
+
         $('#pivotgrid').hide();
         pivotGrid.bindChart(pivotGridChart, {
             dataFieldsDisplayMode: 'splitPanes',
@@ -258,6 +250,27 @@ function ShowEvent(_datasource) {
 
 
         columns: [
+            {
+                dataField: "ProfilePicture",
+                caption: "Profile Picture",
+                width: 80,
+                allowFiltering: false,
+                allowSorting: false,
+                cellTemplate(container, options) {
+                    $('<div>')
+                        .append($('<img>', { src: options.data.ProfilePicture }))
+                        .appendTo(container);
+                },
+                allowEditing: false, // Enable editing for this column
+                editCellTemplate: function (container, options) {
+                    // Create an img element for the profile picture
+                    var img = $("<img>").attr("src", options.data.ProfilePicture).width(60).height(60);
+
+                    // Append the img to the editing popup container
+                    container.append(img);
+                }
+            },
+
 
             {
                 caption: "Full Name",
@@ -277,36 +290,6 @@ function ShowEvent(_datasource) {
             },
 
            
-            //{
-            //    dataField: "FirstName",
-            //    caption: "First Name",
-            //    /* validationRules: [{ type: "required" }],*/
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    allowEditing: true,
-            //    width: 80,
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-            //},
-            //{
-            //    dataField: "LastName",
-            //    caption: "Last Name",
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    /*validationRules: [{ type: "required" }],*/
-            //    allowEditing: true,
-            //    width: 80,
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-            //},
 
             {
                 dataField: "Gender",
@@ -430,28 +413,56 @@ function ShowEvent(_datasource) {
                     }
                 }
             },
-            {
-                dataField: "ProfilePicture",
-                caption: "Profile Picture",
 
-                /*validationRules: [{ type: "required" }],*/
-                allowEditing: false,
-                width: 120,
+            {
+                dataField: "Country_Home",
+                caption: "Country",
                 allowFiltering: true,
                 allowSorting: true,
-                cellTemplate(container, options) {
-                    $('<div>')
-                        .append($('<img>', { src: options.data.ProfilePicture }))
-                        .appendTo(container);
-                },
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 100,
                 headerFilter: {
                     allowSelectAll: true,
                     search: {
                         enabled: false,
                     }
                 }
-               
             },
+            {
+                dataField: "State_Home",
+                caption: "State",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 100,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
+            },
+            {
+                dataField: "City_Home",
+                caption: "City",
+                allowFiltering: true,
+                allowSorting: true,
+                /*validationRules: [{ type: "required" }],*/
+                allowEditing: false,
+                width: 100,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
+            },
+
+
+
+
             
             {
                 dataField: "Status",
@@ -509,14 +520,6 @@ function ShowEvent(_datasource) {
 }
 
 
-
-
-//$(function () {
-//    $("#EditButton").dxButton({
-//        icon: "edit",
-//        text: "Edit"
-//    }
-//    }
 
 
 let StatusValues1 = [];
@@ -693,7 +696,19 @@ function LoadRecords() {
     $.ajax({
         url: "/JobApplications/GetAppliedJobs", 
         method: 'GET',
+
+
+
         success: function (responseData) {
+
+            // Update the ResponseData values for each record
+            responseData.forEach(function (record) {
+                if (record.ProfilePicture == null || record.ProfilePicture == "") {
+                    record.ProfilePicture = "/UserProfile/DefaultProfileJobSeeker.png";
+                }
+                
+            });
+         
             ShowEvent(responseData);
             ShowPivotGrid(responseData);
 

@@ -34,12 +34,12 @@ namespace Repository.AuditTrails
         {
             IEnumerable<AuditTrail> result = new List<AuditTrail>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT * FROM v_AuditTrail order by DateTimeStamp desc";
+            string Query = $@"SELECT * FROM {Constant.GetUserActivitiesViewName} order by DateTimeStamp desc";
             result = connection.Query<AuditTrail>(Query, null, null, true, 0, null);
             return result;
         }       
 
-        public bool InsertAuditTrail(int TaskId, string Module, string Action, HttpContext context, Object OldObject, Object NewObject) // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
+        public bool InsertAuditTrail(int TaskId, string Module, string TableName, string Action, HttpContext context, Object OldObject, Object NewObject) // It will insert detail about User & various changes he has done in record, into Table_AuditTrail
         {   
             int UserId = int.Parse(context.User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);                        
             string Url = context.Request.Path.Value;
@@ -61,6 +61,7 @@ namespace Repository.AuditTrails
                     param.Add(nameof(AuditTrail.OldValue), OldValue);
                     param.Add(nameof(AuditTrail.NewValue), NewValue);
                     param.Add(nameof(AuditTrail.DataField), DataField);
+                    param.Add(nameof(AuditTrail.TableName), TableName);
                     param.Add(nameof(AuditTrail.Module), Module);
                     param.Add(nameof(AuditTrail.Url), Url);
                     param.Add(nameof(AuditTrail.Action), Action);
@@ -85,7 +86,7 @@ namespace Repository.AuditTrails
             param.Add(nameof(ContactQuery.Phone), query.Phone);
             param.Add(nameof(ContactQuery.Message), query.Message);
             param.Add(nameof(ContactQuery.IPAddress), context.Connection.LocalIpAddress.ToString());
-            result = connection.Execute("spInsertContactQuery", param, null, 0, CommandType.StoredProcedure);
+            result = connection.Execute(Constant.InsertContactQueryStoredProcedure, param, null, 0, CommandType.StoredProcedure);
             if (result != 0)
             {
                 return true;
@@ -98,7 +99,7 @@ namespace Repository.AuditTrails
         {
             IEnumerable<ContactQuery> result = new List<ContactQuery>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT * FROM v_ContactQueries order by DateTimeStamp desc";
+            string Query = $@"SELECT * FROM {Constant.GetContactQueriesViewName} order by DateTimeStamp desc";
             result = connection.Query<ContactQuery>(Query, null, null, true, 0, null);
             return result;
         }

@@ -61,29 +61,27 @@ namespace UI.Controllers
         }
         //end
         [HttpGet]
-        public IActionResult ContactUs()
+        public IActionResult ContactUs()  // Return Contact Us Page which has a Contact Form along with address
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult ContactUs(ContactQuery query)
+        public IActionResult ContactUs(ContactQuery query)  // It will handle POST request of Contact Form present in Contact Us Page
         {
             if (ModelState.IsValid)
             {
-                if(!dNTCaptchaValidatorService.HasRequestValidCaptchaEntry())
+                if(!dNTCaptchaValidatorService.HasRequestValidCaptchaEntry()) // Testing whether the Captcha is valid or not
                 {
                     TempData["captchaError"] = "Incorrect captcha code!";
                     return View(query);
                 }
-
-                var result = _auditTrailServices.InsertContactQuery(query, this.HttpContext);
-                ModelState.Clear();
-                ViewBag.Message = "Your Message/Query Has Been Submitted";
-                //if (HttpContext.User.Identity.IsAuthenticated)
-                //{
-                //    return RedirectToAction("ContactUs", "UserDashboard");
-                //}
+                else
+                {
+                    var result = _auditTrailServices.InsertContactQuery(query, this.HttpContext);  // Inserting Contact Form Data into database
+                    ModelState.Clear();
+                    ViewBag.Message = "Your Message/Query Has Been Submitted";
+                }                            
             }
             return View();
         }
