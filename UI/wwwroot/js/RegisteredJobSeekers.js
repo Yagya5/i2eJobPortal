@@ -7,7 +7,6 @@ function ShowEvent(_datasource) {
     $("#dataGrid").dxDataGrid({
         dataSource: _datasource,
         keyExpr: "UserId",
-
         allowColumnReordering: true,
         allowColumnResizing: true,
         filterRow: { visible: true },
@@ -16,11 +15,6 @@ function ShowEvent(_datasource) {
         showBorders: true,
         showRowLines: true,
         wordWrapEnabled: true,
-        columnAutoWidth: true,
-        columnFixing: {
-            enabled: true,
-        },
-
         columnFixing: { enabled: true },
         columnChooser: {
             enabled: true,
@@ -36,6 +30,18 @@ function ShowEvent(_datasource) {
                 allowSelectAll: true,
 
             },
+        },
+
+        loadPanel: {
+            enabled: true,
+            showPane: true,
+            shading: true,
+            shadingColor: 'rgba(0,0,0,0.4)'
+        },
+
+        columnAutoWidth: true,
+        columnFixing: {
+            enabled: true,
         },
 
         export: {
@@ -70,7 +76,6 @@ function ShowEvent(_datasource) {
 
         scrolling: {
             mode: "virtual", 
-            rowRenderingMode: "virtual" 
         },
 
         paging: {
