@@ -52,7 +52,7 @@ namespace Repository.Users
         {
             IEnumerable<AuditLogin> result = new List<AuditLogin>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "SELECT top 50 * FROM v_AuditedLogins ORDER BY LoginTimeStamp DESC";
+            string Query = $@"SELECT top 50 * FROM {Constant.GetAllUserLoginsViewName} ORDER BY LoginTimeStamp DESC";
             result = connection.Query<AuditLogin>(Query, null, null, true, 0, null);
             return result;
         }
@@ -61,7 +61,7 @@ namespace Repository.Users
         {
             var result = new User();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "select UserId from v_Users where Email='" + Email + "'";
+            string Query = $@"select UserId from {Constant.GetAllUsersViewName} where Email='" + Email + "'";
             result = connection.QueryFirstOrDefault<User>(Query, null, null, 0, null);
             return result.UserId;
         }
@@ -70,7 +70,7 @@ namespace Repository.Users
         {
             IEnumerable<User> result = new List<User>();
             using var connection = _dapperConnection.CreateConnection();
-            string Query = "select * from v_Users";
+            string Query = $@"select * from {Constant.GetAllUsersViewName}";
             result = connection.Query<User>(Query, null, null, true, 0, null);            
             return result;
         }
@@ -84,7 +84,7 @@ namespace Repository.Users
             param.Add(nameof(User.LastName), LastName);
             param.Add(nameof(User.Email), Email);
             param.Add(nameof(User.Password), Password);
-            result = connection.Execute("spJobSeekerSignUp", param, null, 0, CommandType.StoredProcedure);
+            result = connection.Execute(Constant.SignUpJobSeekerStoredProcedure, param, null, 0, CommandType.StoredProcedure);
             if (result != 0)
             {
                 return true;
