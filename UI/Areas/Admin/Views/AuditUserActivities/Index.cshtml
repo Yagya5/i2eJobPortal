@@ -40,13 +40,12 @@
 <script src="~/js/audituseractivities.js"></script>
 
 
-<h1 style="visibility:hidden">Audit User Activities</h1>
+
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</li>
         <li class="breadcrumb-item active" aria-current="page">Audit User Activities</li>
-
     </ol>
 </nav>
 
