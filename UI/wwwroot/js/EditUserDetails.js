@@ -5,6 +5,13 @@
     var StateList = [];
     var CityList = [];
 
+    var previousStateList = [];
+    var previousCityList = [];
+
+    var previousCountry = "";
+    var previousState = "";
+    var previousCity = ""; 
+
     function ShowUserProfileDetails(_datasource) {
         $('#form').dxForm({
             formData: _datasource,
@@ -85,24 +92,38 @@
                             onValueChanged: function (e) {
                                 console.log(_datasource.StateList);
                                 console.log(e.value)
-                                _datasource.State = "";
-                                _datasource.City = "";
+                                if (e.value === previousCountry) {
+                                    _datasource.State = previousState;
+                                    _datasource.City = previousCity;
+                                }
+                                else {
+                                    _datasource.State = "";
+                                    _datasource.City = "";
+                                }
                                 $.ajax({
                                     url: "/EditUserFullDetails/GetState",
                                     method: 'GET',
                                     data: { country : e.value },
                                     success: function (ResponseData) {
-                                        let tempStateList = [];
-                                        let tempCityList = [];
-                                        for (var i = 0; i < ResponseData.length; i++) {
-                                            var value = ResponseData[i].Value;
-                                            tempStateList.push(value);
+                                        if (e.value === previousCountry) {
+                                            _datasource.StateList = previousStateList;
+                                            _datasource.CityList = previousCityList;
                                         }
-                                        _datasource.StateList = tempStateList;
-                                        _datasource.CityList = tempCityList;
-                                        console.log("Updated StateList", _datasource.StateList);
+                                        else {
+                                            let tempStateList = [];
+                                            let tempCityList = [];
+                                            for (var i = 0; i < ResponseData.length; i++) {
+                                                var value = ResponseData[i].Value;
+                                                tempStateList.push(value);
+                                            }
+                                            _datasource.StateList = tempStateList;
+                                            _datasource.CityList = tempCityList;
+                                        }
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
+
+                                        $('#form').dxForm('instance').getEditor('State').option('value', _datasource.State);
+                                        $('#form').dxForm('instance').getEditor('City').option('value', _datasource.City);
                                     },
                                     error: function (err) {
                                         console.error(err);
@@ -128,20 +149,31 @@
                             onValueChanged: function (e) {
                                 console.log(_datasource.CityList);
                                 console.log(e.value)
-                                _datasource.City = "";
+                                if (e.value === previousState) {
+                                    _datasource.City = previousCity;
+                                }
+                                else {
+                                    _datasource.City = "";
+                                }
                                 $.ajax({
                                     url: "/EditUserFullDetails/GetCity",
                                     method: 'GET',
                                     data: { state: e.value },
                                     success: function (ResponseData) {
-                                        let tempCityList = [];
-                                        for (var i = 0; i < ResponseData.length; i++) {
-                                            var value = ResponseData[i].Value;
-                                            tempCityList.push(value);
+                                        if (e.value === previousState) {
+                                            _datasource.CityList = previousCityList;
                                         }
-                                        _datasource.CityList = tempCityList;
-                                        console.log("Updated StateList", _datasource.CityList);
+                                        else {
+                                            let tempCityList = [];
+                                            for (var i = 0; i < ResponseData.length; i++) {
+                                                var value = ResponseData[i].Value;
+                                                tempCityList.push(value);
+                                            }
+                                            _datasource.CityList = tempCityList;
+                                        }
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
+
+                                        $('#form').dxForm('instance').getEditor('City').option('value', _datasource.City);
                                     },
                                     error: function (err) {
                                         console.error(err);
@@ -610,6 +642,13 @@
 
             await LoadCity(user.State); 
             user.CityList = CityList;
+
+            previousCountry = user.Country;
+            previousState = user.State;
+            previousCity = user.City;
+
+            previousStateList = user.StateList;
+            previousCityList = user.CityList;
 
             await LoadBachelors(); 
             user.BachelorsList = BachelorsList;

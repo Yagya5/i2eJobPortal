@@ -19,6 +19,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="~/css/homeStyle.css">
     <title>Job Portal</title>
+    <style>
+        .cuttoff-text {
+            --max-lines: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: var(--max-lines);
+        }
+    </style>
 </head>
 
     <div class="container-fluid p-0 maincontainer">
@@ -47,20 +56,20 @@
             <div class="find-job-section">
                 <h1>Find the perfect job</h1>
                 <div class="d-flex justify-content-between job-details">
-                    <a class="job-cards" href="">
-                        <div class="job-type">Internships</div>
+                    <a class="job-cards" href="" >
+                        <div class="job-type">Internship</div>
                         <div class="job-img">
                             <img src="~/images/Croods Friends.png" alt="">
                         </div>
                     </a>
-                    <a class="job-cards second-job-card" href="">
-                        <div class="job-type">Full-time jobs</div>
+                      <a class="job-cards second-job-card" href="">
+                        <div class="job-type">Full Time jobs</div>
                         <div class="job-img">
                             <img src="~/images/Croods Peaceful Place.png" alt="" srcset="">
                         </div>
                     </a>
-                    <a class="job-cards" href="">
-                        <div class="job-type">Part-time jobs</div>
+                     <a class="job-cards" href="" >
+                        <div class="job-type">Part Time jobs</div>
                         <div class="job-img">
                             <img src="~/images/Croods The Feedback.png" alt="" srcset="">
                         </div>
@@ -87,8 +96,11 @@
                                                 @item.JobTitle
                                             </div>
                                             <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home
+                                                <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home  @item.State_Home, @item.City_Home
                                                 <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience
+                                            </div>
+                                            <div discribe-Job>
+                                                <p class="cuttoff-text">@item.Description</p>
                                             </div>
 
                                         </div>
@@ -172,9 +184,10 @@
    </div>
 
 <script type="text/javascript">
+    
     function OpenDetails(JobId) {
         // Redirect to the event details page, passing the event ID as a query parameter
         window.location.href = '/Home/Details?id=' + JobId;
     }
-
+  
 </script> 

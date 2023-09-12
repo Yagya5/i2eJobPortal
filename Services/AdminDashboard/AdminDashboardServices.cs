@@ -50,6 +50,20 @@ namespace Services.AdminDashboard
             var result  =_AdminDashboardRepository.GetAuditDetails();
             return result;
         }
+
+
+        public IEnumerable<JobDetails> GetJobModeDetails()
+        {
+            var result =_AdminDashboardRepository.GetJobModeDetails();
+            return result;
+        }
+
+
+        public IEnumerable<Job> GetStatewise_JobCount()
+        {
+            var result =_AdminDashboardRepository.GetStatewise_JobCount();
+            return result;
+        }
     }
 }
 

@@ -4,10 +4,14 @@
 }
 
 <style>
-
+  
 
     #dataGrid {
         height: 600px;
+    }
+
+    .breadcrumb-item {
+        color: #008BFF;
     }
    
 </style>
@@ -36,9 +40,16 @@
 <script src="~/js/audituseractivities.js"></script>
 
 
-<h1>Audit User Activities</h1>
 
-<body class="dx-viewport" id="LoadPanelShading">
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value</li>
+        <li class="breadcrumb-item active" aria-current="page">Audit User Activities</li>
+    </ol>
+</nav>
+
+<body class="dx-viewport" id="LoadPanelShading" style="margin-top: 100px;">
 
     <div id="dataGrid">
     </div>

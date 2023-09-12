@@ -8,6 +8,7 @@ $(document).ready(function () {
     JobTypeArea();
     TopAuditLogins();
     WorldMap();
+    JobModeCountTiles();
 
     $('.nav-tabs a').click(function () {
         console.log('Tab clicked:', this.href); // Add this line for debugging
@@ -54,22 +55,8 @@ function CountRecords() {
 
 
 
-function ShowTiles(_datasource)
-{
-
-}
-
-
 function ShowFunnel(_datasource) {
     $(() => {
-        //// Create a data source with the provided values
-        //const dataSource = [
-        //    { argument: 'Selected', value: selectedCount },
-        //    { argument: 'Rejected', value: rejectedCount },
-        //    { argument: 'Users', value: userCount },
-        //    { argument: 'Total Applied Jobs', value: totalAppliedJobs }
-        //];
-
         $('#funnel').dxFunnel({
             dataSource: _datasource,
             title: {
@@ -96,8 +83,7 @@ function ShowFunnel(_datasource) {
                 position: 'inside',
                 backgroundColor: 'none',
                 customizeText(e) {
-                    return `<span style='font-size: 28px'>${e.percentText
-                        }</span><br/>${e.item.argument}`;
+                    return `<span style='font-size: 28px'>${e.value}</span><br/>${e.item.argument}`;
                 },
             },
         });
@@ -172,15 +158,15 @@ function ShowDonut(_dataSource) {
             palette: 'Soft Pastel',
             dataSource: _dataSource,
             title: 'Types of Jobs',
-            tooltip: {
-                enabled: true,
-                format: 'millions',
-                customizeTooltip(arg) {
-                    return {
-                        text: `${arg.argumentText}: ${arg.valueText}`,
-                    };
-                },
-            },
+            //tooltip: {
+            //    enabled: true,
+            //    format: '',
+            //    customizeTooltip(arg) {
+            //        return {
+            //            text: `${arg.argumentText}: ${arg.valueText}`,
+            //        };
+            //    },
+            //},
             legend: {
                 horizontalAlignment: 'right',
                 verticalAlignment: 'top',
@@ -303,26 +289,123 @@ function ShowAudit(_datasource) {
 }
 
 
-function WorldMap()
-{
-
+function JobModeCountTiles() {
     $.ajax({
-        url: "/AdminDashboard/GetAuditDetails",
+        url: "/AdminDashboard/GetJobModeDetails",
         method: 'GET',
         success: function (responseData) {
+            // Update the HTML elements with the count values
+            $("#remote").text(responseData.filter(item => item.JobMode === 'Remote')[0].JobModeCount);
+            $("#hybrid").text(responseData.filter(item => item.JobMode === 'Hybrid')[0].JobModeCount);
+            $("#in_office").text(responseData.filter(item => item.JobMode === 'In Office')[0].JobModeCount);
+        },
+        error: function (err) {
+            alert(err);
+        }
+    });
+}
+
+
+function WorldMap() {
+    $.ajax({
+        url: "/AdminDashboard/GetStatewise_JobCount",
+        method: 'GET',
+        success: function (responseData) {
+            // Call the ShowMap function with the retrieved data
             ShowMap(responseData);
         },
         error: function (err) {
             alert(err);
         }
     });
-
-
-
 }
+function ShowMap(data) {
+    console.log('Data received:', data);
 
 
+    $('#vector-map').dxVectorMap({
 
-function ShowMap() {
+        onRendered: function () {
+            console.log('Map Rendered');
+        },
+
+
+        bounds: [-180, 85, 180, -60],
+        tooltip: {
+            enabled: true,
+            border: {
+                visible: false,
+            },
+            font: { color: '#fff' },
+            customizeTooltip(arg) {
+                console.log('Customize Tooltip:', arg);
+                const name = arg.attribute('name');
+                const countryData = data.find((country) => country.Country_Home === name);
+                if (countryData) {
+                    return { text: `${name}: ${countryData.CountrywiseJob_count} Jobs`, color: '#000' };
+                }
+                return null;
+            },
+        },
+        layers: {
+            dataSource: DevExpress.viz.map.sources.world,
+
+            
+
+            customize(elements) {
+
+                console.log('Customize Elements:', elements);
+                $.each(elements, (_, element) => {
+                    const name = element.attribute('name');
+                    const countryData = data.find((country) => country.Country_Home === name);
+                    if (countryData) {
+                        element.applySettings({
+                            color: getColorBasedOnJobCount(countryData.CountrywiseJob_count),
+                            hoveredColor: '#e0e000',
+                            selectedColor: '#008f00',
+                        });
+                    }
+                });
+            },
+
+          
+        },
+        onClick(e) {
+            const { target } = e;
+            if (target && data.some((country) => country.Country_Home === target.attribute('name'))) {
+                target.selected(!target.selected());
+            }
+        },
+    });
+
+    // You can define a function to set colors based on job counts
+    function getColorBasedOnJobCount(count) {
+        console.log('Count:', count);
+
+        // Customize the color logic based on your requirements
+        // For example, you can use different colors for different job count ranges
+        if (count > 100) {
+            console.log('Color: Red');
+            return '#FF0000';
+        } else if (count > 50) {
+            console.log('Color: Yellow');
+            return '#FFFF00';
+        }
+        else if (count > 20) {
+            console.log('Color: Blue');
+            return '#0000FF';
+        }
+        else if (count > 10) {
+            console.log('Color: Orange');
+            return '#F28500';
+        }
+        else if (count > 5) {
+            console.log('Color: Pink');
+            return '#FF007F'; 
+        } else {
+            console.log('Color: Green');
+            return '#008000'; 
+        }
+    }
 
 }
