@@ -324,10 +324,17 @@
                     {
                         dataField: 'CoverLetter',
                         editorType: 'dxTextArea',
-                        
+                        validationRules: [
+                            {
+                                type: 'stringLength',
+                                max: 500,
+                                message: 'Cover Letter cannot exceed 500 characters',
+                            },
+                        ],
                         label: {
                             template: labelTemplate('info'),
                         },
+                        maxLength: 500,
                     },
 
                     {
