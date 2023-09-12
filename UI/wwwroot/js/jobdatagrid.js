@@ -101,7 +101,15 @@ function showJob(dataSource) {
             allowAdding: true,
            
         },
-
+       
+        onEditorPreparing(e) {
+            if (e.parentType === 'dataRow' && e.dataField === 'State') {
+                e.editorOptions.disabled = (typeof e.row.data.Country !== 'number');
+            }
+            if (e.parentType === 'dataRow' && e.dataField === 'City') {
+                e.editorOptions.disabled = (typeof e.row.data.State !== 'number');
+            }
+        },
         onContentReady: function () {
             $(".dx-link-edit")
             $(".dx-link-delete")
@@ -147,14 +155,7 @@ function showJob(dataSource) {
                 "State": e.data.State,
             };
          
-            if (globalCountry !== 0) {
-                dataToSend.Country = globalCountry;
-                globalCountry = 0;
-            }
-            if (globalState !== 0) {
-                dataToSend.State = globalState;
-                globalState = 0;
-            }
+           
             
             $.ajax({
                 url: "/Job/EditJob/",
@@ -187,8 +188,8 @@ function showJob(dataSource) {
                 "MinExperienceMonth": e.data.MinExperienceMonth,
                 "MaxExperienceMonth": e.data.MaxExperienceMonth,
                 "City": e.data.City,
-                "Country": globalCountry,
-                "State": globalState,
+                "Country": e.data.Country,
+                "State": e.data.State,
             };
             globalCountry = 0;
             globalState = 0;
@@ -488,145 +489,55 @@ function showJob(dataSource) {
                         .appendTo(container);
                 }
             },
-           
             {
                 dataField: "Country",
-                caption: "Country",
-                allowFiltering: true,
-                allowSorting: true,
-                editorType: "dxSelectBox",
-                editorOptions: {
+                caption: 'Country',
+                validationRules: [{ type: "required" }],
+                setCellValue(rowData, value) {
+                    rowData.Country = value;
+                    rowData.State = null;
+                },
+                lookup: {
                     dataSource: CountryList,
-                    valueExpr: "Category_Id",
-                    displayExpr: "Value",
-                    placeholder: "Select Country",
-                    onInitialized: function (e) {
-                        stateSelectBoxInstance = e.component;
-                        console.log("Country initialized");
-
-                        const selectedCountryId = e.data ? e.data.Country : null;
-                        console.log(selectedCountryId);
-
-                        filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
-                        console.log("Filtered States:", filteredState);
-
-                        if (stateSelectBoxInstance) {
-                            stateSelectBoxInstance.option("dataSource", filteredState);
-
-                            if (e.data) {
-                                stateSelectBoxInstance.option("value", e.data.State);
-                            }
-                        }
-                    },
-                    onValueChanged: function (e) {
-                        console.log("Country selection changed:", e.value);
-                        const selectedCountryId = e.value;
-                        globalCountry = selectedCountryId;
-                        dataSource.Country = globalCountry;
-                        filteredState = StateList.filter(State => State.Ref_ID === selectedCountryId);
-                        if (stateSelectBoxInstance) {
-                            stateSelectBoxInstance.option("dataSource", filteredState);
-                            if (e.data) {
-                                stateSelectBoxInstance.option("value", e.data.State);
-                            }
-                        }
-                    },
+                    valueExpr: 'Category_Id',
+                    displayExpr: 'Value',
                 },
-                cellTemplate: function (container, options) {
-                    const CountryID = options.value;
-                    const CountryValues = CountryList.find(Country => Country.Category_Id === CountryID);
-                    const CountryValuesText = CountryValues ? CountryValues.Value : "No data";
-                    JobCountry = CountryValuesText;
-                    const displayedText = CountryID === 0 ? "-" : CountryValuesText;
-
-                    $("<div>")
-                        .text(displayedText)
-                        .appendTo(container);
-                }
             },
             {
-                dataField: "State",
-                caption: "State",
-                allowFiltering: true,
-                allowSorting: true,
-                editorType: "dxSelectBox",
-                editorOptions: {
-                    dataSource: StateList,
-                    valueExpr: "Category_Id",
-                    displayExpr: "Value",
-                    placeholder: "Select State",
-                    onInitialized: function (e) {
-                        stateSelectBoxInstance = e.component;
-                        console.log("State initialized");
-                        const selectedStateId = e.data ? e.data.State : null;
-                        filteredCity = CityList.filter(City => City.Ref_ID === selectedStateId);
-                        console.log("Filtered Cities:", filteredCity);
-                        if (citySelectBoxInstance) {
-                            citySelectBoxInstance.option("dataSource", filteredCity);
-                            if (e.data) {
-                                citySelectBoxInstance.option("value", e.data.City);
-                            }
-                        }
-                    },
-                    onValueChanged: function (e) {
-                        console.log("State selection changed:", e.value);
-                        const selectedStateId = e.value;
-                       
-                        globalState = selectedStateId;
-
-                        filteredCity = CityList.filter(City => City.Ref_ID === selectedStateId);
-                        console.log("Filtered Cities:", filteredCity);
-                        if (citySelectBoxInstance !== null) {
-                            citySelectBoxInstance.option("value", null);
-                            citySelectBoxInstance.option("dataSource", filteredCity);
-                        }
-                    },
+                dataField: 'State',
+                caption: 'State',
+                validationRules: [{ type: "required" }],
+                setCellValue(rowData, value) {
+                    rowData.State = value;
+                    rowData.City = null;
                 },
-                cellTemplate: function (container, options) {
-                    const StateID = options.value;
-                    const StateValues = StateList.find(State => State.Category_Id === StateID);
-                    const StateValuesText = StateValues ? StateValues.Value : "No data";
-                    JobState = StateValuesText;
-                   
-                    const displayedText = StateID === 0 ? "-" : StateValuesText;
-
-                    $("<div>")
-                        .text(displayedText)
-                        .appendTo(container);
-                }
+                lookup: {
+                    dataSource(options) {
+                        return {
+                            store: StateList,
+                            filter: options.data ? ['Ref_ID', '=', options.data.Country] : null,
+                        };
+                    },
+                    valueExpr: 'Category_Id',
+                    displayExpr: 'Value',
+                },
             },
             {
-                dataField: "City",
-                caption: "City",
-                allowFiltering: true,
-                allowSorting: true,
-                editorType: "dxSelectBox",
-                editorOptions: {
-                    dataSource: CityList,
-                    valueExpr: "Category_Id",
-                    displayExpr: "Value",
-                    placeholder: "Select City",
-                    onInitialized: function (e) {
-                        citySelectBoxInstance = e.component;
-                        console.log("City initialized");
-                        if (e.data) {
-                            citySelectBoxInstance.option("value", e.data.City);
-                        } 
+                dataField: 'City',
+                caption: 'City',
+                validationRules: [{ type: "required" }],
+                lookup: {
+                    dataSource(options) {
+                        return {
+                            store: CityList,
+                            filter: options.data ? ['Ref_ID', '=', options.data.State] : null,
+                        };
                     },
-                }, cellTemplate: function (container, options) {
-                    const CityID = options.value;
-                    const CityValues = CityList.find(City => City.Category_Id === CityID);
-                    const CityValuesText = CityValues ? CityValues.Value : "No data";
-                    JobCity = CityValuesText; 
-                   
-                    const displayedText = CityID === 0 ? "-" : CityValuesText;
-
-                    $("<div>")
-                        .text(displayedText)
-                        .appendTo(container);
-                }
+                    valueExpr: 'Category_Id',
+                    displayExpr: 'Value',
+                },
             },
-
+         
         ],
         showBorders: true,
         filterRow: { visible: true },
