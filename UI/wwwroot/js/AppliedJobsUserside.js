@@ -17,7 +17,7 @@ function ShowEvent(_datasource) {
         },
         showBorders: true,
         showRowLines: true,
-       rowAlternationEnabled: true,
+      // rowAlternationEnabled: true,
         wordWrapEnabled: true,
 
        
