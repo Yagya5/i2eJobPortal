@@ -13,21 +13,6 @@ let CountryList = [];
 let StateList = [];
 let CityList = [];
 
-let filteredState = [];
-let globalCountry;
-let globalState;
-let filteredCity = [];
-
-let stateSelectBoxInstance = null;
-let citySelectBoxInstance = null;
-
-
-let JobTypeHome = null;
-let JobModeHome = null;
-let JobCurrency = null;
-let JobCountry = null;
-let JobCity = null;
-let JobState = null;
 
 function showJob(dataSource) {
     window.jsPDF = window.jspdf.jsPDF;
@@ -100,8 +85,47 @@ function showJob(dataSource) {
             allowDeleting: true,
             allowAdding: true,
            
+       
+        form: {
+            items: [{
+                itemType: 'group',
+                colCount: 2,
+                colSpan: 2,
+                items: ['JobTitle', 'DepartmentName', 'Salary', 'CurrencyType', 'JobType', 'JobMode', {
+                    dataField: 'Description',
+                    editorType: 'dxTextArea',
+                    colSpan: 2,
+                    editorOptions: {
+                        height: 50,
+                    },
+                }],
+            }, {
+                itemType: 'group',
+                colCount: 2,
+                colSpan: 1,
+                items: ['MinExperience', 'MinExperienceMonth'],
+                },
+                {
+                    itemType: 'group',
+                    colCount: 2,
+                    colSpan: 1,
+                    items: ['MaxExperience', 'MaxExperienceMonth'],
+                },
+                {
+                    itemType: 'group',
+                    colCount: 2,
+                    colSpan: 2,
+                    items: ['Country', 'State','City'],
+                },
+                {
+                    itemType: 'group',
+                    colCount: 2,
+                    colSpan: 1,
+                    items: ['IsActive', 'urgentRequirement'],
+                }, ],
         },
        
+        },
         onEditorPreparing(e) {
             if (e.parentType === 'dataRow' && e.dataField === 'State') {
                 e.editorOptions.disabled = (typeof e.row.data.Country !== 'number');
