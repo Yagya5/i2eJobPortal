@@ -121,6 +121,9 @@
                                         }
                                         $('#form').dxForm('instance').getEditor('State').option('items', _datasource.StateList);
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
+
+                                        $('#form').dxForm('instance').getEditor('State').option('value', _datasource.State);
+                                        $('#form').dxForm('instance').getEditor('City').option('value', _datasource.City);
                                     },
                                     error: function (err) {
                                         console.error(err);
@@ -169,6 +172,8 @@
                                             _datasource.CityList = tempCityList;
                                         }
                                         $('#form').dxForm('instance').getEditor('City').option('items', _datasource.CityList);
+
+                                        $('#form').dxForm('instance').getEditor('City').option('value', _datasource.City);
                                     },
                                     error: function (err) {
                                         console.error(err);
