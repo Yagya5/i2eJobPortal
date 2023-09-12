@@ -1,4 +1,6 @@
 ﻿using DomainModel.AdminDashboard;
+using DomainModel.AppliedJobs;
+using DomainModel.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,6 +18,8 @@ namespace Repository.AdminDashboard
         IEnumerable<JobDetails> GetJobDetails();
 
         IEnumerable<AuditDetails> GetAuditDetails();
+        IEnumerable<JobDetails> GetJobModeDetails();
 
+        IEnumerable<Job> GetStatewise_JobCount();
     }
 }

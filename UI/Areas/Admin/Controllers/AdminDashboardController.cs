@@ -1,4 +1,5 @@
 ﻿using DomainModel.AdminDashboard;
+using DomainModel.AppliedJobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.AdminDashboard;
@@ -49,6 +50,20 @@ namespace UI.Areas.Admin.Controllers
             var result = _adminDashboardServices.GetAuditDetails().ToList();
             return Ok(result);
         }
+
+
+        public IActionResult GetJobModeDetails() { 
+        
+            var result  =_adminDashboardServices.GetJobModeDetails().ToList();
+            return Ok(result);
+        }
+
+        public IActionResult GetStatewise_JobCount()
+        {
+            var result =_adminDashboardServices.GetStatewise_JobCount().ToList();
+            return Ok(result);
+        }
+
 
     }
 }
