@@ -110,6 +110,36 @@ function showJob(dataSource) {
                 e.editorOptions.disabled = (typeof e.row.data.State !== 'number');
             }
         },
+        export: {
+            enabled: true,
+            formats: ['xlsx', 'pdf']
+        },
+
+        onExporting(e) {
+
+            if (e.format === 'xlsx') {
+                const workbook = new ExcelJS.Workbook();
+                const worksheet = workbook.addWorksheet("Main sheet");
+                DevExpress.excelExporter.exportDataGrid({
+                    worksheet: worksheet,
+                    component: e.component,
+                }).then(function () {
+                    workbook.xlsx.writeBuffer().then(function (buffer) {
+                        saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Jobs Posting.xlsx");
+                    });
+                });
+            }
+            else if (e.format === 'pdf') {
+                const doc = new jsPDF();
+
+                DevExpress.pdfExporter.exportDataGrid({
+                    jsPDFDocument: doc,
+                    component: e.component,
+                }).then(() => {
+                    doc.save('Jobs Posting.pdf');
+                });
+            }
+        },
         onContentReady: function () {
             $(".dx-link-edit")
             $(".dx-link-delete")
@@ -224,30 +254,20 @@ function showJob(dataSource) {
                 validationRules: [{ type: "required" }],
             },
 
-
             {
-                dataField: "JobType",
-                caption: "Job Type",
-                allowFiltering: true,
-                allowSorting: true,
-                validationRules: [{ type: "required" }],
-                editorType: "dxSelectBox",
-                editorOptions: {
-                    dataSource: jobTypeValues1,
-                    valueExpr: "Id",
-                    displayExpr: "Value",
-                    placeholder: "Select a Job Type",
+                dataField: 'JobType',
+                caption: 'Job Type',
+                lookup: {
+                    dataSource(options) {
+                        return {
+                            store: jobTypeValues1,
+                        };
+                    },
+                    valueExpr: 'Id',
+                    displayExpr: 'Value',
                 },
-                cellTemplate: function (container, options) {
-                    const jobTypeId = options.value;
-                    const jobTypeValue = jobTypeValues1.find(jobType => jobType.Id === jobTypeId);
-                    const jobTypeText = jobTypeValue.Value;
-                    JobTypeHome = jobTypeText;
-                    $("<div>")
-                        .text(jobTypeText)
-                        .appendTo(container);
-                }
             },
+            
             {
                 dataField: "DepartmentName",
                 caption: "Department Name",
@@ -309,17 +329,16 @@ function showJob(dataSource) {
             },
 
             {
-                dataField: "CurrencyType",
-                caption: "Currency",
-                allowFiltering: true,
-                allowSorting: true,
-                validationRules: [{ type: "required" }],
-                editorType: "dxSelectBox",
-                editorOptions: {
-                    dataSource: currencyValues1,
-                    valueExpr: "Id",
-                    displayExpr: "Value",
-                    placeholder: "Select a Currency",
+                dataField: 'CurrencyType',
+                caption: 'Currency',
+                lookup: {
+                    dataSource(options) {
+                        return {
+                            store: currencyValues1,
+                        };
+                    },
+                    valueExpr: 'Id',
+                    displayExpr: 'Value',
                 },
                 cellTemplate: function (container, options) {
                     const currencyId = options.value;
@@ -332,19 +351,18 @@ function showJob(dataSource) {
                 }
             },
 
+
             {
                 dataField: "JobMode",
-                caption: "Job Mode",
-                allowFiltering: true,
-                allowSorting: true,
-                validationRules: [{ type: "required" }],
-
-                editorType: "dxSelectBox",
-                editorOptions: {
-                    dataSource: jobModeValues1,
-                    valueExpr: "Id",
-                    displayExpr: "Value",
-                    placeholder: "Select a Job Mode",
+               caption: "Job Mode",
+                lookup: {
+                    dataSource(options) {
+                        return {
+                            store: jobModeValues1,
+                        };
+                    },
+                    valueExpr: 'Id',
+                    displayExpr: 'Value',
                 },
                 cellTemplate: function (container, options) {
                     const jobModeID = options.value;
@@ -357,6 +375,7 @@ function showJob(dataSource) {
                         .appendTo(container);
                 }
             },
+           
             {
                 dataField: "MinExperience",
                 caption: "Min Experience",
