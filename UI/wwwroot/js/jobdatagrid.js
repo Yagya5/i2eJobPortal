@@ -406,16 +406,7 @@ function showJob(dataSource) {
                     valueExpr: 'Id',
                     displayExpr: 'Value',
                 },
-                cellTemplate: function (container, options) {
-                    const jobModeID = options.value;
-                    const jobModeValues = jobModeValues1.find(JobMode => JobMode.Id === jobModeID);
-                    const jobModeValuesText = jobModeValues.Value;
-                    JobModeHome = jobModeValuesText;
-
-                    $("<div>")
-                        .text(jobModeValuesText)
-                        .appendTo(container);
-                }
+                
             },
            
             {
@@ -527,13 +518,15 @@ function showJob(dataSource) {
                 caption: "Post Active Status",
                 allowFiltering: true,
                 allowSorting: true,
-                cellTemplate: function (container, options) {
-                    const isActive = options.value;
-                    const statusText = isActive ? "Post Active" : "Post Inactive";
-
-                    $("<div>")
-                        .text(statusText)
-                        .appendTo(container);
+                validationRules: [{ type: "required" }],
+                filterType: "lookup",
+                lookup: {
+                    dataSource: [
+                        { value: true, text: "Post Status Active" },
+                        { value: false, text: "Post Status Inactive" }
+                    ],
+                    valueExpr: "value",
+                    displayExpr: "text"
                 }
             },
             {
@@ -541,13 +534,15 @@ function showJob(dataSource) {
                 caption: "Urgent Requirement",
                 allowFiltering: true,
                 allowSorting: true,
-                cellTemplate: function (container, options) {
-                    const isUrgentRequirement = options.value;
-                    const statusText = isUrgentRequirement ? "Urgent Hiring Active" : "Urgent Hiring Inactive";
-
-                    $("<div>")
-                        .text(statusText)
-                        .appendTo(container);
+                validationRules: [{ type: "required" }],
+                filterType: "lookup",
+                lookup: {
+                    dataSource: [
+                        { value: true, text: "Urgently Hire" },
+                        { value: false, text: "Urgently Hire Inactive" }
+                    ],
+                    valueExpr: "value",
+                    displayExpr: "text"
                 }
             },
             {
