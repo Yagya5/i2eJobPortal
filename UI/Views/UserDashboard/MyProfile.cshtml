@@ -18,6 +18,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="~/css/homeStyle.css">
     <title>Job Portal</title>
+    <style>
+        .cuttoff-text {
+            --max-lines: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: var(--max-lines);
+        }
+    </style>
 </head>
 
 <div class="container-fluid p-0 maincontainer">
@@ -86,8 +95,11 @@
                                                 @item.JobTitle
                                             </div>
                                             <div class="job-location">
-                                                <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home
+                                                <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home  @item.State_Home, @item.City_Home
                                                 <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience
+                                            </div>
+                                            <div discribe-Job>
+                                                <p class="cuttoff-text">@item.Description</p>
                                             </div>
 
                                         </div>

@@ -18,7 +18,12 @@ function CreateAppliedJob(JobId) {
             success: function (response) {
                 console.log(response);
                 if (response.status) {
-                    alert("Succesfully Applied job ");
+                    Swal.fire(
+                        'Succesfully Applied job!',
+                        '',
+                        'success'
+                    )
+                   /* alert("Succesfully Applied job ");*/
                 } else {
                     if (response.responseof == "Resume Required") {
 

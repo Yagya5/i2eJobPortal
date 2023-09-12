@@ -13,21 +13,6 @@ let CountryList = [];
 let StateList = [];
 let CityList = [];
 
-let filteredState = [];
-let globalCountry;
-let globalState;
-let filteredCity = [];
-
-let stateSelectBoxInstance = null;
-let citySelectBoxInstance = null;
-
-
-let JobTypeHome = null;
-let JobModeHome = null;
-let JobCurrency = null;
-let JobCountry = null;
-let JobCity = null;
-let JobState = null;
 
 function showJob(dataSource) {
     window.jsPDF = window.jspdf.jsPDF;
@@ -100,8 +85,47 @@ function showJob(dataSource) {
             allowDeleting: true,
             allowAdding: true,
            
+       
+        form: {
+            items: [{
+                itemType: 'group',
+                colCount: 2,
+                colSpan: 2,
+                items: ['JobTitle', 'DepartmentName', 'Salary', 'CurrencyType', 'JobType', 'JobMode', {
+                    dataField: 'Description',
+                    editorType: 'dxTextArea',
+                    colSpan: 2,
+                    editorOptions: {
+                        height: 50,
+                    },
+                }],
+            }, {
+                itemType: 'group',
+                colCount: 2,
+                colSpan: 1,
+                items: ['MinExperience', 'MinExperienceMonth'],
+                },
+                {
+                    itemType: 'group',
+                    colCount: 2,
+                    colSpan: 1,
+                    items: ['MaxExperience', 'MaxExperienceMonth'],
+                },
+                {
+                    itemType: 'group',
+                    colCount: 2,
+                    colSpan: 2,
+                    items: ['Country', 'State','City'],
+                },
+                {
+                    itemType: 'group',
+                    colCount: 2,
+                    colSpan: 1,
+                    items: ['IsActive', 'urgentRequirement'],
+                }, ],
         },
        
+        },
         onEditorPreparing(e) {
             if (e.parentType === 'dataRow' && e.dataField === 'State') {
                 e.editorOptions.disabled = (typeof e.row.data.Country !== 'number');
@@ -155,7 +179,13 @@ function showJob(dataSource) {
                     JobId: e.key
                 },
                 success: function (ResponseData) {
-                    console.log(ResponseData);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted the Record Sucessfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+
                 },
                 error: function (err) {
                     alert(err);
@@ -192,6 +222,13 @@ function showJob(dataSource) {
                 method: "POST",
                 data: dataToSend,
                 success: function (ResponseData) {
+                        Swal.fire({ 
+                            icon: 'success',
+                            title: 'Updated the Record Sucessfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
                     LoadRecords();
                 },
                 error: function (err) {
@@ -221,16 +258,21 @@ function showJob(dataSource) {
                 "Country": e.data.Country,
                 "State": e.data.State,
             };
-            globalCountry = 0;
-            globalState = 0;
-
+           
             $.ajax({
                 url: "/Job/CreateJob/",
                 method: "POST",
                 data: dataToSend,
                 success: function (ResponseData) {
+                    
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Created the Record Sucessfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
 
-                    LoadRecords();
+                        LoadRecords();
                 },
                 error: function (err) {
                     console.log(err);
@@ -364,16 +406,7 @@ function showJob(dataSource) {
                     valueExpr: 'Id',
                     displayExpr: 'Value',
                 },
-                cellTemplate: function (container, options) {
-                    const jobModeID = options.value;
-                    const jobModeValues = jobModeValues1.find(JobMode => JobMode.Id === jobModeID);
-                    const jobModeValuesText = jobModeValues.Value;
-                    JobModeHome = jobModeValuesText;
-
-                    $("<div>")
-                        .text(jobModeValuesText)
-                        .appendTo(container);
-                }
+                
             },
            
             {
@@ -485,13 +518,15 @@ function showJob(dataSource) {
                 caption: "Post Active Status",
                 allowFiltering: true,
                 allowSorting: true,
-                cellTemplate: function (container, options) {
-                    const isActive = options.value;
-                    const statusText = isActive ? "Post Active" : "Post Inactive";
-
-                    $("<div>")
-                        .text(statusText)
-                        .appendTo(container);
+                validationRules: [{ type: "required" }],
+                filterType: "lookup",
+                lookup: {
+                    dataSource: [
+                        { value: true, text: "Post Status Active" },
+                        { value: false, text: "Post Status Inactive" }
+                    ],
+                    valueExpr: "value",
+                    displayExpr: "text"
                 }
             },
             {
@@ -499,13 +534,15 @@ function showJob(dataSource) {
                 caption: "Urgent Requirement",
                 allowFiltering: true,
                 allowSorting: true,
-                cellTemplate: function (container, options) {
-                    const isUrgentRequirement = options.value;
-                    const statusText = isUrgentRequirement ? "Urgent Hiring Active" : "Urgent Hiring Inactive";
-
-                    $("<div>")
-                        .text(statusText)
-                        .appendTo(container);
+                validationRules: [{ type: "required" }],
+                filterType: "lookup",
+                lookup: {
+                    dataSource: [
+                        { value: true, text: "Urgently Hire" },
+                        { value: false, text: "Urgently Hire Inactive" }
+                    ],
+                    valueExpr: "value",
+                    displayExpr: "text"
                 }
             },
             {
