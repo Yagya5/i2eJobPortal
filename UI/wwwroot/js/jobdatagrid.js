@@ -179,7 +179,13 @@ function showJob(dataSource) {
                     JobId: e.key
                 },
                 success: function (ResponseData) {
-                    console.log(ResponseData);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted the Record Sucessfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+
                 },
                 error: function (err) {
                     alert(err);
@@ -216,6 +222,13 @@ function showJob(dataSource) {
                 method: "POST",
                 data: dataToSend,
                 success: function (ResponseData) {
+                        Swal.fire({ 
+                            icon: 'success',
+                            title: 'Updated the Record Sucessfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
                     LoadRecords();
                 },
                 error: function (err) {
@@ -245,16 +258,21 @@ function showJob(dataSource) {
                 "Country": e.data.Country,
                 "State": e.data.State,
             };
-            globalCountry = 0;
-            globalState = 0;
-
+           
             $.ajax({
                 url: "/Job/CreateJob/",
                 method: "POST",
                 data: dataToSend,
                 success: function (ResponseData) {
+                    
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Created the Record Sucessfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
 
-                    LoadRecords();
+                        LoadRecords();
                 },
                 error: function (err) {
                     console.log(err);
