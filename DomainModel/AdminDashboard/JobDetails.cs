@@ -17,6 +17,7 @@ namespace DomainModel.AdminDashboard
         public string? JobType { get; set; }/*Call from Master table*/
 
         public int JobTypeCount { get; set; }   
+        public int JobModeCount { get; set; }
 
     }
 }

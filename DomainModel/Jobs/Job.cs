@@ -45,5 +45,8 @@ namespace DomainModel.Jobs
 
         public bool is_Delete { get; set; }
 
+
+        public string? CountrywiseJob_count { get; set; }
+
     }
 }
