@@ -7,6 +7,7 @@ using Services.Jobs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DomainModel.Users;
 using static SkiaSharp.HarfBuzz.SKShaper;
+using Repository.AppliedJobs;
 
 namespace UI.Controllers
 {
@@ -69,20 +70,22 @@ namespace UI.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateAppliedJob(int job_Id)  /* Applied job by user function  */
         {
-            if (job_Id != 0)
-            {
-                int User_Id = Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-                bool result = await _appliedJobsServices.IsUserResumeUploaded(User_Id);
-                if (result)
+           
+                if (job_Id != 0)
                 {
-                    var response = _appliedJobsServices.CreateAppliedJob(User_Id, job_Id);
-                    return Ok(new { response = response, status = true, responseof = "Job Applied" });
+                    int User_Id = Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+                    bool result = await _appliedJobsServices.IsUserResumeUploaded(User_Id);
+                    if (result)
+                    {
+                        var response = _appliedJobsServices.CreateAppliedJob(User_Id, job_Id);
+                        return Ok(new { response = response, status = true, responseof = "Job Applied" });
+                    }
+                    else
+                    {
+                        return Ok(new { response = result, status = false, responseof = "Resume Required", userid = User_Id });
+                    }
                 }
-                else
-                {
-                    return Ok(new { response = result, status = false, responseof = "Resume Required", userid = User_Id });
-                }
-            }
+                    
             return BadRequest(new { status = false, responseof = "" });
         }
         public IActionResult AppliedJobs(int id)
