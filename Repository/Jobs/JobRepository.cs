@@ -153,5 +153,16 @@ namespace Repository.Jobs
             var sql = "SELECT * FROM v_GetJobDetails_ForOldObject_AuditTrail WHERE JobId = @JobId";
             return connection.QuerySingleOrDefault<Job>(sql, new { JobId = jobId });
         }
+
+
+        public string GetCountryStateCityForAuditTrail(int category_Id, string category_Name)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            var param = new DynamicParameters();
+            param.Add("category_Id", category_Id);
+            param.Add("category_Name", category_Name);
+            string Value = connection.QuerySingle<string>(Constant.CountryStateCityForAuditTrailStoredProcedure, param, null, 0, CommandType.StoredProcedure);           
+            return Value;
+        }
     }
 }
