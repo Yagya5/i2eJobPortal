@@ -71,7 +71,7 @@ namespace UI.Areas.Admin.Controllers
                 appliedJobs_Obj.RoundValue = null; //Audit Trail Code
                 _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, TableName, Action, this.HttpContext, OldObject, appliedJobs_Obj); //Audit Trail Code
             }
-            return View (appliedJobs_Obj);
+            return Ok(appliedJobs_Obj);
         }
 
 

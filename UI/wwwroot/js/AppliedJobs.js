@@ -154,15 +154,23 @@ function ShowEvent(_datasource) {
             allowUpdating: true,
             allowDeleting: false,
             allowAdding: false,
-            
-
         },
+
+        onEditorPreparing(e) {
+            if (e.parentType === 'dataRow' && e.dataField === 'Status') {
+                e.editorOptions.disabled = (typeof e.row.data.Round !== 'string');
+            }
+        },
+
+
+
+
         allowColumnReordering: true,
         allowColumnResizing: true,
         columnFixing: {
             enabled: true,
         },
-      /*  columnHidingEnabled: true,*/
+        /*  columnHidingEnabled: true,*/
 
 
         remoteOperations: { groupPaging: true },
@@ -180,7 +188,7 @@ function ShowEvent(_datasource) {
             enabled: true,
             formats: ['xlsx', 'pdf']
         },
-        onContentReady :function(e) {
+        onContentReady: function (e) {
             fetchDataStatus();
             /*   fetchRoundData();*/
             fetchDataRound();
@@ -196,7 +204,7 @@ function ShowEvent(_datasource) {
                 }).then(function () {
                     workbook.xlsx.writeBuffer().then(function (buffer) {
                         saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Job Application.xlsx");
-                 });
+                    });
                 });
             }
             else if (e.format === 'pdf') {
@@ -216,7 +224,7 @@ function ShowEvent(_datasource) {
 
         onRowUpdated: function (e) {
             console.log(e);
-           /*//** var AppliedJobId = e.key.AppliedJobId;*/
+            /*//** var AppliedJobId = e.key.AppliedJobId;*/
             $.ajax({
                 url: "/JobApplications/UpdateAppliedJob/",
                 method: "POST",
@@ -235,7 +243,7 @@ function ShowEvent(_datasource) {
                     "Status": e.data.Status,
                     "Round": e.data.Round
 
-              },
+                },
                 success: function (ResponseData) {
                     LoadRecords();
                 },
@@ -244,7 +252,7 @@ function ShowEvent(_datasource) {
                 }
             })
         },
-       
+
 
 
 
@@ -288,17 +296,17 @@ function ShowEvent(_datasource) {
                 }
             },
 
-           
+
 
             {
                 dataField: "Gender",
                 caption: "Gender",
                 allowFiltering: true,
                 allowSorting: true,
-               /* validationRules: [{ type: "required" }],*/
+                /* validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 width: 100,
-            
+
                 headerFilter: {
                     allowSelectAll: true,
                     search: {
@@ -315,8 +323,8 @@ function ShowEvent(_datasource) {
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 width: 150,
-              
-              
+
+
                 headerFilter: {
                     allowSelectAll: true,
                     search: {
@@ -354,7 +362,7 @@ function ShowEvent(_datasource) {
                     }
                 },
                 calculateCellValue: function (data) {
-                    return data.MinExperience + "" + " Years" + "   " + data.MinExperienceMonth+""+"Months";
+                    return data.MinExperience + "" + " Years" + "   " + data.MinExperienceMonth + "" + "Months";
                 },
             },
 
@@ -458,50 +466,73 @@ function ShowEvent(_datasource) {
                     }
                 }
             },
+            //{
+            //    dataField: "Round",
+            //    caption: "Round",
+            //    allowFiltering: true,
+            //    allowSorting: true,
+            //    validationRules: [{ type: "required" }],
+            //    allowEditing: true,
+            //    editorType: "dxSelectBox",
+            //    editorOptions: {
 
+            //        dataSource: RoundValues1,
+            //        valueExpr: "value",
+            //        displayExpr: "value",
+            //        placeholder: "Select Round",
+            //    },
 
+            //    width: 110,
+            //    headerFilter: {
+            //        allowSelectAll: true,
+            //        search: {
+            //            enabled: false,
+            //        }
+            //    }
+            //},
+            //{
+            //    dataField: "Status",
+            //    caption: "Current Status",
+            //    validationRules: [{ type: "required" }],
+            //    allowFiltering: true,
+            //    allowSorting: true,
+            //    allowEditing: true,
+            //    editorType: "dxSelectBox",
+            //    editorOptions: {
 
-
-            
+            //        dataSource: StatusValues1,
+            //        valueExpr: "value",
+            //        displayExpr: "value",
+            //        placeholder: "Select Current Status",
+            //    },
+            //    width: 110,
+            //    headerFilter: {
+            //        allowSelectAll: true,
+            //        search: {
+            //            enabled: false,
+            //        }
+            //    }
+            //},
+            //{
+            //    dataField: 'Round',
+            //    caption: 'Round',
+            //    lookup: {
+            //        dataSource(options) {
+      ////},
             {
-                dataField: "Status",
-                caption: "Current Status",
+                dataField: 'Round',
+                caption: 'Round',
+                visible: true,
                 validationRules: [{ type: "required" }],
-                allowFiltering: true,
-                allowSorting: true,
-                allowEditing: true,
-                editorType: "dxSelectBox",
-                editorOptions: {
-
-                    dataSource: StatusValues1,
-                    valueExpr: "value",
-                    displayExpr: "value",
-                    placeholder: "Select Current Status",
+                setCellValue(rowData, value) {
+                    rowData.Round = value;
+                    rowData.Status = null;
                 },
-                width: 110,
-                headerFilter: {
-                    allowSelectAll: true,
-                    search: {
-                        enabled: false,
-                    }
-                }
-            },
-            {
-                dataField: "Round",
-                caption: "Round",
-                allowFiltering: true,
-                allowSorting: true,
-                validationRules: [{ type: "required" }],
-                allowEditing: true,
-                editorType: "dxSelectBox",
-                editorOptions: {
-
+                lookup: {
                     dataSource: RoundValues1,
-                    valueExpr: "value",
-                    displayExpr: "value",
-                    placeholder: "Select Round",
+                    valueExpr: 'value',
+                    displayExpr: 'value',
                 },
-                     
                 width: 110,
                 headerFilter: {
                     allowSelectAll: true,
@@ -511,7 +542,68 @@ function ShowEvent(_datasource) {
                 }
             },
 
+            {
+                dataField: 'Status',
+                caption: 'Status',
+                lookup: {
+                    dataSource(options) {
+                        
+                        const isRound = options.data && options.data.Round === 'Not Started';
 
+                        const StatusFilter = isRound ? ['value', '=', 'Pending'] : null;
+                        return {
+                            store: StatusValues1,
+                            filter: StatusFilter,
+                        };
+                    },
+                    valueExpr: 'value',
+                    displayExpr: 'value',
+                },
+                width: 110,
+                headerFilter: {
+                    allowSelectAll: true,
+                    search: {
+                        enabled: false,
+                    }
+                }
+            },
+
+            //            return {
+            //                store: RoundValues1,
+            //            };
+            //        },
+            //        valueExpr: 'value',
+            //        displayExpr: 'value',
+            //    },
+            
+
+
+
+
+
+            //{
+            //    dataField: 'Status',
+            //    caption: 'Status',
+            //    validationRules: [{ type: "required" }],
+            //    lookup: {
+            //        dataSource(options) {
+            //            return {
+            //                store: StatusValues1,
+            //                filter: options.data ? ['Round', '=', options.data.State] : null,
+            //            };
+            //        },
+            //        valueExpr: 'Category_Id',
+            //        displayExpr: 'Value',
+
+            //    },
+            //},
+
+
+
+
+
+
+           
         ],
     
     });
@@ -748,7 +840,7 @@ function ShowChart(_datasource) {
             series: {
                 argumentField: 'JobTitle', // X-axis: Job titles
                 valueField: 'Count',      // Y-axis: Count of user IDs
-                name: 'My orange',
+                name: 'Job Titles',
                 type: 'bar',
                 color: '#E75480',
             },
