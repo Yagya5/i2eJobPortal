@@ -106,7 +106,13 @@
             },
             {
                 dataField: "OldValue",
-                caption: "Old Value"
+                caption: "Old Value",
+                //cellTemplate: function (container, cellInfo) {
+                //    const currentCell = $("<div>").text(cellInfo.value);
+                //    currentCell.css(({ "color": "red" }));
+                //    $(container).append(currentCell);
+                //}
+                
             },
             {
                 dataField: "NewValue",
@@ -130,7 +136,16 @@
                 width: "350"
             },
             {
-                dataField: "Action",                
+                dataField: "Action",   
+                cellTemplate: function (container, cellInfo) {
+                    const currentCell = $("<div>").text(cellInfo.value);
+                    if (cellInfo.value == 'Modified') {
+                        currentCell.css(({ "color": "green", "font-weight":"bold" }));
+                    } else if (cellInfo.value == "Deleted") {
+                        currentCell.css(({"color":"red", "font-weight":"bold"}))
+                    }
+                    $(container).append(currentCell);
+                } 
             },
             {
                 dataField: "DateTimeStamp",
