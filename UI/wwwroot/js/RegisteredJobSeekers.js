@@ -308,20 +308,13 @@ function ShowEvent(_datasource) {
                 dataField: "BirthDate",
                 caption: "Birth Date",
                 dataType: "date",
+                format: "dd/MM/yyyy",
                 allowEditing: false,
                 editorOptions: {
                     min: new Date(new Date().getFullYear() - 60, 0, 1), // 60 years ago from today
                     max: new Date(new Date().getFullYear() - 18, 11, 31) // 18 years ago from today
                 },
-                cellTemplate: function (container, options) {
-                    if (options.data.BirthDate === "0001-01-01") {
-                        container.text("");
-                    } else {
-                        var birthDate = new Date(options.data.BirthDate);
-                        var formattedDate = birthDate.toLocaleDateString();
-                        $("<div>").text(formattedDate).appendTo(container);
-                    }
-                }
+                
             },
 
             {
@@ -372,6 +365,10 @@ function LoadRecords() {
                     }
                     if (data.City !== null && !CityList.includes(data.City)) {
                         CityList.push(data.City);
+                    }
+
+                    if (data.BirthDate === "0001-01-01") {
+                        data.BirthDate = "";
                     }
                 }
             });
