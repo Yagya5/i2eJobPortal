@@ -311,8 +311,8 @@ function ShowEvent(_datasource) {
                 format: "dd/MM/yyyy",
                 allowEditing: false,
                 editorOptions: {
-                    min: new Date(new Date().getFullYear() - 60, 0, 1), // 60 years ago from today
-                    max: new Date(new Date().getFullYear() - 18, 11, 31) // 18 years ago from today
+                    min: new Date(new Date().getFullYear() - 60, new Date().getMonth(), new Date().getDate()), // 60 years ago from today
+                    max: new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate()), // 18 years ago from today
                 },
                 
             },
