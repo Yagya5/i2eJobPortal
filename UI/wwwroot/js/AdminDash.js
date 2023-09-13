@@ -343,6 +343,7 @@ function ShowMap(data) {
                 const countryData = data.find((country) => country.Country_Home === name);
                 if (countryData) {
                     return { text: `${name}: ${countryData.CountrywiseJob_count} Jobs`, color: '#000' };
+                    console.log('hellooo')
                 }
                 return null;
             },
@@ -359,10 +360,14 @@ function ShowMap(data) {
                     const name = element.attribute('name');
                     const countryData = data.find((country) => country.Country_Home === name);
                     if (countryData) {
+                        console.log('hellooo')
+
                         element.applySettings({
                             color: getColorBasedOnJobCount(countryData.CountrywiseJob_count),
                             hoveredColor: '#e0e000',
                             selectedColor: '#008f00',
+
+                            
                         });
                     }
                 });
@@ -403,8 +408,8 @@ function ShowMap(data) {
             console.log('Color: Pink');
             return '#FF007F'; 
         } else {
-            console.log('Color: Green');
-            return '#008000'; 
+            console.log('Color: Bordeaux');
+            return '#4C0013'; 
         }
     }
 
