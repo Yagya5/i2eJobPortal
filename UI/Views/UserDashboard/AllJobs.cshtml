@@ -101,7 +101,7 @@
                         </div>
 
                         @foreach (var item in Model.OrderByDescending(job => job.urgentRequirement))
-                        {
+                        { 
                             @if (item.IsActive)
                             {
                                 <div class="col-sm-6 cardmain job-card">
@@ -122,8 +122,11 @@
                                                         @item.JobTitle
                                                     </div>
                                                     <div class="job-location">
-                                                        <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home
+                                                        <i class="fa-solid fa-location-dot me-2"></i>@item.JobMode_Home  @item.State_Home, @item.City_Home
                                                         <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience
+                                                    </div>
+                                                    <div discribe-Job>
+                                                        <p class="cuttoff-text">@item.Description</p>
                                                     </div>
                                                     <div class="job-experience-range" style="display: none;">
                                                         <i class="fa fa-briefcase me-2" aria-hidden="true"></i>@item.MinExperience - @item.MaxExperience

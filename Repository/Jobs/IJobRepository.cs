@@ -25,5 +25,7 @@ namespace Repository.Jobs
 
         IEnumerable<Master> GetMasterValuesJob();
         IEnumerable<CountryStateCityData> GetAllCountryStateCity();
+
+        string GetCountryStateCityForAuditTrail(int category_Id, string category_Name);
     }
 }
