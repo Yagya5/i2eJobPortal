@@ -1,0 +1,16 @@
+﻿
+
+#dataGrid {
+    height: 600px;
+}
+
+.breadcrumb-item {
+    color: #008BFF;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .mainActivity {
+        height: 76.5vh;
+    }
+}

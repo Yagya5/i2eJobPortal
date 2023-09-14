@@ -9,100 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/css/userlayout.css">
+
     <style>
-        .menu-contains {
-            position: fixed;
-            top: 0px;
-            width: 100%;
-            z-index: 5;
-            border-bottom: 1px solid #000;
-        }
-
-
-
-        .footer {
-            background-color: #202020;
-            color: #FFFFFF;
-            padding: 10px 0;
-        }
-
-        .footerLogoSection {
-            display: flex;
-            align-items: center;
-        }
-
-            .footerLogoSection img {
-                width: 60px;
-                float: left;
-            }
-
-            .footerLogoSection small {
-                font-size: 10px;
-                float: right;
-                color: #FFFFFF;
-            }
-
-        .footerBackground {
-            display: flex;
-            justify-content: space-between;
-        }
-
-       /*  .navbar {
-            width: 85%;
-            margin: auto;
-        }
-
-            .navbar .navbar-brand {
-                display: flex;
-                align-items: center;
-            }
-
-            .navbar .navbar-collapse {
-                display: flex !important;
-                flex-basis: auto;
-                justify-content: flex-end;
-            }
-
-            .navbar .navbar-nav .nav-item {
-                margin: 0px 10px;
-            }
-
-            .navbar .nav-link {
-                color:  #202020;
-                font-weight: 600;
-            } */
-
-
-
-        .menu-contains .logo-section {
-                display: flex;
-                align-self: center;
-            }
-
-             .menu-contains .navbar-expand-lg .navbar-collapse {
-                display: flex !important;
-                flex-basis: auto;
-                justify-content: flex-end;
-            }
-
-             .menu-contains .nav-item {
-                margin: 0px 10px;
-            }
-
-                 .menu-contains .nav-item .nav-link {
-                    color: #000000;
-                    font-family: "Poppins";
-                    font-weight: 400;
-                }
-
-                 .menu-contains .nav-item .active {
-                    color: #000000;
-                    font-family: "Poppins";
-                    font-weight: 800;
-                    text-decoration: none !important;
-                    position:relative;
-                    top: 8px;
-                }
+        
 
             
             
@@ -110,8 +20,9 @@
 </head>
 <body>
     <header>
-        <div class="col-lg menu-contains">
-        <nav class="navbar navbar-expand-sm bg-white navbar-light">
+        <div class="container-fluid">
+        <div class="col-lg-12 menu-contains">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/Images/i2e_JobPortal_Logo.jpg" alt="i2e Logo" style="width:155px;">
@@ -121,6 +32,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ms-auto">
+
                         <li class="nav-item px-2">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -145,6 +57,7 @@
 
             </div>
         </nav>
+        </div>
         </div>
 
         

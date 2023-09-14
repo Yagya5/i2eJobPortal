@@ -1,0 +1,234 @@
+﻿
+.demo-container {
+    display: flex;
+}
+
+
+
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+#calendar {
+    width: 100%;
+    background-color: #008BFF;
+    /* padding: 10px; */
+    border-radius: 5px;
+    margin-left: 20px;
+    min-height: 424px;
+}
+
+
+
+.dx-button-mode-outlined {
+    border: none;
+}
+
+    .dx-button-mode-outlined .dx-icon, .dx-button-mode-outlined .dx-icon, .dx-button-text, .dx-calendar-cell {
+        color: #fff;
+    }
+
+.dx-calendar-body thead th {
+    font-weight: 500;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #fff;
+}
+
+
+
+.dx-calendar-cell:not(.dx-calendar-other-month) .weekend,
+.dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
+    text-shadow: none;
+    font-weight: bold;
+}
+
+
+
+.dx-calendar-cell:not(.dx-calendar-other-month) .weekend {
+    color: #3030ff;
+}
+
+
+
+.dx-state-disabled.dx-calendar .dx-calendar-cell:not(.dx-calendar-other-month) .weekend {
+    color: #8080ff;
+}
+
+
+
+.dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
+    color: #ff3030;
+}
+
+
+
+.dx-state-disabled.dx-calendar .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
+    color: #ff8080;
+}
+
+.dx-calendar-body thead tr {
+    position: relative;
+    left: 35px;
+}
+
+.dx-calendar-week-number-cell .week-number {
+    font-style: italic;
+}
+
+
+
+.caption {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+
+
+.options {
+    padding: 20px;
+    background-color: rgba(191, 191, 191, 0.15);
+}
+
+
+
+.option {
+    margin-top: 20px;
+}
+
+
+
+.section-with-margin {
+    margin: 10px;
+}
+
+
+.users-list li {
+    display: inline-block; /* Display records horizontally */
+    width: 23%; /* Set the width for each record to fit 4 in a row */
+    margin-right: 1%; /* Add a small margin between records */
+    padding: 10px;
+    border: 1px solid #eee; /* Add a border around each record */
+    background-color: #f9f9f9;
+    font-size: 14px;
+    vertical-align: top; /* Align records to the top of the container */
+    text-align: center;
+}
+
+    .users-list li img {
+        max-width: 100%;
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+.users-list-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.users-list-date {
+    color: #777;
+}
+
+.mainrow {
+    margin-bottom: 20px;
+    margin-left: 0px;
+}
+
+.small-box {
+    padding: 20px;
+    color: #fff;
+    border-radius: 5px;
+    min-height: 150px;
+}
+
+.inner {
+    align-self: center;
+}
+
+.second-inner-div {
+    align-self: center;
+}
+
+    .second-inner-div i {
+        font-size: 60px;
+    }
+
+.card {
+    height: 100%;
+}
+
+.header-cards {
+    height: 18%;
+}
+
+.card-header {
+    background-color: #008BFF;
+}
+
+.card-title {
+    color: #fff;
+    font-family: "Poppins";
+    font-weight: 400;
+}
+
+.connectedSortable .nav-tabs .nav-link {
+    color: #fff;
+    font-family: "Poppins";
+    font-weight: 400;
+}
+
+    .connectedSortable .nav-tabs .nav-link.active {
+        color: #008BFF;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+.users-list li {
+    display: inline-block;
+    width: 23%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    padding: 10px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+#vector-map {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .mainrow {
+       
+        --bs-gutter-y: 10px;
+    }
+
+    .charts-height {
+        margin-bottom: 20px;
+    }
+
+    .job-flow {
+        margin-bottom: 20px;
+    }
+
+    .latest-members {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

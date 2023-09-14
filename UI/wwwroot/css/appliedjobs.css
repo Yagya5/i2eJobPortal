@@ -1,0 +1,50 @@
+﻿.Appliedmain {
+    min-height: 79vh;
+    margin-top: 100px;
+}
+
+.dx-theme-generic-typography .dx-font-xl, .dx-theme-generic-typography h1 {
+    font-weight: 600;
+    font-size: 48px;
+    font-family: "Poppins";
+    text-align: center;
+}
+
+.Mainheading {
+    font-weight: 600;
+    font-size: 48px;
+    font-family: "Poppins";
+    text-align: center;
+}
+
+.dx-header-row {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Poppins";
+    background-color: #008BFF;
+    color: white;
+}
+
+
+.dx-datagrid-table {
+    box-shadow: 0 0 10px #dce9fb;
+}
+
+.dx-datagrid .dx-datagrid-headers .dx-header-filter {
+    color: #fff;
+}
+
+@media only screen and (max-width: 1200px) {
+    .Appliedmain {
+        min-height: 80vh;
+       
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .Appliedmain {
+        min-height: 84.5vh;
+        margin-top: 100px;
+    }
+}

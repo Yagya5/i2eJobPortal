@@ -136,3 +136,26 @@ body {
             color: #FFFFFF;
             font-size: 12px; /* Adjusted font size */
         }
+
+
+@media only screen and (max-width: 768px) {
+
+    .maincontainer .about-header {
+        margin-top: 80px;
+    }
+
+    .emp-img-main .img-first img {
+        width: 100%;
+        height: 202px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+
+    
+
+    .emp-img-main .img-first img {
+        width: 100%;
+       
+    }
+}

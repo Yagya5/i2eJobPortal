@@ -20,42 +20,10 @@
     <link rel="stylesheet" href="~/css/job.css">
     <title>Job Portal</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/alljobs.css">
     <title>Job Portal</title>
     <style>
-        .urgent-text {
-            color: #008BFF;
-            font-size: 14px;
-        }
-
-        .filter-buttons .flter-btn {
-            height: 97.5%;
-            width: 100px;
-            background-color: #008BFF;
-            margin-top: 4px;
-            color: #fff;
-        }
-
-            .filter-buttons .flter-btn:hover {
-                font-weight: 600;
-            }
-
-        .filter-buttons .search-btn {
-            height: 86%;
-            margin-top: 4px;
-        }
-
-        .dropdown-menu.show {
-            min-width: 280px;
-        }
-
-        .min-exp{
-       align-items: baseline;
-        }
-
-        .inpt-btns{
-            position: relative;
-            left: -30px;
-        }
+      
        
 
     </style>
@@ -64,9 +32,9 @@
 
 <div class="container-fluid p-0 maincontainer">
 
-    <div class="col-lg-12 jobs">
+    <div class="col-lg-12 p-0 jobs">
         <div class="job-main">
-            <div class="opening-details mb-4">
+            <div class="opening-details mt-5 mb-4">
                 
                 <div class="d-flex mb-5 filter-buttons">
                     <div class="dropdown">
@@ -127,7 +95,7 @@
                 </div>
 
                 <div class="col-lg-9 mb-5 opening-list">
-                    <div class="row ms-5 g-4">
+                    <div class="row g-4">
                         <div class="no-data-message text-center" style="display: none;">
                             No data found.
                         </div>
@@ -149,7 +117,7 @@
                                                             <span class="urgent-text me-2">Urgently Hiring</span>
                                                         }
                                                     </div>
-                                                    <div class="job-name">
+                                                    <div class="col-lg-8 job-name">
 
                                                         @item.JobTitle
                                                     </div>
@@ -168,7 +136,7 @@
                                                         <span>@item.JobMode</span>
                                                     </div>
                                                 </div>
-                                                <div class="apply-btn d-flex align-items-end flex-column mb-3">
+                                                <div class="col-lg-4 apply-btn d-flex align-items-end flex-column mb-3">
                                                     <button class="mt-auto apply" onclick="OpenDetails(@item.JobId)">
                                                         View Details
                                                     </button>

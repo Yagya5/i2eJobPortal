@@ -67,7 +67,7 @@
 
 /*------------ For small screens------------*/
 
-@media only screen and (max-width: 768px) {
+/*@media only screen and (max-width: 768px) {
 
     .box-area {
         margin: 0 10px;
@@ -82,3 +82,4 @@
         padding: 20px;
     }
 }
+*/

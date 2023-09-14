@@ -1,0 +1,70 @@
+﻿.menu-contains {
+    padding: 0px;
+}
+
+.urgent-text {
+    color: #008BFF;
+    font-size: 14px;
+}
+
+.filter-buttons .flter-btn {
+    height: 97.5%;
+    width: 100px;
+    background-color: #008BFF;
+    margin-top: 4px;
+    color: #fff;
+}
+
+    .filter-buttons .flter-btn:hover {
+        font-weight: 600;
+    }
+
+.filter-buttons .search-btn {
+    height: 86%;
+    margin-top: 4px;
+}
+
+.dropdown-menu.show {
+    min-width: 280px;
+}
+
+.min-exp {
+    align-items: baseline;
+}
+
+.inpt-btns {
+    position: relative;
+    left: -30px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .maincontainer .opening-details .opening-list .apply {
+        background-color: #008BFF;
+        color: #FFFFFF;
+        border: none;
+        padding: 5px 2px 5px 2px;
+    }
+
+    .maincontainer .opening-details .opening-list .cardmain .job-name {
+        font-size: 21px;
+        font-family: "Poppins";
+        font-weight: 400;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .maincontainer .opening-details .opening-list .cardmain .job-name {
+        font-size: 16px;
+        font-family: "Poppins";
+        font-weight: 400;
+    }
+
+    .maincontainer .opening-details .opening-list .apply {
+        background-color: #008BFF;
+        color: #FFFFFF;
+        font-size: 15px;
+        border: none;
+        padding: 5px 14px 5px 14px;
+    }
+}

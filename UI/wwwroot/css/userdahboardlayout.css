@@ -1,0 +1,151 @@
+﻿.menu-contains {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 5;
+    border-bottom: 1px solid #000;
+}
+
+.footer {
+    background-color: #202020;
+    color: #FFFFFF;
+    padding: 10px 0;
+}
+
+.footerLogoSection {
+    display: flex;
+    align-items: center;
+}
+
+    .footerLogoSection img {
+        width: 60px;
+        float: left;
+    }
+
+    .footerLogoSection small {
+        font-size: 10px;
+        float: right;
+        color: #FFFFFF;
+    }
+
+.footerBackground {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*  .navbar {
+            width: 85%;
+            margin: auto;
+        }
+
+            .navbar .navbar-brand {
+                display: flex;
+                align-items: center;
+            }
+
+            .navbar .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                justify-content: flex-end;
+            }
+
+            .navbar .navbar-nav .nav-item {
+                margin: 0px 10px;
+            }
+
+            .navbar .nav-link {
+                color: #202020;
+                font-weight: 600;
+            } */
+
+.menu-contains .logo-section {
+    display: flex;
+    align-self: center;
+}
+
+/*.menu-contains .navbar-expand-lg .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto !important;
+    justify-content: flex-end !important;
+}*/
+
+.menu-contains .nav-item {
+    margin: 0px 10px !important;
+}
+
+    .menu-contains .nav-item .nav-link {
+        /* color: #000000; */
+        color: rgba(0,0,0,.55) !important;
+        font-family: "Poppins" !important;
+        font-weight: 400 !important;
+        font-size: 16px;
+    }
+
+    .menu-contains .nav-item .active {
+        color: #000000;
+        font-family: "Poppins" !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        position: relative;
+        top: 8px;
+    }
+
+.nav-drop {
+    position: relative;
+    top: -11px;
+}
+
+
+/* DevExtreme CSS starts from below*/
+.dx-theme-generic-typography .dx-font-xl, .dx-theme-generic-typography h1 {
+    font-weight: 600;
+    font-size: 48px;
+    font-family: "Poppins";
+    text-align: center;
+}
+
+.Mainheading {
+    font-weight: 600;
+    font-size: 48px;
+    font-family: "Poppins";
+    text-align: center;
+}
+
+.dx-header-row {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "Poppins";
+    background-color: #008BFF;
+    color: white;
+}
+
+
+.dx-datagrid-table {
+    box-shadow: 0 0 10px #dce9fb;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .menu-contains {
+        right: 0px;
+    }
+
+        .menu-contains .navbar-expand-lg .navbar-collapse {
+            position: absolute;
+            background-color: #fff;
+            top: 78px;
+            right: 42px;
+            border: 1px solid;
+            color: black;
+            width: 261px;
+            height: 250px;
+        }
+
+    .footerLogoSection small {
+        font-size: 10px;
+        float: right;
+        color: #FFFFFF;
+        position: relative;
+        right: -21px;
+    }
+}

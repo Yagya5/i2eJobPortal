@@ -90,38 +90,41 @@ body {
 .maincontainer .contact-us-main .btn-style-new:hover {
   margin-left: 5px;
 }
-    .maincontainer .contact-info-main {
-        background-image: url("~/images/Embrace-new-technology.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 28.2%;
-        padding: 22px 30px 25px;
-        color: #FFFFFF;
-        position: absolute;
-        left: 830px;
-        top: 245px;
-        height: 287px;
-        z-index: 1;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 15px;
+    .maincontainer .contact-info {
+        margin-top: 155px;
     }
-.maincontainer .contact-info-main h4 {
-  font-size: 26px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  font-weight: 600;
+.contact-info-main1 {
+    width: 100%;
+    box-shadow: 0 0 10px #dce9fb;
+    padding: 24px;
+    background-color: #fffdd02e;
+    border-radius: 10px;
+    height: 45%;
 }
-.maincontainer .contact-info-main ul,
-.maincontainer .contact-info-main li {
+
+.maincontainer .contact-info-main1 h4 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+.maincontainer .contact-info-main1 ul,
+.maincontainer .contact-info-main1 li {
   list-style: none;
 }
-.maincontainer .contact-info-main p {
+.maincontainer .contact-info-main1 p {
   font-size: 16px;
 }
-.maincontainer .contact-info-main:after {
+.maincontainer .contact-info-main1:after {
   border-radius: 15px;
 }
-.maincontainer .contact-info-main:after {
+.map-details {
+    background-image: url("/Images/city1.png");
+    height: 255px;
+    width: 100%;
+    border-radius: 10px;
+}
+/*.maincontainer .contact-info-main:after {
   position: absolute;
   content: "";
   top: 0;
@@ -130,9 +133,9 @@ body {
   height: 100%;
   background: rgba(0, 139, 255, 0.9) none repeat scroll 0 0;
   z-index: -1;
-}
+}*/
 .maincontainer .footer-main {
-  background-color: #202020;
+    background-color: #202020;
 }
 .maincontainer .footer-main .footer-contain {
   width: 85%;
@@ -143,3 +146,15 @@ body {
   color: #FFFFFF;
   font-size: 10px;
 }/*# sourceMappingURL=contactus.css.map */
+
+@media only screen and (max-width: 768px) {
+
+    .GetIn-main {
+        flex-direction: column;
+    }
+
+    .map-details {
+        width: 95%;
+        margin: 20px;
+    }
+}

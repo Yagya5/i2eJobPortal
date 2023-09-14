@@ -1,0 +1,15 @@
+﻿img {
+    /*  height: 70px; */
+    width: 70px;
+}
+
+#dataGrid {
+    margin-top: 100px;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .registermain {
+        height: 85vh;
+    }
+}

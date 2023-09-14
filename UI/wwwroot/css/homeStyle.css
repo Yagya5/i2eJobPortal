@@ -226,3 +226,51 @@ body {
   color: #FFFFFF;
   font-size: 10px;
 }/*# sourceMappingURL=homeStyle.css.map */
+
+@media only screen and (max-width: 1200px) {
+    .maincontainer .opening-details .opening-list .apply {
+        background-color: #008BFF;
+        color: #FFFFFF;
+        border: none;
+        padding: 5px 13px 5px 13px;
+    }
+
+    .maincontainer .opening-details .opening-list .cardmain .job-name {
+        font-size: 21px;
+        font-family: "Poppins";
+        font-weight: 400;
+    }
+   
+}
+
+@media only screen and (max-width: 768px) {
+
+    .maincontainer {
+       margin-top: 100px;
+    }
+
+    .maincontainer .image-section img {
+        height: 370px;
+    }
+
+    .maincontainer .opening-details .opening-list .cardmain .job-name {
+        font-size: 16px;
+        font-family: "Poppins";
+        font-weight: 400;
+    }
+
+    .maincontainer .opening-details .opening-list .apply {
+        background-color: #008BFF;
+        color: #FFFFFF;
+        font-size: 15px;
+        border: none;
+        padding: 5px 14px 5px 14px;
+    }
+
+    .maincontainer .sixth-section .our-culture {
+        display: flex;
+        justify-content: space-evenly;
+        justify-items: center;
+        flex-direction: column;
+    }
+}

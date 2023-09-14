@@ -43,151 +43,9 @@
 
     
     <script src="~/js/admindash.js"></script>
+    <link rel="stylesheet" href="~/css/adminDashboard.css">
 
 <style>
-        .demo-container {
-            display: flex;
-        }
-
-
-
-        .calendar-container {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-
-        #calendar {
-            width: 49%;
-            background-color: green;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-
-
-        .dx-button-mode-outlined {
-            border: none;
-        }
-
-
-
-
-
-
-
-            .dx-button-mode-outlined .dx-icon, .dx-button-mode-outlined .dx-icon, .dx-button-text, .dx-calendar-cell {
-                color: #fff;
-            }
-
-
-
-        .dx-calendar-body thead th {
-            font-weight: 500;
-            font-size: 10px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: #fff;
-        }
-
-
-
-        .dx-calendar-cell:not(.dx-calendar-other-month) .weekend,
-        .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
-            text-shadow: none;
-            font-weight: bold;
-        }
-
-
-
-        .dx-calendar-cell:not(.dx-calendar-other-month) .weekend {
-            color: #3030ff;
-        }
-
-
-
-        .dx-state-disabled.dx-calendar .dx-calendar-cell:not(.dx-calendar-other-month) .weekend {
-            color: #8080ff;
-        }
-
-
-
-        .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
-            color: #ff3030;
-        }
-
-
-
-        .dx-state-disabled.dx-calendar .dx-calendar-cell:not(.dx-calendar-other-month) .holiday {
-            color: #ff8080;
-        }
-
-
-
-        .dx-calendar-week-number-cell .week-number {
-            font-style: italic;
-        }
-
-
-
-        .caption {
-            font-weight: 500;
-            font-size: 18px;
-        }
-
-
-
-        .options {
-            padding: 20px;
-            background-color: rgba(191, 191, 191, 0.15);
-        }
-
-
-
-        .option {
-            margin-top: 20px;
-        }
-
-
-        
-        .section-with-margin {
-            margin: 10px;
-        }
-
-
-        .users-list li {
-            display: inline-block; /* Display records horizontally */
-            width: 23%; /* Set the width for each record to fit 4 in a row */
-            margin-right: 1%; /* Add a small margin between records */
-            padding: 10px;
-            border: 1px solid #eee; /* Add a border around each record */
-            background-color: #f9f9f9;
-            font-size: 14px;
-            vertical-align: top; /* Align records to the top of the container */
-        }
-
-            .users-list li img {
-                max-width: 100%;
-                height: auto;
-                border-radius: 50%;
-                margin-right: 10px;
-            }
-
-        .users-list-name {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .users-list-date {
-            color: #777;
-        }
-
-        
 </style>
    
 
@@ -195,23 +53,20 @@
 
 
 
-<body class="dx-viewport1">
+<body class="dx-viewport1" style="margin-top: 100px;">
 
 
 
-    <div class="row">
+    <div class="row mainrow">
         <div class="col-lg-4">
 
-            <div class="small-box bg-success">
+            <div class="d-flex justify-content-around small-box bg-success">
                 <div class="inner">
                     <h3 id="remote"></h3>
                     <p>Remote</p>
                 </div>
                 <div class="second-inner-div">
-                    <i class="fa-solid fa-building"></i>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="fa-solid fa-house-laptop"></i>
                 </div>
 
             </div>
@@ -219,15 +74,13 @@
 
         <div class="col-lg-4">
 
-
-
-            <div class="small-box bg-info">
+            <div class="d-flex justify-content-around small-box bg-info">
                 <div class="inner">
                     <h3 id="hybrid"></h3>
                     <p>Hybrid</p>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
+                <div class="second-inner-div">
+                    <i class="fa-solid fa-laptop"></i>
                 </div>
 
             </div>
@@ -235,13 +88,13 @@
 
         <div class="col-lg-4">
 
-            <div class="small-box bg-warning">
+            <div class="d-flex justify-content-around small-box bg-warning">
                 <div class="inner">
                     <h3 id="in_office"></h3>
                     <p>In Office</p>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
+                <div class="second-inner-div">
+                    <i class="fa-solid fa-building"></i>
                 </div>
 
             </div>
@@ -257,7 +110,7 @@
             <div class="col-lg-6 charts-height">
               
 
-                <div class="card  ">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
@@ -293,9 +146,9 @@
 
             
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 job-flow">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header header-cards">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
                             Job Application Flow
@@ -314,11 +167,8 @@
 
       <section>
 
-        <div class="row">
-
-
-
-            <div class="col-md-6">
+        <div class="row mb-5">
+            <div class="col-md-6 latest-members">
 
                 <div class="card">
                     <div class="card-header">
@@ -334,7 +184,7 @@
                         </div>
                     </div>
 
-                    <div class="card-body p-0">
+                    <div class="card-body">
 
                        
                             <ul class="users-list clearfix" id="lastLoginsCard">
@@ -361,7 +211,7 @@
       </section>
       <section>
 
-        <div class="demo-container">
+        <div class="col-lg-12 demo-container">
             <div id="vector-map"></div>
         </div>
 

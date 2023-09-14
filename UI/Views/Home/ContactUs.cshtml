@@ -33,37 +33,39 @@
     <title>Job Portal</title>
 </head>
 <div class="container-fluid p-0 maincontainer">
-    <h1 class="title-info">Get In Touch</h1>
-    <div class="col-lg contact-us-main">
-        <div class="col-lg-8 mb-5 contact-us">
-            <form class="row g-5 needs-validation" asp-controller="Home" asp-action="ContactUs" id="ContactForm">
-                <div class="col-md-5">
-                    <label for="validationCustom01" class="form-label">First name <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="FirstName" name="FirstName"  placeholder="First name" asp-for="FirstName">
+    <div class="col-lg-11 d-flex GetIn-main">
+        <div class="col-lg-7 GetIn-right">
+         <h1 class="title-info">Get In Touch</h1>
+             <div class="col-lg contact-us-main">
+        <div class="col-lg mb-5 contact-us">
+             <form class="row g-5 needs-validation" asp-controller="Home" asp-action="ContactUs" id="ContactForm">
+                         <div class="col-md-5">
+                             <label for="validationCustom01" class="form-label">First name <span class="redcolor">*</span></label>
+                               <input type="text" class="form-control" id="FirstName" name="FirstName"  placeholder="First name" asp-for="FirstName">
 
-                </div>
-                <div class="col-md-5">
-                    <label for="validationCustom02" class="form-label">Last name <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="LastName" name="LastName"  placeholder="Last name" asp-for="LastName">
+                         </div>
+                        <div class="col-md-5">
+                             <label for="validationCustom02" class="form-label">Last name <span class="redcolor">*</span></label>
+                             <input type="text" class="form-control" id="LastName" name="LastName"  placeholder="Last name" asp-for="LastName">
 
-                </div>
-                <div class="col-md-5">
-                    <label for="validationCustom02" class="form-label">Email <span class="redcolor">*</span></label>
-                    <input type="text" class="form-control" id="Email" name="Email"  placeholder="Email" asp-for="Email">
+                         </div>
+                        <div class="col-md-5 mt-3">
+                                <label for="validationCustom02" class="form-label">Email <span class="redcolor">*</span></label>
+                                <input type="text" class="form-control" id="Email" name="Email"  placeholder="Email" asp-for="Email">
 
-                </div>
-                <div class="col-md-5">
-                    <label for="validationCustom02" class="form-label">Phone Number <span class="redcolor">*</span></label>
-                    <input type="tel" class="form-control" id="Phone" name="Phone"  placeholder="Phone Number" asp-for="Phone">
-                </div>
-                <div class="form-floating col-lg-10">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message" maxlength="1000"></textarea>
-                    <label class="messges1 ms-4" for="floatingTextarea2">Message</label>
-                </div>
+                         </div>
+                        <div class="col-md-5 mt-3">
+                                <label for="validationCustom02" class="form-label">Phone Number <span class="redcolor">*</span></label>
+                                <input type="tel" class="form-control" id="Phone" name="Phone"  placeholder="Phone Number" asp-for="Phone">
+                         </div>
+                         <div class="form-floating col-lg-10 mt-3">
+                             <textarea class="form-control" placeholder="Leave a comment here" id="Message" name="Message" style="height: 100px" asp-for="Message" maxlength="1000"></textarea>
+                             <label class="messges1 ms-4" for="floatingTextarea2">Message</label>
+                         </div>
 
-                <div class="form-floating col-lg-10">
+                         <div class="form-floating col-lg-10 mt-3">
 
-                    <dnt-captcha asp-captcha-generator-max="999999"
+                            <dnt-captcha asp-captcha-generator-max="999999"
                                  asp-captcha-generator-min="111111"
                                  asp-captcha-generator-language="English"
                                  asp-captcha-generator-display-mode="ShowDigits"
@@ -81,7 +83,7 @@
                                  asp-refresh-button-class="fas fa-redo btn-sm"
                                  asp-show-refresh-button=true />
 
-                    </div>
+                         </div>
 
                 
 
@@ -103,14 +105,16 @@
                 <h6 style="color: red; font-weight: bold; display:none" id="SuccessMessage">@ViewBag.Message</h6>
             </form>
         </div>
-        <div class="contact-info">
-            <div class="col-lg-4 contact-info-main">
+            </div>
+    </div>
+        <div class="col-lg-5 contact-info">
+            <div class="col-lg-4 mb-3 contact-info-main1">
                 <h4>Contact Information</h4>
                 <ul class="address-list">
                     <li>
                         <p>
                             <i class="fa fa-map-marker me-2"></i>
-                            93 Shennecossett Rd, Suite # 104, Groton, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CT 06340
+                            93 Shennecossett Rd, Suite # 104, Groton, &nbsp; CT 06340
                         </p>
                     </li>
                     <li>
@@ -125,9 +129,13 @@
                     </li>
                 </ul>
             </div>
-        </div>
-    </div>
+            <div class="col-lg-4 map-details">
 
+            </div>
+
+        </div>
+
+    </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
