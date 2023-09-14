@@ -197,7 +197,18 @@ namespace Repository.AppliedJobs
                 return false;
         }
 
-       
+        public bool HasUserApplied(int userId, int jobId)
+        {
+            using var connection = _dapperConnection.CreateConnection();
+            string query = "SELECT COUNT(*) FROM Table_AppliedJobs WHERE UserId = @UserId AND JobId = @JobId";
+            int count = connection.QuerySingle<int>(query, new { UserId = userId, JobId = jobId });
+            if (count>0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
 
 
     }

@@ -62,6 +62,12 @@ namespace Services.AppliedJobs
             return result;
         }
 
+        public bool HasUserApplied(int userId, int jobId)
+        {
+            var result = _AppliedJobsRepository.HasUserApplied( userId,  jobId);
+            return result;
+        }
+
         public DM_AppliedJobs GetAppliedJobsById(int Id)
         {
             var result = _AppliedJobsRepository.GetAppliedJobsById(Id);

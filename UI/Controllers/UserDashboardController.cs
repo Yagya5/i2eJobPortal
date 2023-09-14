@@ -70,10 +70,18 @@ namespace UI.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateAppliedJob(int job_Id)  /* Applied job by user function  */
         {
-           
+            int User_Id = Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+            bool count = _appliedJobsServices.HasUserApplied(User_Id, job_Id);
+            if (count)
+            {
+                return Ok(new { response = count, status1 = true, responseof = "HasUserApplied" });
+            }
+            else
+            {
+
                 if (job_Id != 0)
                 {
-                    int User_Id = Convert.ToInt32(User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
+                    
                     bool result = await _appliedJobsServices.IsUserResumeUploaded(User_Id);
                     if (result)
                     {
@@ -85,6 +93,7 @@ namespace UI.Controllers
                         return Ok(new { response = result, status = false, responseof = "Resume Required", userid = User_Id });
                     }
                 }
+            }
                     
             return BadRequest(new { status = false, responseof = "" });
         }

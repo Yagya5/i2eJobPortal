@@ -17,25 +17,40 @@ function CreateAppliedJob(JobId) {
             method: 'Get',
             success: function (response) {
                 console.log(response);
-                if (response.status) {
-                    Swal.fire(
-                        'Succesfully Applied job!',
-                        '',
-                        'success'
-                    )
-                   /* alert("Succesfully Applied job ");*/
-                } else {
-                    if (response.responseof == "Resume Required") {
-
-                       // alert("Please upload your Resume on Profile Section.");
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Resume Required',
-                            text: 'Please Upload Your Resume In Order to Apply for Job'
-                        }).then(function () {
-                            window.location.href = '/EditUserFullDetails/Index?id=' + response.userid;
-                        })                        
+                if (response.status1)
+                {   
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Aleady Applied',
+                        text: 'You have Aleady Applied this job'
+                    })
+                }
+                else
+                {
+                    if (response.status)
+                    {
+                        Swal.fire(
+                            'Succesfully Applied job!',
+                            '',
+                            'success'
+                        )
+                       
                     }
+                    else
+                    {
+                        if (response.responseof == "Resume Required") {
+
+                          
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Resume Required',
+                                text: 'Please Upload Your Resume In Order to Apply for Job'
+                            }).then(function () {
+                                window.location.href = '/EditUserFullDetails/Index?id=' + response.userid;
+                            })
+                        }
+                    }
+
                 }
                
             },
