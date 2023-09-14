@@ -21,8 +21,8 @@ function CreateAppliedJob(JobId) {
                 {   
                     Swal.fire({
                         icon: 'error',
-                        title: 'Aleady Applied',
-                        text: 'You have Aleady Applied this job'
+                        title: 'Already Applied',
+                        text: 'You have Already Applied this job'
                     })
                 }
                 else
