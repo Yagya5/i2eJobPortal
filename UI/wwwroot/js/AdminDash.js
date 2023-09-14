@@ -400,16 +400,21 @@ function ShowMap(data) {
             console.log('Color: Blue');
             return '#0000FF';
         }
-        else if (count > 10) {
+        else if (count > 8) {
             console.log('Color: Orange');
             return '#F28500';
         }
-        else if (count > 5) {
+        else if (count > 4) {
             console.log('Color: Pink');
             return '#FF007F'; 
-        } else {
-            console.log('Color: Bordeaux');
-            return '#4C0013'; 
+        } else if (count > 2) {
+            console.log('Color: Rust');
+            return '#B7410E';
+        }
+
+        else {
+            console.log('Color: Pine');
+            return '#01796F'; 
         }
     }
 
