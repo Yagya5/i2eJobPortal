@@ -54,13 +54,17 @@ namespace Services.AppliedJobs
             var result= _AppliedJobsRepository.IsUserResumeUploaded(userId);
             return await  result;
         }
-
-
-
+      
         public bool UpdateAppliedJob(DM_AppliedJobs appliedJobs_Obj)
         {
             var result = _AppliedJobsRepository.UpdateAppliedJob(appliedJobs_Obj);
            
+            return result;
+        }
+
+        public bool HasUserApplied(int userId, int jobId)
+        {
+            var result = _AppliedJobsRepository.HasUserApplied( userId,  jobId);
             return result;
         }
 

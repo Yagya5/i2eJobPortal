@@ -49,6 +49,7 @@ function ShowEvent(_datasource) {
                 dataField: "JobTypeName",
               caption: "JobType"
             },
+           
             {
                 dataField: "JobAppliedDateTime",
                 caption: "AppliedDate",
