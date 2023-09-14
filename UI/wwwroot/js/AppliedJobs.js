@@ -127,19 +127,24 @@ function ShowEvent(_datasource) {
         selection: {
             mode: 'false',
         },
+        scrolling: {
+            mode: "virtual",
+        },
+
 
         paging: {
             pageSize: 10,
         },
         pager: {
             visible: true,
-            allowedPageSizes: [10, 20, 'all'],
+            allowedPageSizes: [10, 20,50, 'all'],
             showPageSizeSelector: true,
             showInfo: true,
             showNavigationButtons: true,
             visible: true,
         },
 
+      
         summary: {
             groupItems: [{
                 summaryType: "count"
@@ -203,7 +208,7 @@ function ShowEvent(_datasource) {
                     component: e.component,
                 }).then(function () {
                     workbook.xlsx.writeBuffer().then(function (buffer) {
-                        saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Job Application.xlsx");
+                        saveAs(new Blob([buffer], { type: "application/octet-stream" }), "AppliedJob Management.xlsx");
                     });
                 });
             }
@@ -214,7 +219,7 @@ function ShowEvent(_datasource) {
                     jsPDFDocument: doc,
                     component: e.component,
                 }).then(() => {
-                    doc.save('Job Application.pdf');
+                    doc.save('AppliedJob Management.pdf');
                 });
             }
         },
@@ -224,7 +229,7 @@ function ShowEvent(_datasource) {
 
         onRowUpdated: function (e) {
             console.log(e);
-            /*//** var AppliedJobId = e.key.AppliedJobId;*/
+            
             $.ajax({
                 url: "/JobApplications/UpdateAppliedJob/",
                 method: "POST",
@@ -236,7 +241,6 @@ function ShowEvent(_datasource) {
                     "JobTitle": e.data.JobTitle,
                     "DepartmentName": e.data.DepartmentName,
                     "MinExperience": e.data.MinExperience,
-                    /*"Location": e.data.Location,*/
                     "ProfilePicture": e.data.ProfilePicture,
                     "StatusValue": e.data.Status,
                     "RoundValue": e.data.Round,
@@ -244,13 +248,23 @@ function ShowEvent(_datasource) {
                     "Round": e.data.Round
 
                 },
-                success: function (ResponseData) {
-                    LoadRecords();
-                },
-                error: function (err) {
-                    alert(err);
-                }
-            })
+
+              
+                
+                    success: function (ResponseData) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Updated the Record Sucessfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                        LoadRecords();
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
         },
 
 
@@ -288,12 +302,12 @@ function ShowEvent(_datasource) {
                 allowSorting: true,
                 allowEditing: false,
                 width: 150,
-                headerFilter: {
-                    allowSelectAll: true,
-                    search: {
-                        enabled: false,
-                    }
-                }
+                //headerFilter: {
+                //    allowSelectAll: true,
+                //    search: {
+                //        enabled: false,
+                //    }
+                //}
             },
 
 
@@ -340,12 +354,12 @@ function ShowEvent(_datasource) {
                 /*validationRules: [{ type: "required" }],*/
                 allowEditing: false,
                 width: 130,
-                headerFilter: {
-                    allowSelectAll: true,
-                    search: {
-                        enabled: false,
-                    }
-                }
+                //headerFilter: {
+                //    allowSelectAll: true,
+                //    search: {
+                //        enabled: false,
+                //    }
+                //}
             },
             {
                 dataField: "MinExperience",
@@ -466,59 +480,7 @@ function ShowEvent(_datasource) {
                     }
                 }
             },
-            //{
-            //    dataField: "Round",
-            //    caption: "Round",
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    validationRules: [{ type: "required" }],
-            //    allowEditing: true,
-            //    editorType: "dxSelectBox",
-            //    editorOptions: {
 
-            //        dataSource: RoundValues1,
-            //        valueExpr: "value",
-            //        displayExpr: "value",
-            //        placeholder: "Select Round",
-            //    },
-
-            //    width: 110,
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-            //},
-            //{
-            //    dataField: "Status",
-            //    caption: "Current Status",
-            //    validationRules: [{ type: "required" }],
-            //    allowFiltering: true,
-            //    allowSorting: true,
-            //    allowEditing: true,
-            //    editorType: "dxSelectBox",
-            //    editorOptions: {
-
-            //        dataSource: StatusValues1,
-            //        valueExpr: "value",
-            //        displayExpr: "value",
-            //        placeholder: "Select Current Status",
-            //    },
-            //    width: 110,
-            //    headerFilter: {
-            //        allowSelectAll: true,
-            //        search: {
-            //            enabled: false,
-            //        }
-            //    }
-            //},
-            //{
-            //    dataField: 'Round',
-            //    caption: 'Round',
-            //    lookup: {
-            //        dataSource(options) {
-      ////},
             {
                 dataField: 'Round',
                 caption: 'Round',
@@ -567,39 +529,6 @@ function ShowEvent(_datasource) {
                     }
                 }
             },
-
-            //            return {
-            //                store: RoundValues1,
-            //            };
-            //        },
-            //        valueExpr: 'value',
-            //        displayExpr: 'value',
-            //    },
-            
-
-
-
-
-
-            //{
-            //    dataField: 'Status',
-            //    caption: 'Status',
-            //    validationRules: [{ type: "required" }],
-            //    lookup: {
-            //        dataSource(options) {
-            //            return {
-            //                store: StatusValues1,
-            //                filter: options.data ? ['Round', '=', options.data.State] : null,
-            //            };
-            //        },
-            //        valueExpr: 'Category_Id',
-            //        displayExpr: 'Value',
-
-            //    },
-            //},
-
-
-
 
 
 
