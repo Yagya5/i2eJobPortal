@@ -25,5 +25,7 @@ namespace Services.Jobs
         IEnumerable<CountryStateCityData> GetAllCountryStateCity();
 
         Job GetJobById_ForAuditTrail(int jobId);
+
+        string GetCountryStateCityForAuditTrail(int category_Id, string category_Name);
     }
 }

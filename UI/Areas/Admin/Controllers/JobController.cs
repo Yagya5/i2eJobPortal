@@ -82,24 +82,37 @@ namespace UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
-                //int TaskId = OldObject.JobId;
-                //string Module = "Job";
-                //string Action = AuditAction.Modified;
-
-                //OldObject.PostDate = null;
-                //job.PostDate = null;
+                #region Audit Trail Codes
+                var OldObject = _jobServices.GetJobById_ForAuditTrail(job.JobId);
+                var JobModes = _jobServices.GetMasterValuesByCategory("Job Mode");
+                var JobTypes = _jobServices.GetMasterValuesByCategory("Job Type");
+                var Currencies = _jobServices.GetMasterValuesByCategory("Currency");    
+                job.JobMode_Home = JobModes.First(x => x.Id == job.JobMode).Value;
+                job.JobType_Home = JobTypes.First(x => x.Id == job.JobType).Value;
+                job.CurrencyType_Home = Currencies.First(x => x.Id == job.CurrencyType).Value;
+                job.Country_Home = _jobServices.GetCountryStateCityForAuditTrail(job.Country, "Country");
+                job.State_Home = _jobServices.GetCountryStateCityForAuditTrail(job.State, "State");
+                job.City_Home = _jobServices.GetCountryStateCityForAuditTrail(job.City, "City");
+                int TaskId = OldObject.JobId;
+                string Module = "Job";
+                string Action = AuditAction.Modified;
+                string TableName = Constant.JobsTableName;
+                OldObject.PostDate = null;
+                job.PostDate = null;
+                #endregion
 
                 var response = _jobServices.UpdateJob(job);
 
+                #region Audit Trail Codes
+                OldObject.JobMode = job.JobMode;
+                OldObject.JobType = job.JobType;
+                OldObject.CurrencyType = job.CurrencyType;
+                OldObject.Country = job.Country;
+                OldObject.State = job.State;
+                OldObject.City = job.City;
+                _ = _auditTrailServices.InsertAuditTrail(TaskId, Module, TableName, Action, this.HttpContext, OldObject, job);
+                #endregion
 
-                //OldObject.JobMode = job.JobMode;
-                //OldObject.JobType = job.JobType;
-                //OldObject.CurrencyType = job.CurrencyType;
-                //OldObject.Country = job.Country;
-                //OldObject.State = job.State;
-                //OldObject.City = job.City;
-                //_ = _auditTrailServices.InsertAuditTrail(TaskId, Module, Action, this.HttpContext, OldObject, job);
                 return Ok(response); 
 
             }

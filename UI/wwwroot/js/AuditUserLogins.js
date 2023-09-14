@@ -120,7 +120,10 @@
                 dataField: "LoginTimeStamp",
                 caption: "Login Date & Time",
                 dataType: "datetime",  
-                format: "dd/MM/yyyy, hh:mm a"                
+                format: "dd/MM/yyyy, hh:mm a",
+                editorOptions: {
+                    max: new Date()
+                }
             }
 
         ]

@@ -17,7 +17,7 @@ namespace DomainModel.Common
         GetUserActivitiesViewName = "v_AuditTrail", // It will get details of User Activities which have been audited.
         GetContactQueriesViewName = "v_ContactQueries", // It will get Contact Form related Queries and Messages.
         GetJobDetailsForOldObjectViewName = "v_GetJobDetails_ForOldObject_AuditTrail", // It will get Table_Jobs Details for Old Object before we start to compare & track changes. 
-        GetJobData="v_GetJobData",
+        GetJobData = "v_GetJobData",
         #endregion
 
 
@@ -30,8 +30,9 @@ namespace DomainModel.Common
         CreateNewJob = "spCreateJob",
         DeleteAJob = "spDeleteJob",
         UpdateAJob = "spUpdateJob",
-        UpdateStatusRoundStoredProcedure= "spUpdateStatusAndRound",//Updating the Status and Round Of Users which Applied for the Jobs.
-            CreateAppliedJob = "spAppliedJobdata",
+        UpdateStatusRoundStoredProcedure = "spUpdateStatusAndRound",//Updating the Status and Round Of Users which Applied for the Jobs.
+        CreateAppliedJob = "spAppliedJobdata",
+        CountryStateCityForAuditTrailStoredProcedure = "spGetCountryStateCityForAuditTrail",
         #endregion
 
 

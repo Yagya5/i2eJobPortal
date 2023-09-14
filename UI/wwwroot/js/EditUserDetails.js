@@ -72,6 +72,8 @@
                             width: '100%',
                             min: new Date(new Date().getFullYear() - 60, new Date().getMonth(), new Date().getDate()), // 60 years ago from today
                             max: new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate()), // 18 years ago from today
+                            displayFormat: 'dd/MM/yyyy',
+
                         },
                         validationRules: [{
                             type: 'required',
@@ -324,10 +326,17 @@
                     {
                         dataField: 'CoverLetter',
                         editorType: 'dxTextArea',
-                        
+                        validationRules: [
+                            {
+                                type: 'stringLength',
+                                max: 500,
+                                message: 'Cover Letter cannot exceed 500 characters',
+                            },
+                        ],
                         label: {
                             template: labelTemplate('info'),
                         },
+                        maxLength: 500,
                     },
 
                     {

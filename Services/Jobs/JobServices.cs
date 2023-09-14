@@ -6,6 +6,7 @@ using Repository.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,6 +82,12 @@ namespace Services.Jobs
         public Job GetJobById_ForAuditTrail(int jobId)
         {
             var result = _jobRepository.GetJobById_ForAuditTrail(jobId);
+            return result;
+        }
+
+        public string GetCountryStateCityForAuditTrail(int category_Id, string category_Name)
+        {
+            var result = _jobRepository.GetCountryStateCityForAuditTrail(category_Id, category_Name);
             return result;
         }
     }
