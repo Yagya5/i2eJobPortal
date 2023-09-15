@@ -91,15 +91,16 @@ body {
   margin-left: 5px;
 }
     .maincontainer .contact-info {
-        margin-top: 155px;
+       /* margin-top: 155px;*/
     }
 .contact-info-main1 {
     width: 100%;
     box-shadow: 0 0 10px #dce9fb;
     padding: 24px;
-    background-color: #fffdd02e;
+    background-color: #008BFF;
     border-radius: 10px;
     height: 45%;
+    color: #fff;
 }
 
 .maincontainer .contact-info-main1 h4 {
@@ -152,7 +153,10 @@ body {
     .GetIn-main {
         flex-direction: column;
     }
-
+    .contact-info-main1 {
+        width: 95%;
+        margin: 20px;
+    }
     .map-details {
         width: 95%;
         margin: 20px;

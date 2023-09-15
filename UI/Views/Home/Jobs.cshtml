@@ -129,7 +129,7 @@
                     <div id="breadcrumb-container">
                         <div id="selected-filters"></div>
                     </div>
-                    <div class="row ms-5 g-4">
+                    <div class="row m-3 g-4">
                         <div class="no-data-message text-center" style="display: none;">
                             No data found.
                         </div>
@@ -144,14 +144,14 @@
                                         <div class="col-lg d-flex justify-content-between card-body-main">
                                             
 
-                                            <div class="job-type">
+                                            <div class="col-lg-8 job-type">
                                                 <div>
                                                     @if (item.urgentRequirement)
                                                     {
                                                         <span class="urgent-text me-2">Urgently Hiring</span>
                                                     }
                                                 </div>
-                                                <div class="job-name">
+                                                <div class="col-lg-8 job-name">
                                                     
                                                     @item.JobTitle
                                                 </div>
@@ -173,7 +173,7 @@
                                                     <span>@item.JobMode</span>
                                                 </div>
                                             </div>
-                                            <div class="apply-btn d-flex align-items-end flex-column mb-3">
+                                            <div class="col-lg-4 apply-btn d-flex align-items-end flex-column mb-3">
                                                 <button class="mt-auto apply" id="apply-jobs" onclick="OpenDetails(@item.JobId)">
                                                     View Details
                                                 </button>

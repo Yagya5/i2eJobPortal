@@ -132,6 +132,10 @@ body {
 .maincontainer .opening-details .opening-list .cardmain .card-body-main {
   min-height: 140px;
 }
+
+.job-type {
+    width: 60%;
+}
 .maincontainer .opening-details .opening-list .cardmain .card-body {
   padding: 20px 15px 0px 15px;
 }

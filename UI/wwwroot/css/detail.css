@@ -1,0 +1,70 @@
+﻿.maincontainer {
+    margin-top: 130px;
+    min-height: 74.8vh;
+    text-align: -webkit-center;
+}
+
+    .maincontainer .opening-details {
+        width: 48%;
+        padding: 20px 20px 20px 20px;
+        text-align: left;
+        box-shadow: 0 4px 10px 0 rgba(0,117,194,0.20);
+        border-radius: 5px;
+    }
+
+
+
+.job-cards {
+    width: 100%;
+}
+
+.maincontainer .opening-details h1 {
+    font-weight: 600;
+    font-size: 48px;
+    margin-bottom: 25px;
+    font-family: "Poppins";
+}
+
+
+
+.maincontainer .opening-details p {
+    font-weight: 400;
+    font-size: 16px;
+    font-family: "Poppins";
+    margin-bottom: 10px;
+}
+
+
+
+.maincontainer .opening-details .apply {
+    background-color: #008BFF;
+    color: #FFFFFF;
+    border: none;
+    padding: 5px 20px 5px 20px;
+    font-family: "Poppins";
+    border-radius: 5px;
+}
+
+    .maincontainer .opening-details .apply:hover {
+        background-color: #008BFF;
+        color: #FFFFFF;
+        font-weight: 700;
+    }
+
+
+@media only screen and (max-width: 768px) {
+
+    .maincontainer {
+        margin-top: 130px;
+        min-height: 80.9vh;
+        text-align: -webkit-center;
+    }
+
+        .maincontainer .opening-details {
+            width: 100%;
+            padding: 20px 20px 20px 20px;
+            text-align: left;
+            box-shadow: 0 4px 10px 0 rgba(0,117,194,0.20);
+            border-radius: 5px;
+        }
+}
