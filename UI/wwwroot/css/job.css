@@ -113,8 +113,11 @@ body {
 .maincontainer .opening-details .opening-list .cardmain .card-body-main {
   min-height: 140px;
 }
+.job-type {
+    width: 60%;
+}
 .maincontainer .opening-details .opening-list .cardmain .card-body {
-  padding: 20px 15px 0px 15px;
+    padding: 20px 15px 0px 15px;
 }
 .maincontainer .opening-details .opening-list .cardmain .job-name {
   font-size: 24px;
@@ -185,7 +188,13 @@ body {
     left: -30px;
 }
 
-
+.cuttoff-text {
+    --max-lines: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--max-lines);
+}
 
 @media only screen and (max-width: 768px) {
 

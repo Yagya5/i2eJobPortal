@@ -5,6 +5,7 @@
     width: 100%;
     z-index: 5;
     border-bottom: 1px solid #000;
+    right: 0px;
 }
 
 .footer {
@@ -194,5 +195,13 @@
     .menu-contains .nav-item {
         margin: 5px 6px !important;
         padding: 0px !important;
+    }
+
+    .footerLogoSection small {
+        font-size: 10px;
+        float: right;
+        color: #FFFFFF;
+        position: relative;
+        right: -21px;
     }
 }
