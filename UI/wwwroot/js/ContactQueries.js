@@ -124,13 +124,39 @@
                     max: new Date()
                 }
             },
-            {
-                dataField: "Message",
-                caption: "Message/Query",
-                width: "350"
-            }
+            //{
+            //    dataField: "Message",
+            //    caption: "Message/Query",
+            //    width: "350"
+            //}
 
-        ]
+        ],
+        masterDetail: {
+            enabled: true,           
+
+            template(container, options) {
+                const perticularObject = _datasource.filter(x => x.Id == options.key);
+                const Message = options.data.Message;
+                $("<div>").addClass('detailSection').dxDataGrid({
+                    dataSource: perticularObject,
+                    keyExpr: "Id",
+                    columnAutoWidth: true,
+                    showBorders: true,
+                    allowColumnResizing: true,
+                    wordWrapEnabled: true,
+                    columnFixing: {
+                        enabled: true,
+                    },  
+                    allowFiltering: true,
+                    columns: [
+                        {
+                            dataField: "Message",
+                            caption: "Message/Query",                            
+                        }
+                    ]
+                }).appendTo(container);
+            }
+        }
 
     });
 }
