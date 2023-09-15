@@ -141,12 +141,10 @@ from v_JobInformation";
             IDbTransaction transaction = connection.BeginTransaction();
 
             string Query = @"SELECT TOP 8 * FROM v_AuditedLogins 
-                            WHERE Role IN ('admin', 'super admin')";
+                            WHERE Role IN ('admin', 'super admin') order by LoginTimeStamp desc";
 
             auditresult=connection.Query<AuditDetails>(Query,transaction: transaction);
             return auditresult;
-
-
         }
 
 
